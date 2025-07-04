@@ -2,6 +2,7 @@
 title: Markdown Example
 published: 2023-10-01
 description: A simple example of a Markdown blog post.
+image: "https://hpic.072103.xyz/"
 tags: [Markdown, Blogging, Demo]
 category: Default
 draft: false
