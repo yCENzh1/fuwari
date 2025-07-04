@@ -1,8 +1,9 @@
 ---
 title: PictureAPI
 published: 2025-07-04
+description: "随机图片API,不定期更新"
 image: "https://rba.kanostar.top/adapt"
-tags: [Essay]
+tags: [Essay,Picture,API]
 category: Essay
 draft: false
 ---
