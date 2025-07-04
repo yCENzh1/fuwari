@@ -2,8 +2,8 @@
 title: Draft Example
 published: 2022-07-01
 tags: [Markdown, Blogging, Demo]
-category: Examples
-draft: true
+category: Default
+draft: false
 ---
 
 # This Article is a Draft
@@ -23,3 +23,4 @@ tags: [Markdown, Blogging, Demo]
 category: Examples
 draft: false
 ---
+PS:虽然啊，但是啊，无奖竞猜我这个怎么发出来的
