@@ -1,6 +1,7 @@
 ---
 title: Draft Example
 published: 2022-07-01
+image: "https://hpic.072103.xyz/"
 tags: [Markdown, Blogging, Demo]
 category: Default
 draft: false
