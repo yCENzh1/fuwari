@@ -2,7 +2,7 @@
 title: Essay
 published: 1145-14-19
 description: "随笔记录~"
-image: "./ping.webp"
+image: "./pin.webp"
 tags: [Essay]
 category: Essay
 draft: false
