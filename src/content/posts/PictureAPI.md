@@ -39,11 +39,11 @@ draft: false
      * （竖屏）<https://api.rls.ovh/vertical>
      * （自适应）<https://api.rls.ovh/adaptive>
 
-  10. **樱花API**：<img src="https://www.dmoe.cc/" alt="Random Image">
+  10. **樱花API**：<https://www.dmoe.cc/>
 
-  11. **小歪API** ：<img src="https://api.ixiaowai.cn/api/api.php" alt="Random Anime Image">
+  11. **小歪API** ：<https://api.ixiaowai.cn/api/api.php>
 
-  12. **EEEDOG API** ：<img src="https://api.yimian.xyz/img?type=moe" alt="Random Moe Image">
+  12. **EEEDOG API** ：<https://api.yimian.xyz/img?type=moe>
 
   13. **晓晴博客**：<https://www.toubiec.cn/318.html>
 
