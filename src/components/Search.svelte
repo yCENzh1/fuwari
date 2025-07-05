@@ -16,6 +16,10 @@
   let pagefindLoaded = false;
   let initialized = false;
   let searchError: string | null = null;
+  
+  // 防抖定时器
+  let desktopTimer: ReturnType<typeof setTimeout> | null = null;
+  let mobileTimer: ReturnType<typeof setTimeout> | null = null;
 
   // 模拟搜索结果（用于开发环境）
   const fakeResult: SearchResult[] = [
@@ -121,6 +125,26 @@
     if (keywordMobile) search(keywordMobile, false);
   };
 
+  // 处理桌面端搜索防抖
+  const handleDesktopSearch = () => {
+    if (desktopTimer) clearTimeout(desktopTimer);
+    desktopTimer = setTimeout(() => {
+      if (initialized && keywordDesktop) {
+        search(keywordDesktop, true);
+      }
+    }, 300);
+  };
+
+  // 处理移动端搜索防抖
+  const handleMobileSearch = () => {
+    if (mobileTimer) clearTimeout(mobileTimer);
+    mobileTimer = setTimeout(() => {
+      if (initialized && keywordMobile) {
+        search(keywordMobile, false);
+      }
+    }, 300);
+  };
+
   // 组件挂载时设置搜索功能
   onMount(() => {
     // 开发环境下直接初始化
@@ -161,18 +185,20 @@
     };
   });
 
-  // 响应式搜索 - 桌面端关键词变化
-  $: if (initialized && keywordDesktop) {
-    // 添加轻微延迟减少频繁搜索
-    const timer = setTimeout(() => search(keywordDesktop, true), 300);
-    return () => clearTimeout(timer);
+  // 组件卸载时清理定时器
+  onDestroy(() => {
+    if (desktopTimer) clearTimeout(desktopTimer);
+    if (mobileTimer) clearTimeout(mobileTimer);
+  });
+
+  // 响应式触发搜索（桌面端）
+  $: if (keywordDesktop) {
+    handleDesktopSearch();
   }
 
-  // 响应式搜索 - 移动端关键词变化
-  $: if (initialized && keywordMobile) {
-    // 添加轻微延迟减少频繁搜索
-    const timer = setTimeout(() => search(keywordMobile, false), 300);
-    return () => clearTimeout(timer);
+  // 响应式触发搜索（移动端）
+  $: if (keywordMobile) {
+    handleMobileSearch();
   }
 </script>
 
