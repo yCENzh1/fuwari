@@ -1,7 +1,7 @@
 ---
 title: Draft Example
-published: 2022-07-01
-image: "https://hpic.072103.xyz/"
+published: 1000-07-01
+image: "https://api.lxtu.cn/"
 tags: [Markdown, Blogging, Demo]
 category: Default
 draft: false
