@@ -1,8 +1,10 @@
 # About
 ![Picture](https://rba.kanostar.top/adapt)
+
 This is the demo site for [Fuwari](https://github.com/saicaca/fuwari).
 
 ::github{repo="yCENzh/fuwari"}
+
 PS:点点star吧
 
 > ### Sources of images used in this site
