@@ -1,3 +1,8 @@
+/* 添加 Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @layer components {
   /* 全局可复用的链接样式 */
   .link {
