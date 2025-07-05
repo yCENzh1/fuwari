@@ -1,0 +1,17 @@
+@layer components {
+  .btn-regular-dark {
+    @apply bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700;
+  }
+
+  .btn-plain-bg-hover {
+    @apply bg-transparent hover:bg-gray-100;
+  }
+
+  .no-underline {
+    @apply text-decoration-none;
+  }
+
+  .link {
+    @apply text-blue-500 underline;
+  }
+}
