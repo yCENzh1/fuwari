@@ -94,16 +94,16 @@ function handleKeyDown(e: KeyboardEvent, action: () => void) {
 </script>
 
 <!-- 主容器 -->
-<div class="relative z-50" role="menu" tabindex="-1" onmouseleave={hidePanel}>
+<div class="relative z-50" role="menu" tabindex="-1" on:mouseleave={hidePanel}>
   <!-- 模式切换按钮 -->
   <button 
     aria-label="Light/Dark Mode" 
     role="menuitem" 
     class="relative btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" 
     id="scheme-switch" 
-    onclick={toggleScheme} 
+    on:click={toggleScheme} 
     on:keydown={(e) => handleKeyDown(e, toggleScheme)}
-    onmouseenter={showPanel}
+    on:mouseenter={showPanel}
     aria-expanded={panelElement && !panelElement.classList.contains("float-panel-closed")}
   >
     <!-- 动态渲染图标 -->
