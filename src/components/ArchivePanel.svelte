@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { browser } from "$app/environment";
   
   import I18nKey from "../i18n/i18nKey";
   import { i18n } from "../i18n/translation";
@@ -102,7 +101,7 @@
   
   // 响应式处理URL参数
   const handleUrlParams = (): void => {
-    if (!browser) return;
+    if (typeof window === "undefined") return; // 安全处理SSR
     
     const params = new URLSearchParams(window.location.search);
     tags = params.has("tag") ? params.getAll("tag") : [];
@@ -115,12 +114,14 @@
     if (categories.length > 0) title += ` | Categories: ${categories.join(", ")}`;
     if (uncategorized) title += " | Uncategorized";
     
-    document.title = title;
+    if (typeof document !== "undefined") {
+      document.title = title;
+    }
   };
   
   // 监听URL变化
   const initUrlListener = (): void => {
-    if (!browser) return;
+    if (typeof window === "undefined") return; // 安全处理SSR
     
     const updateOnPopState = () => {
       handleUrlParams();
@@ -136,7 +137,7 @@
   
   // 组件生命周期
   onMount(() => {
-    if (!browser) return;
+    if (typeof window === "undefined") return; // 安全处理SSR
     
     handleUrlParams();
     filterAndGroupPosts();
@@ -160,7 +161,6 @@
 </script>
 
 <style>
-  /* 移除了有问题的 @import 语句 */
   .archive-panel {
     background: var(--card-bg);
     border-radius: 0.5rem;
