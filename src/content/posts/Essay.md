@@ -26,7 +26,7 @@ ShellClash
 
 <https://github.com/juewuy/ShellCrash​>
 
-Tg通知频道：<>
+Tg通知频道：<https://t.me/ShellClash>
 
 ```bash
 bash -c "$(curl -kfsSl https://raw-githubusercontent-com.072103.xyz/juewuy/ShellClash/master/install.sh)" && source /etc/profile &> /dev/null
