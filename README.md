@@ -3,8 +3,12 @@
 基于 [Astro](https://astro.build) 开发的静态博客模板。
 
 [**🖥️在线预览（Vercel）**](https://fuwari.vercel.app)
+[**🖥️作者博客**](https://fuwari-17l.pages.dev/)
 
 ![Preview Image](https://raw.githubusercontent.com/saicaca/resource/main/fuwari/home.png)
+
+## 更新日志(25-07-05)
+1. 修复了上古时期的markdown.css中link未定义导致构建有概率失败的bug
 
 ## ✨ 功能特性
 
@@ -13,7 +17,7 @@
 - [x] 亮色 / 暗色模式
 - [x] 自定义主题色和横幅图片
 - [x] 响应式设计
-- [ ] 评论
+- [ ] 评论(e其实可以用[giscus](https://giscus.app/)的)
 - [x] 搜索
 - [x] 文内目录
 
@@ -22,7 +26,8 @@
 - Node.js <= 22
 - pnpm <= 9
 
-## 🚀 使用方法 1
+## PS:部署方法可以参照我博客的文章
+## 🚀 方法1
 
 使用 [create-fuwari](https://github.com/L4Ph/create-fuwari) 在本地初始化项目。
 
@@ -47,7 +52,7 @@ deno run -A npm:create-fuwari@latest
 2. 执行 `pnpm new-post <filename>` 创建新文章，并在 `src/content/posts/` 目录中编辑
 3. 参考[官方指南](https://docs.astro.build/zh-cn/guides/deploy/)将博客部署至 Vercel, Netlify, GitHub Pages 等；部署前需编辑 `astro.config.mjs` 中的站点设置。
 
-## 🚀 使用方法 2
+## 🚀 方法2
 
 1. 使用此模板[生成新仓库](https://github.com/saicaca/fuwari/generate)或 Fork 此仓库
 2. 进行本地开发，Clone 新的仓库，执行 `pnpm install` 和 `pnpm add sharp` 以安装依赖  
