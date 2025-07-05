@@ -1,8 +1,8 @@
 ---
 title: Include Video in the Posts
-published: 2023-08-01
+published: 1001-08-01
 description: This post demonstrates how to include embedded video in a blog post.
-image: "https://hpic.072103.xyz/"
+image: "https://api.boxmoe.com/random.php"
 tags: [Example, Video]
 category: Default
 draft: false
