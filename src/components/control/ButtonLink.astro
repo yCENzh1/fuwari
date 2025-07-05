@@ -1,43 +1,65 @@
 ---
 interface Props {
-	badge?: string;
-	url?: string;
-	label?: string;
+  badge?: string;     // 可选徽章文本
+  url?: string;       // 链接地址
+  label?: string;     // 无障碍标签
 }
-const { badge, url, label } = Astro.props;
+
+const { badge, url = "#", label } = Astro.props;
+const hasBadge = badge !== undefined && badge !== null && badge !== '';
 ---
-<a href={url} aria-label={label}>
-    <button
-        class:list={`
-            w-full
-            h-10
-            rounded-lg
-            bg-none
-            hover:bg-[var(--btn-plain-bg-hover)]
-            active:bg-[var(--btn-plain-bg-active)]
-            transition-all
-            pl-2
-            hover:pl-3
-            
-            text-neutral-700
-            hover:text-[var(--primary)]
-            dark:text-neutral-300
-            dark:hover:text-[var(--primary)]
-        `
-        }
-    >
-        <div class="flex items-center justify-between relative mr-2">
-            <div class="overflow-hidden text-left whitespace-nowrap overflow-ellipsis  ">
-                <slot></slot>
-            </div>
-            { badge !== undefined && badge !== null && badge !== '' &&
-                <div class="transition px-2 h-7 ml-4 min-w-[2rem] rounded-lg text-sm font-bold
-                    text-[var(--btn-content)] dark:text-[var(--deep-text)]
-                    bg-[oklch(0.95_0.025_var(--hue))] dark:bg-[var(--primary)]
-                    flex items-center justify-center">
-                    { badge }
-                </div>
-            }
+
+<a 
+  href={url}
+  aria-label={label}
+  class="block w-full h-10 rounded-lg hover:pl-3 active:bg-[var(--btn-plain-bg-active)] transition-all duration-300 group"
+>
+  <button
+    class={`
+      w-full h-full rounded-lg bg-none
+      transition-all duration-300
+      text-left pl-2
+      text-neutral-700 hover:text-[var(--primary)]
+      dark:text-neutral-300 dark:hover:text-[var(--primary)]
+      hover:bg-[var(--btn-plain-bg-hover)]
+      focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-opacity-50
+    `}
+    aria-pressed="false"
+  >
+    <div class="flex items-center justify-between relative mr-2">
+      <div class="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[80%]">
+        <slot />
+      </div>
+      
+      {hasBadge && (
+        <div 
+          class="transition-all duration-300 px-2 h-7 ml-4 min-w-[2rem] rounded-lg text-sm font-bold
+                 text-[var(--btn-content)] dark:text-[var(--deep-text)]
+                 bg-[oklch(0.95_0.025_var(--hue))] dark:bg-[var(--primary)]
+                 flex items-center justify-center
+                 group-hover:scale-105"
+        >
+          {badge}
         </div>
-    </button>
+      )}
+    </div>
+  </button>
 </a>
+
+<style>
+  /* 添加微妙的悬停动画 */
+  a {
+    transition: padding-left 0.3s ease;
+  }
+  
+  /* 优化焦点状态 */
+  button:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+  
+  /* 确保徽章不会导致布局问题 */
+  .max-w-[80%] {
+    max-width: 80%;
+  }
+</style>
