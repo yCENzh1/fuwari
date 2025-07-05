@@ -2,7 +2,7 @@
 title: PictureAPI
 published: 1145-01-01
 description: "随机图片API,不定期更新"
-image: "https://rba.kanostar.top/adapt"
+image: "https://api.lxtu.cn/api.php?category=mn"
 tags: [Essay,Picture,API]
 category: Essay
 draft: false
