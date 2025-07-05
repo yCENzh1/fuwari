@@ -4,6 +4,7 @@ module.exports = {
   content: [
     "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue,mjs}",
     "./components.css"
+    "./src/styles/**/*.css" // 添加这行扫描样式文件
   ],
   darkMode: "class", // allows toggling dark mode manually
   theme: {
