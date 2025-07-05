@@ -33,7 +33,7 @@ export default defineConfig({
         applyComplexClasses: true,
         }
         })],
-	adapter: cloudflare(),
+	//adapter: cloudflare(),
 	site: "https://github.com/yCENzh/fuwari/tree/main/src/content/",
 	base: "/",
 	trailingSlash: "always",
