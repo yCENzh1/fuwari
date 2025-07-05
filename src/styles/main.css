@@ -1,6 +1,6 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;//尝试ing
+@tailwind utilities;
 
 @layer components {
     .card-base {
