@@ -6,10 +6,10 @@ module.exports = {
     "./components.css"
     "./src/styles/**/*.css" // 添加这行扫描样式文件
   ],
-  corePlugins: {
+  /*corePlugins: {
     // 禁用预检样式避免冲突
     preflight: false,
-  },
+  },*/
   darkMode: "class", // allows toggling dark mode manually
   theme: {
     extend: {
