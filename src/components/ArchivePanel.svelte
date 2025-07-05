@@ -159,18 +159,17 @@
   }
 </script>
 
-<style lang="scss">
-  @import "../styles/variables";
-  
+<style>
+  /* 移除了有问题的 @import 语句 */
   .archive-panel {
     background: var(--card-bg);
-    border-radius: $border-radius-lg;
-    box-shadow: $shadow-md;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     padding: 2rem;
     transition: all 0.3s ease;
     
     &:hover {
-      box-shadow: $shadow-lg;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
   }
   
@@ -196,7 +195,7 @@
       color: var(--text-75);
       transition: color 0.2s ease;
       
-      @media (min-width: $breakpoint-md) {
+      @media (min-width: 768px) {
         width: 10%;
       }
     }
@@ -206,7 +205,7 @@
       display: flex;
       justify-content: center;
       
-      @media (min-width: $breakpoint-md) {
+      @media (min-width: 768px) {
         width: 10%;
       }
       
@@ -228,7 +227,7 @@
       color: var(--text-50);
       transition: color 0.2s ease;
       
-      @media (min-width: $breakpoint-md) {
+      @media (min-width: 768px) {
         width: 80%;
       }
     }
@@ -237,7 +236,7 @@
   .post-item {
     display: block;
     height: 2.5rem;
-    border-radius: $border-radius;
+    border-radius: 0.375rem;
     margin-bottom: 0.5rem;
     transition: all 0.2s ease;
     
@@ -263,7 +262,7 @@
       color: var(--text-50);
       transition: color 0.2s ease;
       
-      @media (min-width: $breakpoint-md) {
+      @media (min-width: 768px) {
         width: 10%;
       }
     }
@@ -275,7 +274,7 @@
       display: flex;
       align-items: center;
       
-      @media (min-width: $breakpoint-md) {
+      @media (min-width: 768px) {
         width: 10%;
       }
       
@@ -331,7 +330,7 @@
       text-overflow: ellipsis;
       transition: all 0.2s ease;
       
-      @media (min-width: $breakpoint-md) {
+      @media (min-width: 768px) {
         width: 65%;
         max-width: 65%;
       }
@@ -352,7 +351,7 @@
       text-overflow: ellipsis;
       transition: color 0.2s ease;
       
-      @media (min-width: $breakpoint-md) {
+      @media (min-width: 768px) {
         display: block;
         width: 15%;
       }
@@ -385,14 +384,14 @@
       padding: 0.5rem 1.5rem;
       background: var(--primary);
       color: white;
-      border-radius: $border-radius;
+      border-radius: 0.375rem;
       font-weight: 600;
       transition: all 0.2s ease;
       
       &:hover {
         background: var(--primary-dark);
         transform: translateY(-2px);
-        box-shadow: $shadow-md;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       }
     }
   }
@@ -418,7 +417,7 @@
     text-align: center;
     color: var(--error);
     background: var(--error-bg);
-    border-radius: $border-radius;
+    border-radius: 0.375rem;
   }
   
   @keyframes spin {
