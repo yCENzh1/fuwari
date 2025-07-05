@@ -1,9 +1,42 @@
-/* 添加 Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
+  /* 自定义按钮样式 */
+  .btn-regular-dark {
+    @apply flex items-center justify-center;
+    background-color: oklch(0.45 0.01 var(--hue));
+  }
+  
+  .btn-regular-dark:hover {
+    background-color: oklch(0.50 0.01 var(--hue));
+  }
+  
+  .btn-regular-dark:active {
+    background-color: oklch(0.55 0.01 var(--hue));
+  }
+  
+  .dark .btn-regular-dark {
+    background-color: oklch(0.30 0.02 var(--hue));
+  }
+  
+  .dark .btn-regular-dark:hover {
+    background-color: oklch(0.35 0.03 var(--hue));
+  }
+  
+  .dark .btn-regular-dark:active {
+    background-color: oklch(0.40 0.03 var(--hue));
+  }
+  
+  .btn-regular-dark.success {
+    background-color: oklch(0.75 0.14 var(--hue));
+  }
+  
+  .dark .btn-regular-dark.success {
+    background-color: oklch(0.75 0.14 var(--hue));
+  }
+
   /* 全局可复用的链接样式 */
   .link {
     @apply relative bg-none font-medium underline decoration-dashed decoration-1 underline-offset-4;
@@ -43,7 +76,7 @@
     }
 
     a:not(.no-styling) {
-      @apply link; /* 使用全局 link 类 */
+      @apply link;
     }
 
     code {
@@ -131,7 +164,7 @@
   }
 }
 
-/* 在全局作用域中也可使用的 link 类 */
+/* 全局作用域中的 link 类 */
 a.link,
 .link {
   @apply relative bg-none font-medium underline decoration-dashed decoration-1 underline-offset-4;
@@ -146,4 +179,33 @@ a.link,
     background: var(--btn-plain-bg-hover);
     border-bottom: 1px dashed var(--link-hover);
   }
+}
+
+/* 其他全局样式 */
+.custom-md img, #post-cover img {
+  @apply cursor-zoom-in;
+}
+
+::selection {
+  background-color: var(--selection-bg);
+}
+
+.dash-line {
+  position: relative;
+}
+
+.dash-line::before {
+  content: "";
+  position: absolute;
+  width: 10%;
+  height: 100%;
+  left: calc(50% - 1px);
+  border-left: 2px dashed var(--line-color);
+  pointer-events: none;
+  transition: all 0.3s;
+  transform: translateY(-50%);
+}
+
+.collapsed {
+  height: var(--collapsedHeight);
 }
