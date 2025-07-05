@@ -1,9 +1,9 @@
 ---
 title: Markdown Extended Features
-published: 2024-05-01
-updated: 2024-11-29
+published: 1002-05-01
+updated: 1002-11-29
 description: 'Read more about Markdown features in Fuwari'
-image: 'https://hpic.072103.xyz/'
+image: 'https://img.paulzzh.com/touhou/random'
 tags: [Demo, Example, Markdown, Fuwari]
 category: 'Default'
 draft: false 
