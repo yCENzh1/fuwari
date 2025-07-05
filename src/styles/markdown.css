@@ -1,4 +1,6 @@
-@import "./main.css"
+@tailwind base;
+@tailwind components; /* 确保这行在最顶部 */
+@tailwind utilities;
 
 .custom-md {
     h1 {
