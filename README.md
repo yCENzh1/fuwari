@@ -7,6 +7,11 @@
 
 ![Preview Image](https://raw.githubusercontent.com/saicaca/resource/main/fuwari/home.png)
 
+## 食用方法(基础版构建
+1.  [Fork本项目](https://github.com/yCENzh/fuwari/fork) (PS:请不要勾选Copy the master branch only选项)
+2.  使用 [Cloudflare](https://dash.cloudflare.com/) 提供的Pages -> 创建一个Pages -> 导入现有Git存储库 -> 将生产分支更改为Build,框架预设选择Astro,再将构建命令npm run build更改为pnpm run build -> 保存并构建
+3.  没了,非常的简单,后续食用方法请查看我的博客
+
 ## 更新日志(25-07-05)
 1. 修复了上古时期的markdown.css中link未定义导致构建有概率失败的bug(PS:好消息修好了,坏消息修好了)不愧是我[
 
