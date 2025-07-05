@@ -52,7 +52,7 @@ export const navBarConfig: NavBarConfig = {
 		{
 			name: "来骂",
 			url: "https://res.abeim.cn/api-qq?qq=2036008807",
-			external: true,
+			external: false,
 		},
 	],
 };
