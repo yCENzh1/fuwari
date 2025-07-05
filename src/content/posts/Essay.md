@@ -1,6 +1,6 @@
 ---
 title: Essay
-published: 1145-14-19
+published: 1145-01-01
 description: "随笔记录~"
 image: "./pin.webp"
 tags: [Essay]
@@ -11,7 +11,7 @@ draft: false
 关于我的超链接
 
 ```html
-<a href="https://link.me/acofork" target="_blank">关于我</a>
+<a href="https://link.me/yCENzh" target="_blank">关于我</a>
 ```
 
 r2.py所需依赖
