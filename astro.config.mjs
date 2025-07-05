@@ -27,12 +27,12 @@ import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-cop
 
 // https://astro.build/config
 export default defineConfig({
-	integrations: [tailwind({
+	/*integrations: [tailwind({
         // 添加此配置
         config: {
         applyComplexClasses: true,
         }
-        })],
+        })],*/
 	//adapter: cloudflare(),
 	site: "https://github.com/yCENzh/fuwari/tree/main/src/content/",
 	base: "/",
