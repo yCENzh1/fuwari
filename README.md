@@ -8,7 +8,7 @@
 ![Preview Image](https://raw.githubusercontent.com/saicaca/resource/main/fuwari/home.png)
 
 ## 更新日志(25-07-05)
-1. 修复了上古时期的markdown.css中link未定义导致构建有概率失败的bug
+1. 修复了上古时期的markdown.css中link未定义导致构建有概率失败的bug(PS:好消息修好了,坏消息修好了)不愧是我[
 
 ## ✨ 功能特性
 
