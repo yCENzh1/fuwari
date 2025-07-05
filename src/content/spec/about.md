@@ -1,3 +1,4 @@
+![Picture](https://rba.kanostar.top/adapt)
 # About
 This is the demo site for [Fuwari](https://github.com/saicaca/fuwari).
 
