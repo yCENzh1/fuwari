@@ -1,8 +1,8 @@
 ---
 title: Markdown Example
-published: 2023-10-01
+published: 1001-10-01
 description: A simple example of a Markdown blog post.
-image: "https://hpic.072103.xyz/"
+image: "https://rpic.origz.com/api.php?category=pixiv"
 tags: [Markdown, Blogging, Demo]
 category: Default
 draft: false
