@@ -7,21 +7,21 @@ const currentYear = new Date().getFullYear();
 
 <!-- 页脚容器 -->
 <footer class="footer-container">
-  <!-- 分隔线 - 保留原有样式 -->
+  <!-- 分隔线 - 完全保留原始样式 -->
   <div 
-    class="transition-colors duration-300 border-t border-dashed border-black/10 dark:border-white/15 my-10 mx-32"
+    class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32"
     aria-hidden="true"
   ></div>
   
-  <!-- 版权信息区域 - 保留原有样式 -->
+  <!-- 版权信息区域 - 保留原始样式 -->
   <div 
-    class="footer-content transition-all duration-300 border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6"
+    class="footer-content transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6"
   >
     <!-- 版权信息 - 保持单行显示 -->
     <div class="transition text-50 text-sm text-center">
       &copy; <span id="copyright-year">{currentYear}</span> {profileConfig.name}. All Rights Reserved. /
       <a 
-        class="footer-link transition-colors text-[var(--primary)] font-medium hover:opacity-80" 
+        class="footer-link transition link text-[var(--primary)] font-medium" 
         target="_blank" 
         rel="noopener noreferrer"
         href={url('rss.xml')}
@@ -30,17 +30,21 @@ const currentYear = new Date().getFullYear();
         RSS
       </a> /
       <a 
-        class="footer-link transition-colors text-[var(--primary)] font-medium hover:opacity-80" 
+        class="footer-link transition link text-[var(--primary)] font-medium" 
         target="_blank" 
         rel="noopener noreferrer"
         href={url('sitemap-index.xml')}
         aria-label="查看网站地图"
       >
         Sitemap
-      </a> /
+      </a>
+    </div>
+    
+    <!-- Powered by 区域 - 保持单行显示 -->
+    <div class="transition text-50 text-sm text-center mt-1">
       Powered by
       <a 
-        class="footer-link transition-colors text-[var(--primary)] font-medium hover:opacity-80" 
+        class="footer-link transition link text-[var(--primary)] font-medium" 
         target="_blank" 
         rel="noopener noreferrer"
         href="https://astro.build"
@@ -49,10 +53,10 @@ const currentYear = new Date().getFullYear();
         Astro
       </a> &amp;
       <a 
-        class="footer-link transition-colors text-[var(--primary)] font-medium hover:opacity-80" 
+        class="footer-link transition link text-[var(--primary)] font-medium" 
         target="_blank" 
         rel="noopener noreferrer"
-        href="https://github.com/yCENzh/fuwari"
+        href="https://github.com/saicaca/fuwari"
         aria-label="访问Fuwari GitHub仓库"
       >
         Fuwari
@@ -68,11 +72,12 @@ const currentYear = new Date().getFullYear();
     margin: 0 auto;
   }
   
-  /* 链接动画效果 - 保留原有悬停效果 */
+  /* 链接动画效果 - 保留原始悬停效果 */
   .footer-link {
-    display: inline-block;
     position: relative;
+    display: inline-block;
     padding: 0.1rem 0.3rem;
+    margin: 0 0.1rem;
     border-radius: 0.15rem;
     transition: 
       color 0.3s ease,
@@ -83,6 +88,7 @@ const currentYear = new Date().getFullYear();
     background: rgba(var(--primary-rgb), 0.1);
   }
   
+  /* 下划线动画效果 */
   .footer-link::after {
     content: '';
     position: absolute;
@@ -101,7 +107,9 @@ const currentYear = new Date().getFullYear();
   /* 响应式调整 - 确保小屏幕上也能单行显示 */
   @media (max-width: 1024px) {
     .footer-content {
-      padding: 1rem 0.5rem;
+      padding: 0.5rem;
+      margin-left: 1rem;
+      margin-right: 1rem;
     }
     
     .footer-container > div:first-child {
@@ -112,7 +120,7 @@ const currentYear = new Date().getFullYear();
   
   @media (max-width: 768px) {
     .footer-content {
-      padding: 0.75rem 0.25rem;
+      padding: 0.5rem;
       font-size: 0.875rem;
     }
     
