@@ -4,29 +4,148 @@ import { type NavBarLink } from "../../types/config";
 import { url } from "../../utils/url-utils";
 
 interface Props {
-	links: NavBarLink[];
+  links: NavBarLink[];
 }
 
-const links = Astro.props.links;
+const { links } = Astro.props;
 ---
-<div id="nav-menu-panel" class:list={["float-panel float-panel-closed absolute transition-all fixed right-4 px-2 py-2"]}>
-    {links.map((link) => (
-        <a href={link.external ? link.url : url(link.url)} class="group flex justify-between items-center py-2 pl-3 pr-1 rounded-lg gap-8
-            hover:bg-[var(--btn-plain-bg-hover)] active:bg-[var(--btn-plain-bg-active)] transition
-        "
-           target={link.external ? "_blank" : null}
-        >
-            <div class="transition text-black/75 dark:text-white/75 font-bold group-hover:text-[var(--primary)] group-active:text-[var(--primary)]">
-                {link.name}
-            </div>
-            {!link.external && <Icon name="material-symbols:chevron-right-rounded"
-                  class="transition text-[1.25rem] text-[var(--primary)]"
-            >
-            </Icon>}
-            {link.external && <Icon name="fa6-solid:arrow-up-right-from-square"
-                  class="transition text-[0.75rem] text-black/25 dark:text-white/25 -translate-x-1"
-            >
-            </Icon>}
-        </a>
-    ))}
+
+<div 
+  id="nav-menu-panel"
+  class="float-panel float-panel-closed fixed right-4 px-2 py-2"
+  style="
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: 
+      transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+      opacity 0.3s ease-out;
+    will-change: transform, opacity;
+  "
+>
+  {links.map((link) => (
+    <a
+      href={link.external ? link.url : url(link.url)}
+      class="nav-menu-item group flex justify-between items-center py-2 pl-3 pr-1 rounded-lg gap-8"
+      target={link.external ? "_blank" : null}
+      rel={link.external ? "noopener noreferrer" : null}
+      aria-label={link.external ? `${link.name} (在新标签页打开)` : link.name}
+    >
+      <div class="nav-link-text transition-all duration-200 text-black/75 dark:text-white/75 font-bold">
+        {link.name}
+      </div>
+      
+      {!link.external ? (
+        <Icon 
+          name="material-symbols:chevron-right-rounded"
+          class="nav-icon-internal transition-all duration-300 text-[1.25rem] text-[var(--primary)] opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5"
+        />
+      ) : (
+        <Icon 
+          name="fa6-solid:arrow-up-right-from-square"
+          class="nav-icon-external transition-all duration-300 text-[0.75rem] text-black/25 dark:text-white/25 group-hover:text-[var(--primary)] group-hover:scale-110"
+        />
+      )}
+    </a>
+  ))}
 </div>
+
+<style>
+  /* 面板动画效果 */
+  .float-panel {
+    /* 通过JS添加float-panel-open类时触发动画 */
+    transform: translateY(0);
+    opacity: 1;
+    z-index: 1000;
+    background: var(--card-bg);
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 
+                0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    min-width: 220px;
+  }
+  
+  /* 菜单项动画优化 */
+  .nav-menu-item {
+    transition: 
+      background-color 0.25s ease-out,
+      transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: background-color, transform;
+  }
+  
+  .nav-menu-item:hover {
+    background-color: var(--btn-plain-bg-hover);
+    transform: translateX(-2px);
+  }
+  
+  .nav-menu-item:active {
+    background-color: var(--btn-plain-bg-active);
+    transform: translateX(0);
+    transition-duration: 0.1s;
+  }
+  
+  /* 链接文字动画 */
+  .nav-link-text {
+    position: relative;
+  }
+  
+  .nav-link-text::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.3s ease-out;
+  }
+  
+  .nav-menu-item:hover .nav-link-text::after {
+    width: 90%;
+  }
+  
+  /* 响应式调整 */
+  @media (max-width: 480px) {
+    .float-panel {
+      right: 1rem;
+      left: 1rem;
+      width: calc(100% - 2rem);
+    }
+  }
+</style>
+
+<script>
+  // 面板打开/关闭的平滑动画控制
+  document.addEventListener('DOMContentLoaded', () => {
+    const navPanel = document.getElementById('nav-menu-panel');
+    
+    // 面板打开函数
+    function openPanel() {
+      navPanel.classList.remove('float-panel-closed');
+      navPanel.classList.add('float-panel-open');
+      
+      // 使用requestAnimationFrame确保动画流畅
+      requestAnimationFrame(() => {
+        navPanel.style.transform = 'translateY(0)';
+        navPanel.style.opacity = '1';
+      });
+    }
+    
+    // 面板关闭函数
+    function closePanel() {
+      navPanel.style.transform = 'translateY(-10px)';
+      navPanel.style.opacity = '0';
+      
+      // 动画结束后添加关闭类
+      setTimeout(() => {
+        navPanel.classList.remove('float-panel-open');
+        navPanel.classList.add('float-panel-closed');
+      }, 300);
+    }
+    
+    // 示例：如何调用这些函数
+    // 在实际应用中，您需要根据菜单按钮的点击事件调用这些函数
+    // document.getElementById('menu-button').addEventListener('click', openPanel);
+    // document.getElementById('close-button').addEventListener('click', closePanel);
+  });
+</script>
