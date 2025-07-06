@@ -59,9 +59,10 @@ function togglePanel() {
         role="menuitem"
         class="relative btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90"
         id="scheme-switch"
-        onclick={toggleScheme}
+        onclick={() => { toggleScheme(); togglePanel(); }}
+        //onclick={toggleScheme}
         onmouseenter={() => isPanelOpen = true}
-        onclick={togglePanel}
+        //onclick={togglePanel}
     >
         <div class="absolute" class:opacity-0={mode !== LIGHT_MODE}>
             <Icon icon="material-symbols:wb-sunny-outline-rounded" class="text-[1.25rem]" aria-hidden="true"></Icon>
