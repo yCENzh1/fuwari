@@ -13,23 +13,75 @@ const COLLAPSE_THRESHOLD = 5;
 const isCollapsed = categories.length >= COLLAPSE_THRESHOLD;
 
 interface Props {
-	class?: string;
-	style?: string;
+  class?: string;
+  style?: string;
 }
 const className = Astro.props.class;
 const style = Astro.props.style;
 ---
 
-<WidgetLayout name={i18n(I18nKey.categories)} id="categories" isCollapsed={isCollapsed} collapsedHeight={COLLAPSED_HEIGHT}
-                class={className} style={style}
+<WidgetLayout 
+  name={i18n(I18nKey.categories)} 
+  id="categories" 
+  isCollapsed={isCollapsed} 
+  collapsedHeight={COLLAPSED_HEIGHT}
+  class={className} 
+  style={style}
 >
-    {categories.map((c) =>
-        <ButtonLink
-            url={c.url}
-            badge={String(c.count)}
-            label={`View all posts in the ${c.name.trim()} category`}
-        >
-            {c.name.trim()}
-        </ButtonLink>
-    )}
+  <div class="categories-grid grid gap-2">
+    {categories.map((c) => (
+      <ButtonLink
+        url={c.url}
+        badge={String(c.count)}
+        label={`${i18n(I18nKey.viewAllPostsInCategory)} ${c.name.trim()}`}
+        class="category-item"
+      >
+        <span class="category-text transition-all duration-300">
+          {c.name.trim()}
+        </span>
+      </ButtonLink>
+    ))}
+  </div>
 </WidgetLayout>
+
+<style>
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.5rem;
+  }
+  
+  .category-item {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .category-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .category-item:hover .category-text {
+    color: var(--primary);
+    transform: translateX(4px);
+  }
+  
+  .category-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+  
+  .category-item:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+</style>
