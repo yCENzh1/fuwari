@@ -10,39 +10,32 @@ interface Props {
 const { links } = Astro.props;
 ---
 
+<!-- 菜单面板容器 -->
 <div 
   id="nav-menu-panel"
-  class="float-panel float-panel-closed fixed right-4 px-2 py-2"
-  style="
-    transform: translateY(-10px);
-    opacity: 0;
-    transition: 
-      transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-      opacity 0.3s ease-out;
-    will-change: transform, opacity;
-  "
+  class="float-panel float-panel-closed fixed right-4 px-2 py-2 bg-white dark:bg-gray-800 rounded-xl shadow-xl z-50"
 >
   {links.map((link) => (
     <a
       href={link.external ? link.url : url(link.url)}
-      class="nav-menu-item group flex justify-between items-center py-2 pl-3 pr-1 rounded-lg gap-8"
+      class="nav-menu-item group flex justify-between items-center py-3 pl-4 pr-2 rounded-lg gap-8"
       target={link.external ? "_blank" : null}
       rel={link.external ? "noopener noreferrer" : null}
       aria-label={link.external ? `${link.name} (在新标签页打开)` : link.name}
     >
-      <div class="nav-link-text transition-all duration-200 text-black/75 dark:text-white/75 font-bold">
+      <div class="nav-link-text text-gray-800 dark:text-gray-200 font-medium text-base group-hover:text-[var(--primary)] transition-colors duration-200">
         {link.name}
       </div>
       
       {!link.external ? (
         <Icon 
           name="material-symbols:chevron-right-rounded"
-          class="nav-icon-internal transition-all duration-300 text-[1.25rem] text-[var(--primary)] opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5"
+          class="nav-icon-internal text-[1.25rem] text-[var(--primary)] opacity-80 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"
         />
       ) : (
         <Icon 
           name="fa6-solid:arrow-up-right-from-square"
-          class="nav-icon-external transition-all duration-300 text-[0.75rem] text-black/25 dark:text-white/25 group-hover:text-[var(--primary)] group-hover:scale-110"
+          class="nav-icon-external text-[0.75rem] text-gray-400 dark:text-gray-500 group-hover:text-[var(--primary)] group-hover:scale-110 transition-all duration-300"
         />
       )}
     </a>
@@ -52,35 +45,40 @@ const { links } = Astro.props;
 <style>
   /* 面板动画效果 */
   .float-panel {
-    /* 通过JS添加float-panel-open类时触发动画 */
-    transform: translateY(0);
+    /* 初始状态 */
+    opacity: 0;
+    transform: translateY(-15px);
+    visibility: hidden;
+    transition: 
+      opacity 0.3s ease-out,
+      transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1),
+      visibility 0s linear 0.3s; /* 延迟隐藏 */
+  }
+  
+  .float-panel-open {
+    /* 打开状态 */
     opacity: 1;
-    z-index: 1000;
-    background: var(--card-bg);
-    border-radius: 0.75rem;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 
-                0 8px 10px -6px rgba(0, 0, 0, 0.05);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    min-width: 220px;
+    transform: translateY(0);
+    visibility: visible;
+    transition: 
+      opacity 0.3s ease-out,
+      transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1),
+      visibility 0s linear; /* 立即可见 */
   }
   
   /* 菜单项动画优化 */
   .nav-menu-item {
     transition: 
-      background-color 0.25s ease-out,
-      transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-    will-change: background-color, transform;
+      background-color 0.25s ease-out;
+    will-change: background-color;
   }
   
   .nav-menu-item:hover {
     background-color: var(--btn-plain-bg-hover);
-    transform: translateX(-2px);
   }
   
   .nav-menu-item:active {
     background-color: var(--btn-plain-bg-active);
-    transform: translateX(0);
     transition-duration: 0.1s;
   }
   
@@ -101,7 +99,7 @@ const { links } = Astro.props;
   }
   
   .nav-menu-item:hover .nav-link-text::after {
-    width: 90%;
+    width: 95%;
   }
   
   /* 响应式调整 */
@@ -118,34 +116,49 @@ const { links } = Astro.props;
   // 面板打开/关闭的平滑动画控制
   document.addEventListener('DOMContentLoaded', () => {
     const navPanel = document.getElementById('nav-menu-panel');
+    const menuButton = document.getElementById('menu-button'); // 假设菜单按钮ID为menu-button
     
-    // 面板打开函数
-    function openPanel() {
-      navPanel.classList.remove('float-panel-closed');
-      navPanel.classList.add('float-panel-open');
+    if (menuButton) {
+      // 打开面板函数
+      function openPanel() {
+        navPanel.classList.remove('float-panel-closed');
+        navPanel.classList.add('float-panel-open');
+      }
       
-      // 使用requestAnimationFrame确保动画流畅
-      requestAnimationFrame(() => {
-        navPanel.style.transform = 'translateY(0)';
-        navPanel.style.opacity = '1';
-      });
-    }
-    
-    // 面板关闭函数
-    function closePanel() {
-      navPanel.style.transform = 'translateY(-10px)';
-      navPanel.style.opacity = '0';
-      
-      // 动画结束后添加关闭类
-      setTimeout(() => {
+      // 关闭面板函数
+      function closePanel() {
         navPanel.classList.remove('float-panel-open');
         navPanel.classList.add('float-panel-closed');
-      }, 300);
+      }
+      
+      // 切换面板状态
+      function togglePanel() {
+        if (navPanel.classList.contains('float-panel-open')) {
+          closePanel();
+        } else {
+          openPanel();
+        }
+      }
+      
+      // 添加点击事件
+      menuButton.addEventListener('click', togglePanel);
+      
+      // 点击面板外部关闭面板
+      document.addEventListener('click', (event) => {
+        const isClickInsidePanel = navPanel.contains(event.target);
+        const isClickOnMenuButton = menuButton.contains(event.target);
+        
+        if (!isClickInsidePanel && !isClickOnMenuButton && navPanel.classList.contains('float-panel-open')) {
+          closePanel();
+        }
+      });
+      
+      // ESC键关闭面板
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && navPanel.classList.contains('float-panel-open')) {
+          closePanel();
+        }
+      });
     }
-    
-    // 示例：如何调用这些函数
-    // 在实际应用中，您需要根据菜单按钮的点击事件调用这些函数
-    // document.getElementById('menu-button').addEventListener('click', openPanel);
-    // document.getElementById('close-button').addEventListener('click', closePanel);
   });
 </script>
