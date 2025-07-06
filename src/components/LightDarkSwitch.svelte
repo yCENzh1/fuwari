@@ -1,118 +1,189 @@
 <script lang="ts">
-import { AUTO_MODE, DARK_MODE, LIGHT_MODE } from "@constants/constants.ts";
-import I18nKey from "@i18n/i18nKey";
-import { i18n } from "@i18n/translation";
-import Icon from "@iconify/svelte";
-import {
+  import { AUTO_MODE, DARK_MODE, LIGHT_MODE } from "@constants/constants.ts";
+  import I18nKey from "@i18n/i18nKey";
+  import { i18n } from "@i18n/translation";
+  import Icon from "@iconify/svelte";
+  import {
     applyThemeToDocument,
     getStoredTheme,
     setTheme,
-} from "@utils/setting-utils.ts";
-import { onMount } from "svelte";
-import type { LIGHT_DARK_MODE } from "@/types/config.ts";
+  } from "@utils/setting-utils.ts";
+  import { onMount } from "svelte";
+  import type { LIGHT_DARK_MODE } from "@/types/config.ts";
 
-const seq: LIGHT_DARK_MODE[] = [LIGHT_MODE, DARK_MODE, AUTO_MODE];
-let mode: LIGHT_DARK_MODE = $state(AUTO_MODE);
-let isPanelOpen = $state(false); // 控制面板显示状态
+  // 定义主题序列
+  const seq: LIGHT_DARK_MODE[] = [LIGHT_MODE, DARK_MODE, AUTO_MODE];
+  let mode: LIGHT_DARK_MODE = $state(AUTO_MODE);
+  let showPanel = $state(false); // 使用响应式状态控制面板显示
+  let isAnimating = $state(false); // 防止动画叠加
 
-onMount(() => {
+  // 组件挂载时初始化主题
+  onMount(() => {
     mode = getStoredTheme();
-    const darkModePreference = window.matchMedia("(prefers-color-scheme: dark)");
     
-    const changeThemeWhenSchemeChanged: Parameters<
-        typeof darkModePreference.addEventListener<"change">
-    >[1] = (_e) => {
-        applyThemeToDocument(mode);
+    // 监听系统主题变化
+    const darkModePreference = window.matchMedia("(prefers-color-scheme: dark)");
+    const changeThemeWhenSchemeChanged = () => {
+      applyThemeToDocument(mode);
     };
     
     darkModePreference.addEventListener("change", changeThemeWhenSchemeChanged);
     
+    // 清理函数
     return () => {
-        darkModePreference.removeEventListener(
-            "change",
-            changeThemeWhenSchemeChanged,
-        );
+      darkModePreference.removeEventListener("change", changeThemeWhenSchemeChanged);
     };
-});
+  });
 
-function switchScheme(newMode: LIGHT_DARK_MODE) {
+  // 切换主题模式
+  function switchScheme(newMode: LIGHT_DARK_MODE) {
+    if (isAnimating) return;
+    
+    isAnimating = true;
     mode = newMode;
     setTheme(newMode);
-    isPanelOpen = false; // 切换主题后关闭面板
-}
+    
+    // 300ms后重置动画状态
+    setTimeout(() => {
+      isAnimating = false;
+    }, 300);
+  }
 
-function toggleScheme() {
-    let i = 0;
-    for (; i < seq.length; i++) {
-        if (seq[i] === mode) {
-            break;
-        }
-    }
-    switchScheme(seq[(i + 1) % seq.length]);
-}
+  // 循环切换主题
+  function toggleScheme() {
+    if (isAnimating) return;
+    
+    const currentIndex = seq.indexOf(mode);
+    const nextIndex = (currentIndex + 1) % seq.length;
+    switchScheme(seq[nextIndex]);
+  }
 
-function handleButtonClick() {
-    toggleScheme();
-    isPanelOpen = false;
-}
+  // 显示面板（带延迟防误触）
+  function handleMouseEnter() {
+    if (showPanel) return;
+    
+    // 添加微小延迟防止鼠标快速划过时触发
+    setTimeout(() => {
+      showPanel = true;
+    }, 50);
+  }
 
-function handleMouseEnter() {
-    isPanelOpen = true;
-}
+  // 隐藏面板
+  function handleMouseLeave() {
+    showPanel = false;
+  }
+
+  // 获取当前模式图标
+  const getCurrentIcon = () => {
+    if (mode === LIGHT_MODE) return "material-symbols:wb-sunny-outline-rounded";
+    if (mode === DARK_MODE) return "material-symbols:dark-mode-outline-rounded";
+    return "material-symbols:radio-button-partial-outline";
+  };
+
+  // 面板选项配置
+  const panelOptions = [
+    { mode: LIGHT_MODE, icon: "material-symbols:wb-sunny-outline-rounded", label: I18nKey.lightMode },
+    { mode: DARK_MODE, icon: "material-symbols:dark-mode-outline-rounded", label: I18nKey.darkMode },
+    { mode: AUTO_MODE, icon: "material-symbols:radio-button-partial-outline", label: I18nKey.systemMode }
+  ];
 </script>
 
-<div class="relative z-50" role="menu" tabindex="-1" on:mouseleave={() => isPanelOpen = false}>
-    <button
-        aria-label="{i18n(I18nKey.toggleTheme)}, current: {mode}"
-        role="menuitem"
-        class="relative btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90"
-        id="scheme-switch"
-        on:click={handleButtonClick}
-        on:mouseenter={handleMouseEnter}
-    >
-        <div class="absolute" class:opacity-0={mode !== LIGHT_MODE}>
-            <Icon icon="material-symbols:wb-sunny-outline-rounded" class="text-[1.25rem]" aria-hidden="true"></Icon>
-        </div>
-        <div class="absolute" class:opacity-0={mode !== DARK_MODE}>
-            <Icon icon="material-symbols:dark-mode-outline-rounded" class="text-[1.25rem]" aria-hidden="true"></Icon>
-        </div>
-        <div class="absolute" class:opacity-0={mode !== AUTO_MODE}>
-            <Icon icon="material-symbols:radio-button-partial-outline" class="text-[1.25rem]" aria-hidden="true"></Icon>
-        </div>
-    </button>
+<style lang="scss">
+  /* 添加平滑过渡动画 */
+  .icon-transition {
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  .panel-transition {
+    transition: 
+      opacity 0.3s ease,
+      transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  .scale-animation {
+    transition: transform 0.2s ease;
+    
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+  
+  /* 面板动画效果 */
+  .float-panel {
+    opacity: 0;
+    transform: translateY(-10px);
+    
+    &.open {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* 当前主题按钮样式 */
+  .current-theme-btn {
+    background: var(--btn-plain-bg-hover);
+    color: var(--primary);
+  }
+  
+  /* 悬停效果 */
+  .option-btn {
+    transition: 
+      background-color 0.2s ease,
+      color 0.2s ease;
+    
+    &:hover {
+      background: var(--btn-plain-bg-hover);
+    }
+  }
+</style>
 
-    {#if isPanelOpen}
-        <div
-            id="light-dark-panel"
-            class="absolute top-11 -right-2 pt-5"
-            transition:fade={{ duration: 200 }}
+<!-- 使用CSS变量控制主题 -->
+<div class="relative z-50" role="menu" tabindex="-1" 
+     onmouseenter={handleMouseEnter} 
+     onmouseleave={handleMouseLeave}>
+  
+  <!-- 主切换按钮 -->
+  <button
+    aria-label="Light/Dark Mode"
+    role="menuitem"
+    class="relative btn-plain scale-animation rounded-lg h-11 w-11"
+    id="scheme-switch"
+    onclick={toggleScheme}
+  >
+    <!-- 使用单个图标并添加过渡动画 -->
+    <div class="icon-transition">
+      <Icon icon={getCurrentIcon()} class="text-[1.25rem] absolute inset-0 m-auto" />
+    </div>
+    
+    <!-- 添加微妙的脉冲动画 -->
+    <div 
+      class="absolute inset-0 rounded-full bg-current opacity-0 scale-125"
+      class:animate-pulse={isAnimating}
+      style="animation-duration: 0.6s;"
+    ></div>
+  </button>
+
+  <!-- 主题选项面板 -->
+  <div 
+    id="light-dark-panel" 
+    class="hidden lg:block absolute panel-transition top-11 -right-2 pt-5"
+    class:open={showPanel}
+    class:float-panel
+    role="menu"
+  >
+    <div class="card-base p-2 min-w-[160px]">
+      {#each panelOptions as option}
+        <button
+          class="flex transition whitespace-nowrap items-center !justify-start w-full btn-plain scale-animation rounded-lg h-9 px-3 font-medium mb-0.5 option-btn"
+          class:current-theme-btn={mode === option.mode}
+          on:click={() => switchScheme(option.mode)}
+          aria-pressed={mode === option.mode}
+          role="menuitemradio"
         >
-            <div class="card-base float-panel p-2">
-                <button
-                    class="flex transition whitespace-nowrap items-center !justify-start w-full btn-plain scale-animation rounded-lg h-9 px-3 font-medium active:scale-95 mb-0.5"
-                    class:current-theme-btn={mode === LIGHT_MODE}
-                    on:click={() => switchScheme(LIGHT_MODE)}
-                >
-                    <Icon icon="material-symbols:wb-sunny-outline-rounded" class="text-[1.25rem] mr-3"></Icon>
-                    {i18n(I18nKey.lightMode)}
-                </button>
-                <button
-                    class="flex transition whitespace-nowrap items-center !justify-start w-full btn-plain scale-animation rounded-lg h-9 px-3 font-medium active:scale-95 mb-0.5"
-                    class:current-theme-btn={mode === DARK_MODE}
-                    on:click={() => switchScheme(DARK_MODE)}
-                >
-                    <Icon icon="material-symbols:dark-mode-outline-rounded" class="text-[1.25rem] mr-3"></Icon>
-                    {i18n(I18nKey.darkMode)}
-                </button>
-                <button
-                    class="flex transition whitespace-nowrap items-center !justify-start w-full btn-plain scale-animation rounded-lg h-9 px-3 font-medium active:scale-95"
-                    class:current-theme-btn={mode === AUTO_MODE}
-                    on:click={() => switchScheme(AUTO_MODE)}
-                >
-                    <Icon icon="material-symbols:radio-button-partial-outline" class="text-[1.25rem] mr-3"></Icon>
-                    {i18n(I18nKey.systemMode)}
-                </button>
-            </div>
-        </div>
-    {/if}
+          <Icon icon={option.icon} class="text-[1.25rem] mr-3" />
+          {i18n(option.label)}
+        </button>
+      {/each}
+    </div>
+  </div>
 </div>
