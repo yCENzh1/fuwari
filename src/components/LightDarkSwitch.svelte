@@ -52,13 +52,12 @@ function toggleScheme() {
 }
 
 function handleButtonClick() {
-    // 合并点击事件处理逻辑
     toggleScheme();
-    isPanelOpen = false; // 切换主题后关闭面板
+    isPanelOpen = false;
 }
 
 function handleMouseEnter() {
-    isPanelOpen = true; // 鼠标悬停时打开面板
+    isPanelOpen = true;
 }
 </script>
 
@@ -68,8 +67,8 @@ function handleMouseEnter() {
         role="menuitem"
         class="relative btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90"
         id="scheme-switch"
-        on:click={handleButtonClick} <!-- 修复：合并点击事件处理 -->
-        on:mouseenter={handleMouseEnter} <!-- 修复：使用单独的事件处理函数 -->
+        on:click={handleButtonClick}
+        on:mouseenter={handleMouseEnter}
     >
         <div class="absolute" class:opacity-0={mode !== LIGHT_MODE}>
             <Icon icon="material-symbols:wb-sunny-outline-rounded" class="text-[1.25rem]" aria-hidden="true"></Icon>
