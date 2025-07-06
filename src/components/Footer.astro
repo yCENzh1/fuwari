@@ -5,127 +5,14 @@ import { url } from "../utils/url-utils";
 const currentYear = new Date().getFullYear();
 ---
 
-<!-- 页脚容器 -->
-<footer class="footer-container">
-  <!-- 分隔线 - 完全保留原始样式 -->
-  <div 
-    class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32"
-    aria-hidden="true"
-  ></div>
-  
-  <!-- 版权信息区域 - 保留原始样式 -->
-  <div 
-    class="footer-content transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6"
-  >
-    <!-- 版权信息 - 保持单行显示 -->
+<div class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32"></div>
+<div class="transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6">
     <div class="transition text-50 text-sm text-center">
-      &copy; <span id="copyright-year">{currentYear}</span> {profileConfig.name}. All Rights Reserved. /
-      <a 
-        class="footer-link transition link text-[var(--primary)] font-medium" 
-        target="_blank" 
-        rel="noopener noreferrer"
-        href={url('rss.xml')}
-        aria-label="订阅RSS源"
-      >
-        RSS
-      </a> /
-      <a 
-        class="footer-link transition link text-[var(--primary)] font-medium" 
-        target="_blank" 
-        rel="noopener noreferrer"
-        href={url('sitemap-index.xml')}
-        aria-label="查看网站地图"
-      >
-        Sitemap
-      </a>
+        &copy; <span id="copyright-year">{currentYear}</span> {profileConfig.name}. All Rights Reserved. /
+        <a class="transition link text-[var(--primary)] font-medium hover:underline" target="_blank" href={url('rss.xml')}>RSS</a> /
+        <a class="transition link text-[var(--primary)] font-medium hover:underline" target="_blank" href={url('sitemap-index.xml')}>Sitemap</a><br>
+        Powered by
+        <a class="transition link text-[var(--primary)] font-medium hover:underline" target="_blank" href="https://astro.build">Astro</a> &
+        <a class="transition link text-[var(--primary)] font-medium hover:underline" target="_blank" href="https://github.com/saicaca/fuwari">Fuwari</a>
     </div>
-    
-    <!-- Powered by 区域 - 保持单行显示 -->
-    <div class="transition text-50 text-sm text-center mt-1">
-      Powered by
-      <a 
-        class="footer-link transition link text-[var(--primary)] font-medium" 
-        target="_blank" 
-        rel="noopener noreferrer"
-        href="https://astro.build"
-        aria-label="访问Astro官网"
-      >
-        Astro
-      </a> &amp;
-      <a 
-        class="footer-link transition link text-[var(--primary)] font-medium" 
-        target="_blank" 
-        rel="noopener noreferrer"
-        href="https://github.com/saicaca/fuwari"
-        aria-label="访问Fuwari GitHub仓库"
-      >
-        Fuwari
-      </a>
-    </div>
-  </div>
-</footer>
-
-<style>
-  /* 页脚容器样式 */
-  .footer-container {
-    max-width: var(--page-width);
-    margin: 0 auto;
-  }
-  
-  /* 链接动画效果 - 保留原始悬停效果 */
-  .footer-link {
-    position: relative;
-    display: inline-block;
-    padding: 0.1rem 0.3rem;
-    margin: 0 0.1rem;
-    border-radius: 0.15rem;
-    transition: 
-      color 0.3s ease,
-      background 0.3s ease;
-  }
-  
-  .footer-link:hover {
-    background: rgba(var(--primary-rgb), 0.1);
-  }
-  
-  /* 下划线动画效果 */
-  .footer-link::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: var(--primary);
-    transition: width 0.3s ease;
-  }
-  
-  .footer-link:hover::after {
-    width: 100%;
-  }
-  
-  /* 响应式调整 - 确保小屏幕上也能单行显示 */
-  @media (max-width: 1024px) {
-    .footer-content {
-      padding: 0.5rem;
-      margin-left: 1rem;
-      margin-right: 1rem;
-    }
-    
-    .footer-container > div:first-child {
-      margin-left: 1rem;
-      margin-right: 1rem;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .footer-content {
-      padding: 0.5rem;
-      font-size: 0.875rem;
-    }
-    
-    .footer-link {
-      padding: 0.05rem 0.15rem;
-    }
-  }
-</style>
+</div>
