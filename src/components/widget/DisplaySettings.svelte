@@ -3,7 +3,6 @@
   import { i18n } from "@i18n/translation";
   import Icon from "@iconify/svelte";
   import { getDefaultHue, getHue, setHue } from "@utils/setting-utils";
-  import { throttle } from "throttle-debounce";
   import { onMount } from "svelte";
   
   // 使用整数避免小数计算导致的性能问题
@@ -11,28 +10,36 @@
   let appliedHue = immediateHue;
   const defaultHue = getDefaultHue();
   
-  // 节流应用色调变化 (300ms)
-  const applyHue = throttle(300, (hue: number) => {
-    appliedHue = hue;
-    setHue(hue);
-  }, { noLeading: true });
+  // 自定义节流函数
+  let throttleTimeout: ReturnType<typeof setTimeout> | null = null;
+  function applyHueThrottled(hue: number) {
+    if (throttleTimeout) {
+      clearTimeout(throttleTimeout);
+    }
+    
+    throttleTimeout = setTimeout(() => {
+      appliedHue = hue;
+      setHue(hue);
+      throttleTimeout = null;
+    }, 300);
+  }
   
   // 重置色调到默认值
   function resetHue() {
     immediateHue = defaultHue;
-    applyHue(defaultHue);
+    applyHueThrottled(defaultHue);
   }
   
   // 处理滑块输入事件
   function handleInput(e: Event) {
     const value = parseInt((e.target as HTMLInputElement).value);
     immediateHue = value;
-    applyHue(value);
+    applyHueThrottled(value);
   }
   
   // 初始化色调
   onMount(() => {
-    applyHue(immediateHue);
+    applyHueThrottled(immediateHue);
   });
 </script>
 
