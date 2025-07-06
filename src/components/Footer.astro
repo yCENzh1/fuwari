@@ -1,21 +1,155 @@
 ---
-
+// 配置文件导入
 import { profileConfig } from "../config";
+// URL工具函数导入
 import { url } from "../utils/url-utils";
 
+// 获取当前年份
 const currentYear = new Date().getFullYear();
 ---
 
-<!--<div class="border-t border-[var(&#45;&#45;primary)] mx-16 border-dashed py-8 max-w-[var(&#45;&#45;page-width)] flex flex-col items-center justify-center px-6">-->
-<div class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32"></div>
-<!--<div class="transition bg-[oklch(92%_0.01_var(&#45;&#45;hue))] dark:bg-black rounded-2xl py-8 mt-4 mb-8 flex flex-col items-center justify-center px-6">-->
-<div class="transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6">
-    <div class="transition text-50 text-sm text-center">
-        &copy; <span id="copyright-year">{currentYear}</span> {profileConfig.name}. All Rights Reserved. /
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('rss.xml')}>RSS</a> /
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('sitemap-index.xml')}>Sitemap</a><br>
-        Powered by
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://astro.build">Astro</a> &
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/saicaca/fuwari">Fuwari</a>
+<!-- 页脚容器 -->
+<footer 
+  class="footer-container transition-all duration-300 py-8 flex flex-col items-center justify-center px-6"
+  aria-label="网站页脚"
+>
+  <!-- 分隔线 -->
+  <div 
+    class="transition-colors duration-500 border-t border-dashed border-black/10 dark:border-white/15 my-10 mx-4 md:mx-16 lg:mx-32"
+    aria-hidden="true"
+  ></div>
+  
+  <!-- 版权和链接区域 -->
+  <div 
+    class="footer-content transition-all duration-300 border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-8 md:mb-12 px-6 py-4 w-full max-w-[var(--page-width)]"
+  >
+    <!-- 版权信息 -->
+    <p class="transition-colors text-50 text-sm text-center">
+      &copy; <span id="copyright-year">{currentYear}</span> {profileConfig.name}. All Rights Reserved.
+    </p>
+    
+    <!-- 链接容器 -->
+    <div class="links-container flex flex-wrap justify-center gap-2 md:gap-4 mt-2">
+      <!-- RSS链接 -->
+      <a 
+        class="footer-link transition-all duration-200 text-[var(--primary)] font-medium hover:underline hover:opacity-80"
+        target="_blank" 
+        rel="noopener noreferrer"
+        href={url('rss.xml')}
+        aria-label="订阅RSS源"
+      >
+        RSS
+      </a>
+      
+      <!-- 站点地图链接 -->
+      <a 
+        class="footer-link transition-all duration-200 text-[var(--primary)] font-medium hover:underline hover:opacity-80"
+        target="_blank" 
+        rel="noopener noreferrer"
+        href={url('sitemap-index.xml')}
+        aria-label="查看网站地图"
+      >
+        Sitemap
+      </a>
+      
+      <!-- 技术支持文本 -->
+      <span class="text-50">Powered by</span>
+      
+      <!-- Astro链接 -->
+      <a 
+        class="footer-link transition-all duration-200 text-[var(--primary)] font-medium hover:underline hover:opacity-80"
+        target="_blank" 
+        rel="noopener noreferrer"
+        href="https://astro.build"
+        aria-label="访问Astro官网"
+      >
+        Astro
+      </a>
+      
+      <!-- 分隔符 -->
+      <span class="text-50">&</span>
+      
+      <!-- Fuwari链接 -->
+      <a 
+        class="footer-link transition-all duration-200 text-[var(--primary)] font-medium hover:underline hover:opacity-80"
+        target="_blank" 
+        rel="noopener noreferrer"
+        href="https://github.com/yCENzh/fuwari"
+        aria-label="访问Fuwari GitHub仓库"
+      >
+        Fuwari
+      </a>
     </div>
-</div>
+  </div>
+</footer>
+
+<style>
+  /* 页脚容器样式 */
+  .footer-container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+  }
+  
+  /* 页脚内容区域动画 */
+  .footer-content {
+    animation: fadeIn 0.8s ease-out;
+    border-width: 1px;
+    transition: 
+      border-color 0.5s ease,
+      box-shadow 0.3s ease,
+      transform 0.3s ease;
+  }
+  
+  .footer-content:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* 链接悬停动画 */
+  .footer-link {
+    position: relative;
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.15rem;
+    transition: 
+      color 0.3s ease,
+      background 0.3s ease;
+  }
+  
+  .footer-link:hover {
+    background: rgba(var(--primary-rgb), 0.1);
+  }
+  
+  .footer-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--primary);
+    transition: width 0.3s ease;
+  }
+  
+  .footer-link:hover::after {
+    width: 100%;
+  }
+  
+  /* 动画关键帧 */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* 响应式调整 */
+  @media (max-width: 768px) {
+    .footer-content {
+      padding: 1rem;
+    }
+    
+    .links-container {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+</style>
