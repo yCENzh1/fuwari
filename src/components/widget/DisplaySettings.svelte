@@ -6,10 +6,11 @@
   import { tweened } from "svelte/motion";
   import { cubicOut } from "svelte/easing";
   
-  // 使用缓动动画管理色调值变化
-  let hueValue = tweened(getHue(), {
+  // 使用整数避免小数计算导致的性能问题
+  let hueValue = tweened(Math.round(getHue()), {
     duration: 300,
-    easing: cubicOut
+    easing: cubicOut,
+    interpolate: (a, b) => t => Math.round(a + (b - a) * t) // 确保只使用整数
   });
   
   const defaultHue = getDefaultHue();
@@ -24,13 +25,17 @@
     const currentHue = $hueValue;
     setHue(currentHue);
   }
+  
+  // 处理滑块输入事件
+  function handleInput(e) {
+    hueValue.set(parseInt(e.target.value));
+  }
 </script>
 
 <div 
   id="display-setting" 
   class="float-panel float-panel-closed absolute transition-all w-80 right-4 px-4 py-4"
-  in:fly={{ y: 20, duration: 300, easing: cubicOut }}
-  out:fly={{ y: 20, duration: 200, easing: cubicOut }}
+  style="z-index: 100; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 12px; background: var(--card-bg); transform-origin: top right;"
 >
   <!-- 标题区域 -->
   <div class="flex flex-row gap-2 mb-3 items-center justify-between">
@@ -63,14 +68,15 @@
     </div>
   </div>
   
-  <!-- 色调滑块 -->
+  <!-- 色调滑块 - 恢复原始样式 -->
   <div class="w-full h-6 px-1 bg-[oklch(0.80_0.10_0)] dark:bg-[oklch(0.70_0.10_0)] rounded select-none">
     <input 
       aria-label={i18n(I18nKey.themeColor)} 
       type="range" 
       min="0" 
       max="360" 
-      bind:value={$hueValue}
+      value={$hueValue}
+      on:input={handleInput}
       class="slider" 
       id="colorSlider" 
       step="5" 
@@ -79,75 +85,69 @@
   </div>
 </div>
 
-<style lang="stylus">
-  #display-setting
-    z-index: 100
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1)
-    border-radius: 12px
-    background: var(--card-bg)
-    transform-origin: top right
-    
-    input[type="range"]
-      -webkit-appearance: none
-      height: 1.5rem
-      background-image: var(--color-selection-bar)
-      transition: background-image 0.3s ease-in-out
-      cursor: pointer
-      
-      /* 滑块轨道 */
-      &::-webkit-slider-runnable-track
-        height: 0.25rem
-        border-radius: 0.125rem
-        background: rgba(0,0,0,0.1)
-        transition: all 0.3s ease
-        
-      &::-moz-range-track
-        height: 0.25rem
-        border-radius: 0.125rem
-        background: rgba(0,0,0,0.1)
-        transition: all 0.3s ease
+<style>
+  /* 恢复原始滑块样式 */
+  #display-setting input[type="range"] {
+    -webkit-appearance: none;
+    height: 1.5rem;
+    background-image: var(--color-selection-bar);
+    transition: background-image 0.15s ease-in-out;
+    background-color: transparent;
+  }
 
-      /* 滑块按钮 */
-      &::-webkit-slider-thumb
-        -webkit-appearance: none
-        height: 1rem
-        width: 0.5rem
-        border-radius: 0.25rem
-        background: rgba(255, 255, 255, 0.9)
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2)
-        transform: scale(1)
-        transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1)
-        cursor: grab
-        
-        &:hover
-          background: rgba(255, 255, 255, 0.95)
-          transform: scale(1.1)
-          
-        &:active
-          background: rgba(255, 255, 255, 0.85)
-          transform: scale(0.95)
-          cursor: grabbing
-          box-shadow: 0 1px 3px rgba(0,0,0,0.2)
-
-      &::-moz-range-thumb
-        -webkit-appearance: none
-        height: 1rem
-        width: 0.5rem
-        border-radius: 0.25rem
-        border-width: 0
-        background: rgba(255, 255, 255, 0.9)
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2)
-        transform: scale(1)
-        transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1)
-        cursor: grab
-        
-        &:hover
-          background: rgba(255, 255, 255, 0.95)
-          transform: scale(1.1)
-          
-        &:active
-          background: rgba(255, 255, 255, 0.85)
-          transform: scale(0.95)
-          cursor: grabbing
-          box-shadow: 0 1px 3px rgba(0,0,0,0.2)
+  /* 滑块按钮样式 */
+  #display-setting input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 1rem;
+    width: 0.5rem;
+    border-radius: 0.125rem;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: none;
+    transition: all 0.2s ease;
+  }
+  
+  #display-setting input[type="range"]::-webkit-slider-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
+  }
+  
+  #display-setting input[type="range"]::-webkit-slider-thumb:active {
+    background: rgba(255, 255, 255, 0.6);
+  }
+  
+  #display-setting input[type="range"]::-moz-range-thumb {
+    -webkit-appearance: none;
+    height: 1rem;
+    width: 0.5rem;
+    border-radius: 0.125rem;
+    border-width: 0;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: none;
+    transition: all 0.2s ease;
+  }
+  
+  #display-setting input[type="range"]::-moz-range-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
+  }
+  
+  #display-setting input[type="range"]::-moz-range-thumb:active {
+    background: rgba(255, 255, 255, 0.6);
+  }
+  
+  #display-setting input[type="range"]::-ms-thumb {
+    -webkit-appearance: none;
+    height: 1rem;
+    width: 0.5rem;
+    border-radius: 0.125rem;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: none;
+    transition: all 0.2s ease;
+  }
+  
+  #display-setting input[type="range"]::-ms-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
+  }
+  
+  #display-setting input[type="range"]::-ms-thumb:active {
+    background: rgba(255, 255, 255, 0.6);
+  }
 </style>
