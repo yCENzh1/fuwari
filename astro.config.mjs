@@ -34,7 +34,7 @@ export default defineConfig({
         }
         })],*/
 	//adapter: cloudflare(),
-	site: "https://github.com/yCENzh/fuwari/tree/main/src/content/",
+	site: "https://fuwari-17l.pages.dev/",
 	base: "/",
 	trailingSlash: "always",
 	integrations: [
