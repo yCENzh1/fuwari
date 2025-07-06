@@ -281,10 +281,12 @@ class TableOfContents extends HTMLElement {
   observeSections() {
     // 获取所有标题元素
     this.headings = Array.from(
-      document.querySelectorAll(this.tocEntries.map(entry => {
-        const href = entry.getAttribute("href");
-        return href ? `[id="${decodeURIComponent(href.substring(1))}"]` : null;
-      }).filter(Boolean)
+      document.querySelectorAll(
+        this.tocEntries.map(entry => {
+          const href = entry.getAttribute("href");
+          return href ? `[id="${decodeURIComponent(href.substring(1))}"]` : null;
+        }).filter(Boolean)
+      )
     );
     
     // 获取章节元素（通常是标题的父元素）
