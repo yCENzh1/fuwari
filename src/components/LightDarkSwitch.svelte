@@ -88,7 +88,7 @@
   ];
 </script>
 
-<style lang="scss">
+<style>
   /* 添加平滑过渡动画 */
   .icon-transition {
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -135,6 +135,22 @@
       background: var(--btn-plain-bg-hover);
     }
   }
+
+  /* 脉冲动画 */
+  .pulse {
+    animation: pulse 0.6s cubic-bezier(0.4, 0, 0.6, 1);
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 0;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.2;
+      transform: scale(1.25);
+    }
+  }
 </style>
 
 <!-- 使用CSS变量控制主题 -->
@@ -157,9 +173,8 @@
     
     <!-- 添加微妙的脉冲动画 -->
     <div 
-      class="absolute inset-0 rounded-full bg-current opacity-0 scale-125"
-      class:animate-pulse={isAnimating}
-      style="animation-duration: 0.6s;"
+      class="absolute inset-0 rounded-full bg-current opacity-0"
+      class:pulse={isAnimating}
     ></div>
   </button>
 
@@ -176,7 +191,7 @@
         <button
           class="flex transition whitespace-nowrap items-center !justify-start w-full btn-plain scale-animation rounded-lg h-9 px-3 font-medium mb-0.5 option-btn"
           class:current-theme-btn={mode === option.mode}
-          on:click={() => switchScheme(option.mode)}
+          onclick={() => switchScheme(option.mode)}  <!-- 修复这里：使用 onclick 而不是 on:click -->
           aria-pressed={mode === option.mode}
           role="menuitemradio"
         >
