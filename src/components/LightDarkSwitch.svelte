@@ -183,15 +183,13 @@
     id="light-dark-panel" 
     class="hidden lg:block absolute panel-transition top-11 -right-2 pt-5"
     class:open={showPanel}
-    class:float-panel
     role="menu"
   >
-    <div class="card-base p-2 min-w-[160px]">
+    <div class="card-base p-2 min-w-[160px] float-panel">
       {#each panelOptions as option}
         <button
-          class="flex transition whitespace-nowrap items-center !justify-start w-full btn-plain scale-animation rounded-lg h-9 px-3 font-medium mb-0.5 option-btn"
-          class:current-theme-btn={mode === option.mode}
-          onclick={() => switchScheme(option.mode)}  <!-- 修复这里：使用 onclick 而不是 on:click -->
+          class="flex transition whitespace-nowrap items-center !justify-start w-full btn-plain scale-animation rounded-lg h-9 px-3 font-medium mb-0.5 option-btn {mode === option.mode ? 'current-theme-btn' : ''}"
+          onclick={() => switchScheme(option.mode)}
           aria-pressed={mode === option.mode}
           role="menuitemradio"
         >
