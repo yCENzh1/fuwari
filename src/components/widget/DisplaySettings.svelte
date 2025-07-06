@@ -3,33 +3,37 @@
   import { i18n } from "@i18n/translation";
   import Icon from "@iconify/svelte";
   import { getDefaultHue, getHue, setHue } from "@utils/setting-utils";
-  import { tweened } from "svelte/motion";
-  import { cubicOut } from "svelte/easing";
+  import { throttle } from "throttle-debounce";
+  import { onMount } from "svelte";
   
   // 使用整数避免小数计算导致的性能问题
-  let hueValue = tweened(Math.round(getHue()), {
-    duration: 300,
-    easing: cubicOut,
-    interpolate: (a, b) => t => Math.round(a + (b - a) * t) // 确保只使用整数
-  });
-  
+  let immediateHue = Math.round(getHue());
+  let appliedHue = immediateHue;
   const defaultHue = getDefaultHue();
+  
+  // 节流应用色调变化 (300ms)
+  const applyHue = throttle(300, (hue: number) => {
+    appliedHue = hue;
+    setHue(hue);
+  }, { noLeading: true });
   
   // 重置色调到默认值
   function resetHue() {
-    hueValue.set(defaultHue);
-  }
-  
-  // 监听色调值变化并应用
-  $: {
-    const currentHue = $hueValue;
-    setHue(currentHue);
+    immediateHue = defaultHue;
+    applyHue(defaultHue);
   }
   
   // 处理滑块输入事件
-  function handleInput(e) {
-    hueValue.set(parseInt(e.target.value));
+  function handleInput(e: Event) {
+    const value = parseInt((e.target as HTMLInputElement).value);
+    immediateHue = value;
+    applyHue(value);
   }
+  
+  // 初始化色调
+  onMount(() => {
+    applyHue(immediateHue);
+  });
 </script>
 
 <div 
@@ -46,11 +50,11 @@
       <button 
         aria-label={i18n(I18nKey.resetToDefault)}
         class="btn-regular w-7 h-7 rounded-md transition-all duration-300
-               opacity-{$hueValue === defaultHue ? 0 : 100} 
-               pointer-events-{$hueValue === defaultHue ? 'none' : 'auto'}"
+               opacity-{immediateHue === defaultHue ? 0 : 100} 
+               pointer-events-{immediateHue === defaultHue ? 'none' : 'auto'}"
         on:click={resetHue}
       >
-        <div class="text-[var(--btn-content)] transition-transform hover:scale-110">
+        <div class="text-[var(--btn-content)]">
           <Icon icon="fa6-solid:arrow-rotate-left" class="text-[0.875rem]" />
         </div>
       </button>
@@ -63,19 +67,19 @@
         class="transition-all duration-300 bg-[var(--btn-regular-bg)] w-10 h-7 rounded-md 
                flex justify-center font-bold text-sm items-center text-[var(--btn-content)]"
       >
-        {$hueValue}
+        {immediateHue}
       </div>
     </div>
   </div>
   
-  <!-- 色调滑块 - 恢复原始样式 -->
+  <!-- 色调滑块 - 优化性能 -->
   <div class="w-full h-6 px-1 bg-[oklch(0.80_0.10_0)] dark:bg-[oklch(0.70_0.10_0)] rounded select-none">
     <input 
       aria-label={i18n(I18nKey.themeColor)} 
       type="range" 
       min="0" 
       max="360" 
-      value={$hueValue}
+      value={immediateHue}
       on:input={handleInput}
       class="slider" 
       id="colorSlider" 
@@ -86,16 +90,18 @@
 </div>
 
 <style>
-  /* 恢复原始滑块样式 */
+  /* 优化后的滑块样式 - 更轻量 */
   #display-setting input[type="range"] {
     -webkit-appearance: none;
     height: 1.5rem;
     background-image: var(--color-selection-bar);
-    transition: background-image 0.15s ease-in-out;
     background-color: transparent;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
   }
 
-  /* 滑块按钮样式 */
+  /* 滑块按钮样式 - 简化版本 */
   #display-setting input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     height: 1rem;
@@ -103,7 +109,6 @@
     border-radius: 0.125rem;
     background: rgba(255, 255, 255, 0.7);
     box-shadow: none;
-    transition: all 0.2s ease;
   }
   
   #display-setting input[type="range"]::-webkit-slider-thumb:hover {
@@ -112,6 +117,7 @@
   
   #display-setting input[type="range"]::-webkit-slider-thumb:active {
     background: rgba(255, 255, 255, 0.6);
+    transform: scale(1.1);
   }
   
   #display-setting input[type="range"]::-moz-range-thumb {
@@ -122,7 +128,6 @@
     border-width: 0;
     background: rgba(255, 255, 255, 0.7);
     box-shadow: none;
-    transition: all 0.2s ease;
   }
   
   #display-setting input[type="range"]::-moz-range-thumb:hover {
@@ -131,23 +136,16 @@
   
   #display-setting input[type="range"]::-moz-range-thumb:active {
     background: rgba(255, 255, 255, 0.6);
+    transform: scale(1.1);
   }
   
-  #display-setting input[type="range"]::-ms-thumb {
-    -webkit-appearance: none;
-    height: 1rem;
-    width: 0.5rem;
-    border-radius: 0.125rem;
-    background: rgba(255, 255, 255, 0.7);
-    box-shadow: none;
-    transition: all 0.2s ease;
-  }
-  
-  #display-setting input[type="range"]::-ms-thumb:hover {
+  /* 添加悬停状态反馈 */
+  #display-setting input[type="range"]:hover::-webkit-slider-thumb {
     background: rgba(255, 255, 255, 0.8);
   }
   
-  #display-setting input[type="range"]::-ms-thumb:active {
+  #display-setting input[type="range"]:active::-webkit-slider-thumb {
     background: rgba(255, 255, 255, 0.6);
+    transform: scale(1.1);
   }
 </style>
