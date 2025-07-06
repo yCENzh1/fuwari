@@ -4,161 +4,29 @@ import { type NavBarLink } from "../../types/config";
 import { url } from "../../utils/url-utils";
 
 interface Props {
-  links: NavBarLink[];
+	links: NavBarLink[];
 }
 
-const { links } = Astro.props;
+const links = Astro.props.links;
 ---
-
-<!-- 菜单面板容器 -->
-<div 
-  id="nav-menu-panel"
-  class="float-panel float-panel-closed fixed right-4 px-2 py-2 bg-white dark:bg-gray-800 rounded-xl shadow-xl z-50"
->
-  {links.map((link) => (
-    <a
-      href={link.external ? link.url : url(link.url)}
-      class="nav-menu-item group flex justify-between items-center py-3 pl-4 pr-2 rounded-lg gap-8"
-      target={link.external ? "_blank" : null}
-      rel={link.external ? "noopener noreferrer" : null}
-      aria-label={link.external ? `${link.name} (在新标签页打开)` : link.name}
-    >
-      <div class="nav-link-text text-gray-800 dark:text-gray-200 font-medium text-base group-hover:text-[var(--primary)] transition-colors duration-200">
-        {link.name}
-      </div>
-      
-      {!link.external ? (
-        <Icon 
-          name="material-symbols:chevron-right-rounded"
-          class="nav-icon-internal text-[1.25rem] text-[var(--primary)] opacity-80 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"
-        />
-      ) : (
-        <Icon 
-          name="fa6-solid:arrow-up-right-from-square"
-          class="nav-icon-external text-[0.75rem] text-gray-400 dark:text-gray-500 group-hover:text-[var(--primary)] group-hover:scale-110 transition-all duration-300"
-        />
-      )}
-    </a>
-  ))}
+<div id="nav-menu-panel" class:list={["float-panel float-panel-closed absolute transition-all fixed right-4 px-2 py-2"]}>
+    {links.map((link) => (
+        <a href={link.external ? link.url : url(link.url)} class="group flex justify-between items-center py-2 pl-3 pr-1 rounded-lg gap-8
+            hover:bg-[var(--btn-plain-bg-hover)] active:bg-[var(--btn-plain-bg-active)] transition
+        "
+           target={link.external ? "_blank" : null}
+        >
+            <div class="transition text-black/75 dark:text-white/75 font-bold group-hover:text-[var(--primary)] group-active:text-[var(--primary)]">
+                {link.name}
+            </div>
+            {!link.external && <Icon name="material-symbols:chevron-right-rounded"
+                  class="transition text-[1.25rem] text-[var(--primary)]"
+            >
+            </Icon>}
+            {link.external && <Icon name="fa6-solid:arrow-up-right-from-square"
+                  class="transition text-[0.75rem] text-black/25 dark:text-white/25 -translate-x-1"
+            >
+            </Icon>}
+        </a>
+    ))}
 </div>
-
-<style>
-  /* 面板动画效果 */
-  .float-panel {
-    /* 初始状态 */
-    opacity: 0;
-    transform: translateY(-15px);
-    visibility: hidden;
-    transition: 
-      opacity 0.3s ease-out,
-      transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1),
-      visibility 0s linear 0.3s; /* 延迟隐藏 */
-  }
-  
-  .float-panel-open {
-    /* 打开状态 */
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-    transition: 
-      opacity 0.3s ease-out,
-      transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1),
-      visibility 0s linear; /* 立即可见 */
-  }
-  
-  /* 菜单项动画优化 */
-  .nav-menu-item {
-    transition: 
-      background-color 0.25s ease-out;
-    will-change: background-color;
-  }
-  
-  .nav-menu-item:hover {
-    background-color: var(--btn-plain-bg-hover);
-  }
-  
-  .nav-menu-item:active {
-    background-color: var(--btn-plain-bg-active);
-    transition-duration: 0.1s;
-  }
-  
-  /* 链接文字动画 */
-  .nav-link-text {
-    position: relative;
-  }
-  
-  .nav-link-text::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--primary);
-    transition: width 0.3s ease-out;
-  }
-  
-  .nav-menu-item:hover .nav-link-text::after {
-    width: 95%;
-  }
-  
-  /* 响应式调整 */
-  @media (max-width: 480px) {
-    .float-panel {
-      right: 1rem;
-      left: 1rem;
-      width: calc(100% - 2rem);
-    }
-  }
-</style>
-
-<script>
-  // 面板打开/关闭的平滑动画控制
-  document.addEventListener('DOMContentLoaded', () => {
-    const navPanel = document.getElementById('nav-menu-panel');
-    const menuButton = document.getElementById('menu-button'); // 假设菜单按钮ID为menu-button
-    
-    if (menuButton) {
-      // 打开面板函数
-      function openPanel() {
-        navPanel.classList.remove('float-panel-closed');
-        navPanel.classList.add('float-panel-open');
-      }
-      
-      // 关闭面板函数
-      function closePanel() {
-        navPanel.classList.remove('float-panel-open');
-        navPanel.classList.add('float-panel-closed');
-      }
-      
-      // 切换面板状态
-      function togglePanel() {
-        if (navPanel.classList.contains('float-panel-open')) {
-          closePanel();
-        } else {
-          openPanel();
-        }
-      }
-      
-      // 添加点击事件
-      menuButton.addEventListener('click', togglePanel);
-      
-      // 点击面板外部关闭面板
-      document.addEventListener('click', (event) => {
-        const isClickInsidePanel = navPanel.contains(event.target);
-        const isClickOnMenuButton = menuButton.contains(event.target);
-        
-        if (!isClickInsidePanel && !isClickOnMenuButton && navPanel.classList.contains('float-panel-open')) {
-          closePanel();
-        }
-      });
-      
-      // ESC键关闭面板
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && navPanel.classList.contains('float-panel-open')) {
-          closePanel();
-        }
-      });
-    }
-  });
-</script>
