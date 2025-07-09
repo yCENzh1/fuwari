@@ -1,98 +1,13 @@
 ---
-// 组件属性接口定义
 interface Props {
-  size?: string;      // 尺寸（可选）
-  dot?: boolean;      // 是否显示左侧圆点
-  href?: string;      // 链接地址
-  label?: string;     // 无障碍标签
-  isActive?: boolean; // 新增：活动状态标识
+	size?: string;
+	dot?: boolean;
+	href?: string;
+	label?: string;
 }
-
-// 解构属性并设置默认值
-const {
-  dot = false,
-  href = "#",
-  label = "Tag button",
-  isActive = false, // 新增：默认非活动状态
-  size = "default"  // 设置默认尺寸
-} = Astro.props;
-
-// 根据尺寸生成对应类名
-const sizeClasses = {
-  small: "h-6 text-xs px-2",
-  default: "h-8 text-sm px-3",
-  large: "h-10 text-base px-4"
-};
+const { dot, href, label }: Props = Astro.props;
 ---
-
-<a
-  href={href}
-  aria-label={label}
-  class={`
-    btn-regular
-    ${sizeClasses[size] || sizeClasses.default}  // 应用尺寸类
-    rounded-lg
-    inline-flex
-    items-center
-    justify-center
-    transition-all
-    duration-200
-    hover:scale-[1.02]    // 悬停轻微放大
-    hover:shadow-sm       // 悬停添加轻微阴影
-    active:scale-[0.98]   // 点击缩小效果
-    ${isActive ? "ring-2 ring-[var(--primary)]" : ""} // 活动状态添加光环
-  `}
->
-  <!-- 圆点指示器 -->
-  {dot && (
-    <span 
-      class={`
-        h-1 w-1 
-        bg-[var(--btn-content)] 
-        dark:bg-[var(--card-bg)] 
-        rounded-full 
-        mr-2
-        transition-all
-        duration-300
-        ${isActive ? "scale-150" : ""} // 活动状态放大圆点
-      `}
-      aria-hidden="true"
-    />
-  )}
-  
-  <!-- 内容插槽 -->
-  <span class="transition-transform duration-200 hover:translate-x-0.5">
-    <slot />
-  </span>
+<a href={href} aria-label={label} class="btn-regular h-8 text-sm px-3 rounded-lg">
+    {dot && <div class="h-1 w-1 bg-[var(--btn-content)] dark:bg-[var(--card-bg)] transition rounded-md mr-2"></div>}
+    <slot></slot>
 </a>
-
-<style>
-  /* 添加悬停动画关键帧 */
-  .btn-regular {
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-  }
-  
-  .btn-regular::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      120deg,
-      transparent,
-      rgba(255, 255, 255, 0.2),
-      transparent
-    );
-    transform: translateX(-100%);
-    transition: transform 0.6s ease;
-    z-index: -1;
-  }
-  
-  .btn-regular:hover::after {
-    transform: translateX(100%);
-  }
-</style>
