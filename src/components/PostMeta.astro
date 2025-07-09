@@ -6,139 +6,77 @@ import { formatDateToYYYYMMDD } from "../utils/date-utils";
 import { getCategoryUrl, getTagUrl } from "../utils/url-utils";
 
 interface Props {
-  class?: string; // 添加可选标记
-  published: Date;
-  updated?: Date;
-  tags: string[];
-  category: string | null;
-  hideTagsForMobile?: boolean;
-  hideUpdateDate?: boolean;
+	class: string;
+	published: Date;
+	updated?: Date;
+	tags: string[];
+	category: string | null;
+	hideTagsForMobile?: boolean;
+	hideUpdateDate?: boolean;
 }
-
 const {
-  published,
-  updated,
-  tags,
-  category,
-  hideTagsForMobile = false,
-  hideUpdateDate = false,
-  class: className = "",
+	published,
+	updated,
+	tags,
+	category,
+	hideTagsForMobile = false,
+	hideUpdateDate = false,
 } = Astro.props;
+const className = Astro.props.class;
 ---
 
-<div class:list={[
-  "flex flex-wrap text-neutral-500 dark:text-neutral-400 items-center gap-4 gap-x-4 gap-y-2",
-  className
-]}>
-  <!-- 发布日期 -->
-  <div class="flex items-center">
-    <div class="meta-icon" aria-hidden="true">
-      <Icon 
-        name="material-symbols:calendar-today-outline-rounded" 
-        class="text-xl"
-        aria-label={i18n(I18nKey.publishDate)}
-      />
-    </div>
-    <time datetime={published.toISOString()} class="text-50 text-sm font-medium">
-      {formatDateToYYYYMMDD(published)}
-    </time>
-  </div>
-
-  <!-- 更新日期 -->
-  {!hideUpdateDate && updated && updated.getTime() !== published.getTime() && (
+<div class:list={["flex flex-wrap text-neutral-500 dark:text-neutral-400 items-center gap-4 gap-x-4 gap-y-2", className]}>
+    <!-- publish date -->
     <div class="flex items-center">
-      <div class="meta-icon" aria-hidden="true">
-        <Icon 
-          name="material-symbols:edit-calendar-outline-rounded" 
-          class="text-xl"
-          aria-label={i18n(I18nKey.updateDate)}
-        />
-      </div>
-      <time datetime={updated.toISOString()} class="text-50 text-sm font-medium">
-        {formatDateToYYYYMMDD(updated)}
-      </time>
+        <div class="meta-icon"
+        >
+            <Icon name="material-symbols:calendar-today-outline-rounded" class="text-xl"></Icon>
+        </div>
+        <span class="text-50 text-sm font-medium">{formatDateToYYYYMMDD(published)}</span>
     </div>
-  )}
 
-  <!-- 分类 -->
-  <div class="flex items-center">
-    <div class="meta-icon" aria-hidden="true">
-      <Icon 
-        name="material-symbols:book-2-outline-rounded" 
-        class="text-xl"
-        aria-label={i18n(I18nKey.category)}
-      />
-    </div>
-    <div class="flex flex-row flex-nowrap items-center">
-      <a 
-        href={getCategoryUrl(category)} 
-        aria-label={`${i18n(I18nKey.viewAllPostsInCategory)} ${category || i18n(I18nKey.uncategorized)}`}
-        class="link-lg transition text-50 text-sm font-medium hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap"
-      >
-        {category || i18n(I18nKey.uncategorized)}
-      </a>
-    </div>
-  </div>
-
-  <!-- 标签 -->
-  <div class:list={[
-    "items-center",
-    { 
-      "flex": !hideTagsForMobile, 
-      "hidden md:flex": hideTagsForMobile 
-    }
-  ]}>
-    <div class="meta-icon" aria-hidden="true">
-      <Icon 
-        name="material-symbols:tag-rounded" 
-        class="text-xl"
-        aria-label={i18n(I18nKey.tags)}
-      />
-    </div>
-    <div class="flex flex-row flex-nowrap items-center flex-wrap">
-      {tags && tags.length > 0 ? (
-        tags.map((tag, i) => (
-          <>
-            {i > 0 && (
-              <span 
-                class="mx-1.5 text-[var(--meta-divider)] text-sm" 
-                aria-hidden="true"
-              >
-                /
-              </span>
-            )}
-            <a 
-              href={getTagUrl(tag)} 
-              aria-label={`${i18n(I18nKey.viewAllPostsWithTag)} ${tag.trim()}`}
-              class="link-lg transition text-50 text-sm font-medium hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap"
+    <!-- update date -->
+    {!hideUpdateDate && updated && updated.getTime() !== published.getTime() && (
+        <div class="flex items-center">
+            <div class="meta-icon"
             >
-              {tag.trim()}
-            </a>
-          </>
-        ))
-      ) : (
-        <span class="transition text-50 text-sm font-medium">
-          {i18n(I18nKey.noTags)}
-        </span>
-      )}
-    </div>
-  </div>
-</div>
+                <Icon name="material-symbols:edit-calendar-outline-rounded" class="text-xl"></Icon>
+            </div>
+            <span class="text-50 text-sm font-medium">{formatDateToYYYYMMDD(updated)}</span>
+        </div>
+    )}
 
-<style>
-  /* 添加微妙的悬停动画 */
-  .link-lg {
-    transition: color 0.2s ease, transform 0.2s ease;
-  }
-  .link-lg:hover {
-    transform: translateY(-1px);
-  }
-  
-  /* 图标悬停效果 */
-  .meta-icon {
-    transition: transform 0.2s ease;
-  }
-  .meta-icon:hover {
-    transform: scale(1.1);
-  }
-</style>
+    <!-- categories -->
+    <div class="flex items-center">
+        <div class="meta-icon"
+        >
+            <Icon name="material-symbols:book-2-outline-rounded" class="text-xl"></Icon>
+        </div>
+        <div class="flex flex-row flex-nowrap items-center">
+            <a href={getCategoryUrl(category)} aria-label={`View all posts in the ${category} category`}
+               class="link-lg transition text-50 text-sm font-medium
+                            hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap">
+                {category || i18n(I18nKey.uncategorized)}
+            </a>
+        </div>
+    </div>
+
+    <!-- tags -->
+    <div class:list={["items-center", {"flex": !hideTagsForMobile, "hidden md:flex": hideTagsForMobile}]}>
+        <div class="meta-icon"
+        >
+            <Icon name="material-symbols:tag-rounded" class="text-xl"></Icon>
+        </div>
+        <div class="flex flex-row flex-nowrap items-center">
+            {(tags && tags.length > 0) && tags.map((tag, i) => (
+                <div class:list={[{"hidden": i == 0}, "mx-1.5 text-[var(--meta-divider)] text-sm"]}>/</div>
+                <a href={getTagUrl(tag)} aria-label={`View all posts with the ${tag.trim()} tag`}
+                   class="link-lg transition text-50 text-sm font-medium
+                                hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap">
+                    {tag.trim()}
+                </a>
+            ))}
+            {!(tags && tags.length > 0) && <div class="transition text-50 text-sm font-medium">{i18n(I18nKey.noTags)}</div>}
+        </div>
+    </div>
+</div>
