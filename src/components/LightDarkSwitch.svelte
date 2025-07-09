@@ -17,6 +17,7 @@
   // 响应式状态
   let mode: LIGHT_DARK_MODE = $state(AUTO_MODE);
   let panelVisible = $state(false); // 控制面板显示状态
+  let isTransitioning = $state(false); // 跟踪主题切换状态
   
   // 模式对应的图标和文本
   const modeConfig = {
@@ -59,13 +60,24 @@
 
   // 切换模式
   function switchScheme(newMode: LIGHT_DARK_MODE) {
+    // 设置过渡状态
+    isTransitioning = true;
+    
+    // 应用新主题
     mode = newMode;
     setTheme(newMode);
-    panelVisible = false; // 切换后关闭面板
+    panelVisible = false;
+    
+    // 添加短暂延迟后清除过渡状态
+    setTimeout(() => {
+      isTransitioning = false;
+    }, 300); // 与CSS过渡时间匹配
   }
 
   // 循环切换模式
   function toggleScheme() {
+    if (isTransitioning) return; // 防止在过渡期间切换
+    
     const currentIndex = MODE_SEQUENCE.indexOf(mode);
     const nextIndex = (currentIndex + 1) % MODE_SEQUENCE.length;
     switchScheme(MODE_SEQUENCE[nextIndex]);
@@ -74,6 +86,18 @@
   // 切换面板可见性
   function togglePanel() {
     panelVisible = !panelVisible;
+  }
+  
+  // 获取当前图标的颜色类
+  function getIconColorClass() {
+    // 在过渡期间使用主题色
+    if (isTransitioning) return "text-[var(--primary)]";
+    
+    // 在深色模式下使用浅色图标
+    if (mode === DARK_MODE) return "text-white";
+    
+    // 在浅色模式下使用深色图标
+    return "text-gray-800";
   }
 </script>
 
@@ -88,28 +112,29 @@
   <button
     aria-label={i18n(I18nKey.toggleTheme)}
     role="menuitem"
-    class="relative btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90"
+    class="relative btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90 theme-toggle-btn"
     id="scheme-switch"
     on:click={toggleScheme}
     on:mouseenter={() => panelVisible = true}
     aria-expanded={panelVisible}
     aria-controls="light-dark-panel"
+    disabled={isTransitioning}
   >
-    <!-- 使用条件渲染代替多个绝对定位元素 -->
+    <!-- 使用条件渲染确保只有一个图标 -->
     {#if mode === LIGHT_MODE}
       <Icon
         icon="material-symbols:wb-sunny-outline-rounded"
-        class="text-[1.25rem]"
+        class="text-[1.25rem] {getIconColorClass()} theme-icon"
       />
     {:else if mode === DARK_MODE}
       <Icon
         icon="material-symbols:dark-mode-outline-rounded"
-        class="text-[1.25rem]"
+        class="text-[1.25rem] {getIconColorClass()} theme-icon"
       />
     {:else}
       <Icon
         icon="material-symbols:radio-button-partial-outline"
-        class="text-[1.25rem]"
+        class="text-[1.25rem] {getIconColorClass()} theme-icon"
       />
     {/if}
   </button>
@@ -133,7 +158,7 @@
         >
           <Icon
             icon={modeConfig[scheme].icon}
-            class="text-[1.25rem] mr-3"
+            class="text-[1.25rem] mr-3 {getIconColorClass()}"
           />
           {modeConfig[scheme].label}
         </button>
@@ -175,8 +200,21 @@
     z-index: 100;
   }
 
-  /* 过渡效果 */
-  .transition {
-    transition: all 0.3s ease;
+  /* 主题切换按钮样式 */
+  .theme-toggle-btn {
+    background-color: var(--btn-plain-bg);
+    color: var(--text);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* 主题图标过渡 */
+  .theme-icon {
+    transition: color 0.3s ease;
+  }
+
+  /* 禁用状态 */
+  [disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
   }
 </style>
