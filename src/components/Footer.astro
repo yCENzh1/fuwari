@@ -1,21 +1,128 @@
 ---
-
+// 导入配置文件
 import { profileConfig } from "../config";
+// 导入URL工具
 import { url } from "../utils/url-utils";
 
+// 获取当前年份
 const currentYear = new Date().getFullYear();
 ---
 
-<!--<div class="border-t border-[var(&#45;&#45;primary)] mx-16 border-dashed py-8 max-w-[var(&#45;&#45;page-width)] flex flex-col items-center justify-center px-6">-->
-<div class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32"></div>
-<!--<div class="transition bg-[oklch(92%_0.01_var(&#45;&#45;hue))] dark:bg-black rounded-2xl py-8 mt-4 mb-8 flex flex-col items-center justify-center px-6">-->
-<div class="transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6">
-    <div class="transition text-50 text-sm text-center">
-        &copy; <span id="copyright-year">{currentYear}</span> {profileConfig.name}. All Rights Reserved. /
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('rss.xml')}>RSS</a> /
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('sitemap-index.xml')}>Sitemap</a><br>
-        Powered by
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://astro.build">Astro</a> &
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/saicaca/fuwari">Fuwari</a>
+<!-- 使用语义化的footer标签 -->
+<footer class="footer-container">
+  <!-- 分隔线 - 响应式设计 -->
+  <div class="divider"></div>
+  
+  <!-- 页脚内容区域 -->
+  <div class="footer-content">
+    <!-- 版权信息 -->
+    <p class="copyright">
+      &copy; <span id="copyright-year">{currentYear}</span> {profileConfig.name}. All Rights Reserved.
+    </p>
+    
+    <!-- 导航链接 -->
+    <div class="footer-links">
+      <a class="footer-link" target="_blank" href={url('rss.xml')} aria-label="RSS订阅">
+        RSS
+      </a>
+      <span class="link-separator">/</span>
+      <a class="footer-link" target="_blank" href={url('sitemap-index.xml')} aria-label="站点地图">
+        Sitemap
+      </a>
     </div>
-</div>
+    
+    <!-- 技术支持信息 -->
+    <p class="powered-by">
+      Powered by
+      <a class="footer-link" target="_blank" href="https://astro.build" aria-label="Astro官网">
+        Astro
+      </a>
+      &amp;
+      <a class="footer-link" target="_blank" href="https://github.com/saicaca/fuwari" aria-label="Fuwari GitHub仓库">
+        Fuwari
+      </a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  /* 页脚容器 */
+  .footer-container {
+    margin-top: 3rem;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* 分隔线 */
+  .divider {
+    border-top: 1px dashed;
+    border-color: rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin: 2.5rem auto;
+    
+    /* 深色模式适配 */
+    @media (prefers-color-scheme: dark) {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+  }
+  
+  /* 页脚内容 */
+  .footer-content {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--text-50);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  
+  /* 版权信息 */
+  .copyright {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* 链接容器 */
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* 链接分隔符 */
+  .link-separator {
+    margin: 0 0.25rem;
+    color: var(--text-30);
+  }
+  
+  /* 页脚链接样式 */
+  .footer-link {
+    color: var(--primary);
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+    
+    &:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+  }
+  
+  /* 技术支持文本 */
+  .powered-by {
+    margin-top: 0.5rem;
+  }
+  
+  /* 响应式设计 */
+  @media (max-width: 768px) {
+    .divider {
+      width: 90%;
+      margin: 2rem auto;
+    }
+    
+    .footer-content {
+      font-size: 0.8125rem;
+    }
+  }
+</style>
