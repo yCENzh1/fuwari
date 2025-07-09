@@ -53,7 +53,7 @@ function handleSystemThemeChange() {
     }
 }
 
-// 使用 $effect 替代 beforeUpdate 进行状态验证
+// 使用 $effect 进行状态验证
 $effect(() => {
     // 验证主题一致性
     validateThemeConsistency();
@@ -221,13 +221,6 @@ function hidePanel() {
                 />
             </div>
         {/each}
-        
-        <!-- 切换中的加载指示器 -->
-        {#if isSwitching}
-            <div class="absolute inset-0 flex items-center justify-center">
-                <div class="w-4 h-4 border-2 border-t-transparent border-current rounded-full animate-spin"></div>
-            </div>
-        {/if}
     </button>
 
     <!-- 主题选择面板 -->
@@ -258,12 +251,6 @@ function hidePanel() {
                         aria-hidden="true"
                     />
                     {i18n(option.textKey)}
-                    
-                    {#if isSwitching && mode === option.mode}
-                        <span class="ml-2">
-                            <div class="w-3 h-3 border-2 border-t-transparent border-current rounded-full animate-spin"></div>
-                        </span>
-                    {/if}
                 </button>
             {/each}
         </div>
