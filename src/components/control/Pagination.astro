@@ -4,150 +4,81 @@ import { Icon } from "astro-icon/components";
 import { url } from "../../utils/url-utils";
 
 interface Props {
-  page: Page;
-  class?: string;
-  style?: string;
+	page: Page;
+	class?: string;
+	style?: string;
 }
 
 const { page, style } = Astro.props;
+
+const HIDDEN = -1;
+
 const className = Astro.props.class;
 
-// 常量定义
-const HIDDEN = -1; // 表示省略号的特殊值
-const ADJACENT_DISTANCE = 2; // 当前页两侧显示的页码数
-const VISIBLE_PAGES = ADJACENT_DISTANCE * 2 + 1; // 中间可见页码数
+const ADJ_DIST = 2;
+const VISIBLE = ADJ_DIST * 2 + 1;
 
-/**
- * 生成分页数组
- * @param currentPage 当前页码
- * @param lastPage 总页数
- * @returns 分页数组，包含页码和省略号标记
- */
-const generatePagination = (currentPage: number, lastPage: number): number[] => {
-  // 计算可见页码的起始和结束位置
-  let start = Math.max(1, currentPage - ADJACENT_DISTANCE);
-  let end = Math.min(lastPage, currentPage + ADJACENT_DISTANCE);
-  
-  // 调整范围确保显示足够的页码
-  if (start === 1) {
-    end = Math.min(lastPage, VISIBLE_PAGES);
-  } else if (end === lastPage) {
-    start = Math.max(1, lastPage - VISIBLE_PAGES + 1);
-  }
-  
-  const pages: number[] = [];
-  
-  // 添加第一页（如果不在开头）
-  if (start > 1) pages.push(1);
-  
-  // 添加省略号（如果第一页和当前范围之间有间隔）
-  if (start > 2) pages.push(HIDDEN);
-  
-  // 添加当前范围内的页码
-  for (let i = start; i <= end; i++) {
-    pages.push(i);
-  }
-  
-  // 添加省略号（如果当前范围和最后一页之间有间隔）
-  if (end < lastPage - 1) pages.push(HIDDEN);
-  
-  // 添加最后一页（如果不在结尾）
-  if (end < lastPage) pages.push(lastPage);
-  
-  return pages;
+// for test
+let count = 1;
+let l = page.currentPage;
+let r = page.currentPage;
+while (0 < l - 1 && r + 1 <= page.lastPage && count + 2 <= VISIBLE) {
+	count += 2;
+	l--;
+	r++;
+}
+while (0 < l - 1 && count < VISIBLE) {
+	count++;
+	l--;
+}
+while (r + 1 <= page.lastPage && count < VISIBLE) {
+	count++;
+	r++;
+}
+
+let pages: number[] = [];
+if (l > 1) pages.push(1);
+if (l === 3) pages.push(2);
+if (l > 3) pages.push(HIDDEN);
+for (let i = l; i <= r; i++) pages.push(i);
+if (r < page.lastPage - 2) pages.push(HIDDEN);
+if (r === page.lastPage - 2) pages.push(page.lastPage - 1);
+if (r < page.lastPage) pages.push(page.lastPage);
+
+const getPageUrl = (p: number) => {
+	if (p === 1) return "/";
+	return `/${p}/`;
 };
-
-/**
- * 获取页面的URL
- * @param pageNumber 页码
- * @returns 该页对应的URL
- */
-const getPageUrl = (pageNumber: number): string => {
-  return pageNumber === 1 ? "/" : `/${pageNumber}/`;
-};
-
-// 生成分页数组
-const pages = generatePagination(page.currentPage, page.lastPage);
 ---
 
-<div class:list={[className, "flex flex-row gap-3 justify-center items-center"]} style={style}>
-  <!-- 上一页按钮 -->
-  <a 
-    href={page.url.prev || ""} 
-    aria-label={page.url.prev ? "上一页" : null}
-    class:list={[
-      "btn-card overflow-hidden rounded-lg text-[var(--primary)] w-11 h-11",
-      "flex items-center justify-center transition-transform duration-200",
-      "hover:bg-[var(--btn-plain-bg-hover)] active:bg-[var(--btn-plain-bg-active)]",
-      "active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed",
-      { "disabled": !page.url.prev }
-    ]}
-    aria-disabled={!page.url.prev}
-  >
-    <Icon 
-      name="material-symbols:chevron-left-rounded" 
-      class="text-[1.75rem] transition-all"
-      aria-hidden="true"
-    />
-  </a>
-  
-  <!-- 页码容器 -->
-  <div 
-    class="bg-[var(--card-bg)] flex flex-row rounded-lg items-center 
-           text-neutral-700 dark:text-neutral-300 font-bold overflow-hidden
-           shadow-sm transition-colors duration-200"
-  >
-    {pages.map((pageNum) => (
-      pageNum === HIDDEN ? (
-        <!-- 省略号 -->
-        <div 
-          class="mx-1 flex items-center justify-center w-8 h-11"
-          aria-hidden="true"
-        >
-          <Icon name="material-symbols:more-horiz" class="text-lg opacity-70" />
-        </div>
-      ) : pageNum === page.currentPage ? (
-        <!-- 当前页 -->
-        <div 
-          class="h-11 w-11 rounded-lg bg-[var(--primary)] flex items-center justify-center
-                 font-bold text-white dark:text-black/70 transition-all duration-300
-                 shadow-md transform scale-105"
-          aria-current="page"
-        >
-          {pageNum}
-        </div>
-      ) : (
-        <!-- 其他页码 -->
-        <a 
-          href={url(getPageUrl(pageNum))} 
-          aria-label={`第 ${pageNum} 页`}
-          class="btn-card w-11 h-11 rounded-lg overflow-hidden flex items-center justify-center
-                 transition-all duration-200 hover:bg-[var(--btn-plain-bg-hover)]
-                 active:bg-[var(--btn-plain-bg-active)] active:scale-90"
-        >
-          {pageNum}
-        </a>
-      )
-    ))}
-  </div>
-  
-  <!-- 下一页按钮 -->
-  <a 
-    href={page.url.next || ""} 
-    aria-label={page.url.next ? "下一页" : null}
-    class:list={[
-      "btn-card overflow-hidden rounded-lg text-[var(--primary)] w-11 h-11",
-      "flex items-center justify-center transition-transform duration-200",
-      "hover:bg-[var(--btn-plain-bg-hover)] active:bg-[var(--btn-plain-bg-active)]",
-      "active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed",
-      { "disabled": !page.url.next }
-    ]}
-    aria-disabled={!page.url.next}
-  >
-    <Icon 
-      name="material-symbols:chevron-right-rounded" 
-      class="text-[1.75rem] transition-all"
-      aria-hidden="true"
-    />
-  </a>
+<div class:list={[className, "flex flex-row gap-3 justify-center"]} style={style}>
+    <a href={page.url.prev || ""} aria-label={page.url.prev ? "Previous Page" : null}
+       class:list={["btn-card overflow-hidden rounded-lg text-[var(--primary)] w-11 h-11",
+           {"disabled": page.url.prev == undefined}
+       ]}
+    >
+        <Icon name="material-symbols:chevron-left-rounded" class="text-[1.75rem]"></Icon>
+    </a>
+    <div class="bg-[var(--card-bg)] flex flex-row rounded-lg items-center text-neutral-700 dark:text-neutral-300 font-bold">
+        {pages.map((p) => {
+            if (p == HIDDEN)
+                return <Icon name="material-symbols:more-horiz" class="mx-1"/>;
+            if (p == page.currentPage)
+                return <div class="h-11 w-11 rounded-lg bg-[var(--primary)] flex items-center justify-center
+                    font-bold text-white dark:text-black/70"
+                >
+                    {p}
+                </div>
+            return <a href={url(getPageUrl(p))} aria-label={`Page ${p}`}
+                class="btn-card w-11 h-11 rounded-lg overflow-hidden active:scale-[0.85]"
+            >{p}</a>
+        })}
+    </div>
+    <a href={page.url.next || ""} aria-label={page.url.next ? "Next Page" : null}
+       class:list={["btn-card overflow-hidden rounded-lg text-[var(--primary)] w-11 h-11",
+           {"disabled": page.url.next == undefined}
+       ]}
+    >
+        <Icon name="material-symbols:chevron-right-rounded" class="text-[1.75rem]"></Icon>
+    </a>
 </div>
