@@ -5,13 +5,17 @@ import { getCategoryList } from "../../utils/content-utils";
 import ButtonLink from "../control/ButtonLink.astro";
 import WidgetLayout from "./WidgetLayout.astro";
 
+// 获取分类列表
 const categories = await getCategoryList();
 
-const COLLAPSED_HEIGHT = "7.5rem";
-const COLLAPSE_THRESHOLD = 5;
+// 折叠相关配置
+const COLLAPSED_HEIGHT = "7.5rem";  // 折叠时的高度
+const COLLAPSE_THRESHOLD = 5;       // 触发折叠的阈值（分类数量）
 
+// 判断是否需要折叠
 const isCollapsed = categories.length >= COLLAPSE_THRESHOLD;
 
+// 接收父组件传递的属性
 interface Props {
 	class?: string;
 	style?: string;
@@ -20,16 +24,84 @@ const className = Astro.props.class;
 const style = Astro.props.style;
 ---
 
-<WidgetLayout name={i18n(I18nKey.categories)} id="categories" isCollapsed={isCollapsed} collapsedHeight={COLLAPSED_HEIGHT}
-                class={className} style={style}
+<WidgetLayout 
+  name={i18n(I18nKey.categories)} 
+  id="categories" 
+  isCollapsed={isCollapsed} 
+  collapsedHeight={COLLAPSED_HEIGHT}
+  class={className} 
+  style={style}
 >
-    {categories.map((c) =>
+  <div class="categories-container">
+    <div class="categories-grid">
+      {categories.map((c) => (
         <ButtonLink
-            url={c.url}
-            badge={String(c.count)}
-            label={`View all posts in the ${c.name.trim()} category`}
+          url={c.url}
+          badge={String(c.count)}
+          label={`查看 ${c.name.trim()} 分类的所有文章`}
+          class="category-item"
         >
-            {c.name.trim()}
+          {c.name.trim()}
         </ButtonLink>
-    )}
+      ))}
+    </div>
+  </div>
 </WidgetLayout>
+
+<style>
+  /* 分类容器 */
+  .categories-container {
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  /* 分类网格布局 */
+  .categories-grid {
+    display: grid;
+    gap: 0.6rem;
+  }
+  
+  /* 分类项样式 */
+  .category-item {
+    display: block;
+    position: relative;
+    transition: transform 0.25s ease-out, background-color 0.2s ease-out;
+    transform-origin: left center;
+    will-change: transform;
+  }
+  
+  /* 悬停效果 - 平滑右移 */
+  .category-item:hover {
+    transform: translateX(0.25rem);
+  }
+  
+  /* 分类项前的小圆点 */
+  .category-item::before {
+    content: "";
+    position: absolute;
+    left: -0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 50%;
+    background-color: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+  }
+  
+  .category-item:hover::before {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.2);
+  }
+  
+  /* 分类项数量徽章 */
+  .category-item .badge {
+    transition: background-color 0.2s ease-out, color 0.2s ease-out;
+  }
+  
+  .category-item:hover .badge {
+    background-color: var(--primary);
+    color: white;
+  }
+</style>
