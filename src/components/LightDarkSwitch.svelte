@@ -9,7 +9,7 @@ import {
     setTheme,
     getSystemTheme
 } from "@utils/setting-utils.ts";
-import { onMount, beforeUpdate, afterUpdate } from "svelte";
+import { onMount } from "svelte";
 import type { LIGHT_DARK_MODE } from "@/types/config.ts";
 
 // 主题模式序列（循环切换顺序）
@@ -45,6 +45,20 @@ let systemThemeListener: MediaQueryList | null = null;
 // 用于存储页面可见性监听器的引用
 let visibilityListener: (() => void) | null = null;
 
+// 系统主题变化处理函数
+function handleSystemThemeChange() {
+    // 仅在自动模式下响应系统主题变化
+    if (mode === AUTO_MODE) {
+        applyThemeToDocument(AUTO_MODE);
+    }
+}
+
+// 使用 $effect 替代 beforeUpdate 进行状态验证
+$effect(() => {
+    // 验证主题一致性
+    validateThemeConsistency();
+});
+
 // 组件挂载时初始化
 onMount(() => {
     // 1. 从存储中获取主题设置并验证状态
@@ -62,12 +76,6 @@ onMount(() => {
     };
 });
 
-// 组件更新前验证主题状态
-beforeUpdate(() => {
-    // 确保模式与当前文档主题一致
-    validateThemeConsistency();
-});
-
 // 初始化主题状态
 function initTheme() {
     const storedTheme = getStoredTheme();
@@ -80,16 +88,6 @@ function initTheme() {
 // 设置系统主题监听器
 function setupSystemThemeListener() {
     systemThemeListener = window.matchMedia("(prefers-color-scheme: dark)");
-    
-    // 系统主题变化时的处理函数
-    const handleSystemThemeChange = () => {
-        // 仅在自动模式下响应系统主题变化
-        if (mode === AUTO_MODE) {
-            applyThemeToDocument(AUTO_MODE);
-        }
-    };
-    
-    // 添加监听
     systemThemeListener.addEventListener("change", handleSystemThemeChange);
 }
 
@@ -111,7 +109,7 @@ function setupVisibilityListener() {
 // 清理所有监听器
 function cleanupListeners() {
     if (systemThemeListener) {
-        systemThemeListener.removeEventListener?.('change', handleSystemThemeChange);
+        systemThemeListener.removeEventListener('change', handleSystemThemeChange);
     }
     if (visibilityListener) {
         visibilityListener();
