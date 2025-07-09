@@ -30,8 +30,16 @@ export let sortedPosts: Post[] = [];
 let groups: Group[] = [];
 
 // 初始化参数
-const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
-const uncategorized = params.get("uncategorized") === "true";
+let uncategorized = false;
+
+// 在 onMount 中安全访问 window 对象
+onMount(() => {
+  const params = new URLSearchParams(window.location.search);
+  uncategorized = params.get("uncategorized") === "true";
+  
+  // 初始调用过滤函数
+  filterAndGroupPosts();
+});
 
 // 提取工具函数
 const formatDate = (date: Date): string => {
@@ -45,9 +53,12 @@ const formatTag = (tagList: string[]): string => {
   return tagList.map(t => `#${t}`).join(" ");
 };
 
-// 响应式处理过滤逻辑
-$: {
-  if (sortedPosts.length === 0) return;
+// 过滤和分组函数
+const filterAndGroupPosts = () => {
+  if (sortedPosts.length === 0) {
+    groups = [];
+    return;
+  }
   
   let filteredPosts = [...sortedPosts];
 
@@ -85,6 +96,11 @@ $: {
       posts
     }))
     .sort((a, b) => b.year - a.year);
+};
+
+// 响应式处理过滤逻辑
+$: {
+  filterAndGroupPosts();
 }
 </script>
 
