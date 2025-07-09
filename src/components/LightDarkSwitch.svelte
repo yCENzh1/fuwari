@@ -7,8 +7,9 @@ import {
     applyThemeToDocument,
     getStoredTheme,
     setTheme,
+    getSystemTheme
 } from "@utils/setting-utils.ts";
-import { onMount } from "svelte";
+import { onMount, beforeUpdate, afterUpdate } from "svelte";
 import type { LIGHT_DARK_MODE } from "@/types/config.ts";
 
 // 主题模式序列（循环切换顺序）
@@ -17,6 +18,8 @@ const seq: LIGHT_DARK_MODE[] = [LIGHT_MODE, DARK_MODE, AUTO_MODE];
 let mode: LIGHT_DARK_MODE = $state(AUTO_MODE);
 // 控制主题面板的显示状态（响应式）
 let panelVisible = $state(false);
+// 防止快速点击的标志
+let isSwitching = $state(false);
 
 // 主题选项配置（用于渲染按钮）
 const themeOptions = [
@@ -37,45 +40,132 @@ const themeOptions = [
     },
 ];
 
+// 用于存储系统主题监听器的引用
+let systemThemeListener: MediaQueryList | null = null;
+// 用于存储页面可见性监听器的引用
+let visibilityListener: (() => void) | null = null;
+
 // 组件挂载时初始化
 onMount(() => {
-    // 1. 从存储中获取主题设置
-    mode = getStoredTheme();
+    // 1. 从存储中获取主题设置并验证状态
+    initTheme();
     
     // 2. 监听系统主题变化（用于自动模式）
-    const darkModePreference = window.matchMedia("(prefers-color-scheme: dark)");
+    setupSystemThemeListener();
+    
+    // 3. 监听页面可见性变化（解决挂起/恢复问题）
+    setupVisibilityListener();
+    
+    // 组件卸载时清理监听器
+    return () => {
+        cleanupListeners();
+    };
+});
+
+// 组件更新前验证主题状态
+beforeUpdate(() => {
+    // 确保模式与当前文档主题一致
+    validateThemeConsistency();
+});
+
+// 初始化主题状态
+function initTheme() {
+    const storedTheme = getStoredTheme();
+    mode = storedTheme;
+    
+    // 确保应用主题到文档
+    applyThemeToDocument(storedTheme);
+}
+
+// 设置系统主题监听器
+function setupSystemThemeListener() {
+    systemThemeListener = window.matchMedia("(prefers-color-scheme: dark)");
     
     // 系统主题变化时的处理函数
     const handleSystemThemeChange = () => {
+        // 仅在自动模式下响应系统主题变化
         if (mode === AUTO_MODE) {
-            applyThemeToDocument(mode);
+            applyThemeToDocument(AUTO_MODE);
         }
     };
     
     // 添加监听
-    darkModePreference.addEventListener("change", handleSystemThemeChange);
-    
-    // 组件卸载时清理监听器
-    return () => {
-        darkModePreference.removeEventListener("change", handleSystemThemeChange);
+    systemThemeListener.addEventListener("change", handleSystemThemeChange);
+}
+
+// 设置页面可见性监听
+function setupVisibilityListener() {
+    const handleVisibilityChange = () => {
+        // 页面从挂起状态恢复时重新验证主题
+        if (document.visibilityState === 'visible') {
+            validateThemeConsistency();
+        }
     };
-});
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    visibilityListener = () => {
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+}
+
+// 清理所有监听器
+function cleanupListeners() {
+    if (systemThemeListener) {
+        systemThemeListener.removeEventListener?.('change', handleSystemThemeChange);
+    }
+    if (visibilityListener) {
+        visibilityListener();
+    }
+}
+
+// 验证主题一致性（修复状态不同步问题）
+function validateThemeConsistency() {
+    // 1. 检查存储中的主题是否与当前状态一致
+    const storedTheme = getStoredTheme();
+    if (storedTheme !== mode) {
+        mode = storedTheme;
+    }
+    
+    // 2. 如果是自动模式，确保应用当前系统主题
+    if (mode === AUTO_MODE) {
+        applyThemeToDocument(AUTO_MODE);
+    }
+}
 
 /**
  * 切换主题模式
  * @param newMode - 要切换的新模式
  */
 function switchScheme(newMode: LIGHT_DARK_MODE) {
-    mode = newMode;
-    setTheme(newMode);
-    // 切换后自动关闭面板（提升用户体验）
-    panelVisible = false;
+    if (isSwitching) return;
+    
+    isSwitching = true;
+    
+    try {
+        mode = newMode;
+        setTheme(newMode);
+        
+        // 如果是自动模式，立即应用当前系统主题
+        if (newMode === AUTO_MODE) {
+            applyThemeToDocument(AUTO_MODE);
+        }
+    } finally {
+        // 切换后自动关闭面板
+        panelVisible = false;
+        
+        // 短暂延迟后重置切换状态（防快速点击）
+        setTimeout(() => {
+            isSwitching = false;
+        }, 300);
+    }
 }
 
 /**
- * 循环切换主题模式
+ * 循环切换主题模式（带防抖）
  */
 function toggleScheme() {
+    if (isSwitching) return;
+    
     const currentIndex = seq.indexOf(mode);
     const nextIndex = (currentIndex + 1) % seq.length;
     switchScheme(seq[nextIndex]);
@@ -114,6 +204,9 @@ function hidePanel() {
         on:mouseenter={showPanel}
         aria-expanded={panelVisible}
         aria-controls="light-dark-panel"
+        disabled={isSwitching}
+        class:opacity-50={isSwitching}
+        class:cursor-not-allowed={isSwitching}
     >
         <!-- 根据当前模式显示对应图标 -->
         {#each themeOptions as option}
@@ -130,6 +223,13 @@ function hidePanel() {
                 />
             </div>
         {/each}
+        
+        <!-- 切换中的加载指示器 -->
+        {#if isSwitching}
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-4 h-4 border-2 border-t-transparent border-current rounded-full animate-spin"></div>
+            </div>
+        {/if}
     </button>
 
     <!-- 主题选择面板 -->
@@ -152,6 +252,7 @@ function hidePanel() {
                     on:click={() => switchScheme(option.mode)}
                     role="menuitemradio"
                     aria-checked={mode === option.mode}
+                    disabled={isSwitching}
                 >
                     <Icon 
                         icon={option.icon} 
@@ -159,6 +260,12 @@ function hidePanel() {
                         aria-hidden="true"
                     />
                     {i18n(option.textKey)}
+                    
+                    {#if isSwitching && mode === option.mode}
+                        <span class="ml-2">
+                            <div class="w-3 h-3 border-2 border-t-transparent border-current rounded-full animate-spin"></div>
+                        </span>
+                    {/if}
                 </button>
             {/each}
         </div>
@@ -182,5 +289,10 @@ function hidePanel() {
     .dark .float-panel {
         background-color: #1f2937;
         border-color: #374151;
+    }
+    
+    /* 防止切换时内容闪烁 */
+    [disabled] {
+        pointer-events: none;
     }
 </style>
