@@ -7,7 +7,7 @@ category:"教程"
 draft:false
 ---
 
-![Replay 哑瓜式 AI 翻唱软件](https://pub-d433ca7edaa74994b3d7c40a7fd7d9ac.r2.dev/fuwari-blog/img/e3b7630170caac0dc92e9f62d510c1a8.webp)
+![Replay 哑瓜式 AI 翻唱软件](https://sb-r2.afo.im/fuwari-blog/img/e3b7630170caac0dc92e9f62d510c1a8.webp)
 
 ## AI翻唱！仅需两步！
 
@@ -15,9 +15,9 @@ draft:false
 
 2. 打开Replay，首先根据引导下载数据包（约11G）。然后根据图片操作，选择歌曲和模型，最后点击 `CREATE SONG` 即可！
 
-![Replay 操作指南图片1](https://pub-d433ca7edaa74994b3d7c40a7fd7d9ac.r2.dev/fuwari-blog/img/59f2cc973405b81324f0472f53309ff6efa682ace.webp)
+![Replay 操作指南图片1](https://sb-r2.afo.im/fuwari-blog/img/59f2cc973405b81324f0472f5309ff6efa682ace.webp)
 
-![Replay 操作指南图片2](https://pub-d433ca7edaa74994b3d7c40a7fd7d9ac.r2.dev/fuwari-blog/img/2024-10-15-16-40-07-image.webp)
+![Replay 操作指南图片2](https://sb-r2.afo.im/fuwari-blog/img/2024-10-15-16-40-07-image.webp)
 
 傻瓜式AI翻唱软件Replay！选歌！选模型！然后CREATE SONG！
 
