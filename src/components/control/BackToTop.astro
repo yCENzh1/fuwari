@@ -2,152 +2,48 @@
 import { Icon } from "astro-icon/components";
 ---
 
-<!-- 移除外层过滤器以避免影响fixed定位 -->
+<!-- There can't be a filter on parent element, or it will break `fixed` -->
 <div class="back-to-top-wrapper hidden lg:block">
-    <button
-        id="back-to-top-btn"
-        class="back-to-top-btn hide"
-        aria-label="回到顶部"
-        onclick="handleBackToTop()"
-    >
-        <Icon name="material-symbols:keyboard-arrow-up-rounded" class="mx-auto" />
-    </button>
+    <div id="back-to-top-btn" class="back-to-top-btn hide flex items-center rounded-2xl overflow-hidden transition" onclick="backToTop()">
+        <button aria-label="Back to Top" class="btn-card h-[3.75rem] w-[3.75rem]">
+            <Icon name="material-symbols:keyboard-arrow-up-rounded" class="mx-auto"></Icon>
+        </button>
+    </div>
 </div>
 
-<style>
-/* 使用CSS变量实现主题化 */
-:root {
-    --back-to-top-size: 3.75rem;
-    --back-to-top-offset: 5rem;
-    --back-to-top-bottom: 10rem;
-}
+<style lang="stylus">
+.back-to-top-wrapper
+    width: 3.75rem
+    height: 3.75rem
+    position: absolute
+    right: 0
+    top: 0
+    pointer-events: none
 
-.back-to-top-wrapper {
-    width: var(--back-to-top-size);
-    height: var(--back-to-top-size);
-    position: absolute;
-    right: 0;
-    top: 0;
-    pointer-events: none;
-}
+.back-to-top-btn
+    color: var(--primary)
+    font-size: 2.25rem
+    font-weight: bold
+    border: none
+    position: fixed
+    bottom: 10rem
+    opacity: 1
+    cursor: pointer
+    transform: translateX(5rem)
+    pointer-events: auto
+    i
+        font-size: 1.75rem
+    &.hide
+        transform: translateX(5rem) scale(0.9)
+        opacity: 0
+        pointer-events: none
+    &:active
+      transform: translateX(5rem) scale(0.9)
 
-.back-to-top-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--back-to-top-size);
-    height: var(--back-to-top-size);
-    color: var(--primary);
-    font-size: 2.25rem;
-    font-weight: bold;
-    border: none;
-    background: var(--card-bg);
-    border-radius: 1.5rem;
-    position: fixed;
-    bottom: var(--back-to-top-bottom);
-    cursor: pointer;
-    opacity: 1;
-    transform: translateX(var(--back-to-top-offset));
-    pointer-events: auto;
-    transition: 
-        transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-        opacity 0.3s ease,
-        background 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    
-    &:hover {
-        background: var(--btn-plain-bg-hover);
-        transform: translateX(var(--back-to-top-offset)) scale(1.05);
-    }
-    
-    &:active {
-        transform: translateX(var(--back-to-top-offset)) scale(0.95);
-    }
-    
-    &.show {
-        transform: translateX(0);
-        opacity: 1;
-    }
-    
-    &.hide {
-        transform: translateX(var(--back-to-top-offset)) scale(0.9);
-        opacity: 0;
-        pointer-events: none;
-    }
-}
-
-/* 移动端优化 */
-@media (max-width: 1024px) {
-    .back-to-top-wrapper {
-        right: 1rem;
-        bottom: 2rem;
-        top: auto;
-    }
-    
-    .back-to-top-btn {
-        position: fixed;
-        bottom: 2rem;
-        right: 1rem;
-        transform: translateY(5rem);
-        
-        &.show {
-            transform: translateY(0);
-        }
-        
-        &.hide {
-            transform: translateY(5rem);
-        }
-    }
-}
 </style>
 
-<script is:inline>
-// 使用requestAnimationFrame优化滚动监听
-let scrollHandler = null;
-let lastScrollY = 0;
-const threshold = 300; // 显示按钮的滚动阈值
-
-function handleScroll() {
-    if (scrollHandler) return;
-    
-    scrollHandler = requestAnimationFrame(() => {
-        const currentScrollY = window.scrollY || document.documentElement.scrollTop;
-        const btn = document.getElementById('back-to-top-btn');
-        
-        if (Math.abs(currentScrollY - lastScrollY) > 5) {
-            if (currentScrollY > threshold) {
-                btn.classList.remove('hide');
-                btn.classList.add('show');
-            } else {
-                btn.classList.remove('show');
-                btn.classList.add('hide');
-            }
-            lastScrollY = currentScrollY;
-        }
-        
-        scrollHandler = null;
-    });
+<script is:raw is:inline>
+function backToTop() {
+    window.scroll({ top: 0, behavior: 'smooth' });
 }
-
-// 平滑滚动到顶部
-function handleBackToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-}
-
-// 初始化
-document.addEventListener('DOMContentLoaded', () => {
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // 初始检查
-    
-    // 组件卸载时清理
-    window.addEventListener('beforeunload', () => {
-        window.removeEventListener('scroll', handleScroll);
-        if (scrollHandler) {
-            cancelAnimationFrame(scrollHandler);
-        }
-    });
-});
 </script>
