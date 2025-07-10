@@ -42,6 +42,14 @@ const fakeResult: SearchResult[] = [
 const togglePanel = () => {
     const panel = document.getElementById("search-panel");
     panel?.classList.toggle("float-panel-closed");
+    
+    // 当打开面板时，自动聚焦移动端搜索框
+    if (!panel?.classList.contains("float-panel-closed")) {
+        setTimeout(() => {
+            const mobileInput = document.querySelector("#search-bar-inside input");
+            if (mobileInput) (mobileInput as HTMLInputElement).focus();
+        }, 100);
+    }
 };
 
 /**
@@ -149,6 +157,27 @@ const initializeSearch = () => {
     if (keywordMobile) debouncedSearch(keywordMobile, false);
 };
 
+// 处理回车键搜索
+const handleKeyDown = (e: KeyboardEvent, isDesktop: boolean) => {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        if (isDesktop) {
+            debouncedSearch(keywordDesktop, true);
+        } else {
+            debouncedSearch(keywordMobile, false);
+        }
+    }
+};
+
+// 处理图标点击搜索
+const handleIconClick = (isDesktop: boolean) => {
+    if (isDesktop) {
+        debouncedSearch(keywordDesktop, true);
+    } else {
+        debouncedSearch(keywordMobile, false);
+    }
+};
+
 // 组件挂载时执行
 onMount(() => {
     // 开发环境直接初始化
@@ -208,15 +237,21 @@ $: if (initialized && keywordMobile) {
            bg-black/[0.04] hover:bg-black/[0.06] focus-within:bg-black/[0.06]
            dark:bg-white/5 dark:hover:bg-white/10 dark:focus-within:bg-white/10"
 >
-    <Icon 
-        icon="material-symbols:search" 
-        class="absolute text-[1.25rem] pointer-events-none ml-3 transition my-auto 
-               text-black/30 dark:text-white/30"
-    />
+    <!-- 搜索图标（可点击） -->
+    <button 
+        on:click={() => handleIconClick(true)}
+        aria-label="Search"
+        class="absolute text-[1.25rem] ml-3 transition my-auto 
+               text-black/30 dark:text-white/30 hover:text-black/50 dark:hover:text-white/50
+               cursor-pointer z-10"
+    >
+        <Icon icon="material-symbols:search" />
+    </button>
+    
     <input 
         placeholder="{i18n(I18nKey.search)}" 
         bind:value={keywordDesktop}
-        on:focus={() => debouncedSearch(keywordDesktop, true)}
+        on:keydown={(e) => handleKeyDown(e, true)}
         class="transition-all pl-10 text-sm bg-transparent outline-0
                h-full w-40 active:w-60 focus:w-60 text-black/50 dark:text-white/50"
     />
@@ -245,14 +280,21 @@ $: if (initialized && keywordMobile) {
                bg-black/[0.04] hover:bg-black/[0.06] focus-within:bg-black/[0.06]
                dark:bg-white/5 dark:hover:bg-white/10 dark:focus-within:bg-white/10"
     >
-        <Icon 
-            icon="material-symbols:search" 
-            class="absolute text-[1.25rem] pointer-events-none ml-3 transition my-auto 
-                   text-black/30 dark:text-white/30"
-        />
+        <!-- 搜索图标（可点击） -->
+        <button 
+            on:click={() => handleIconClick(false)}
+            aria-label="Search"
+            class="absolute text-[1.25rem] ml-3 transition my-auto 
+                   text-black/30 dark:text-white/30 hover:text-black/50 dark:hover:text-white/50
+                   cursor-pointer z-10"
+        >
+            <Icon icon="material-symbols:search" />
+        </button>
+        
         <input 
             placeholder="Search" 
             bind:value={keywordMobile}
+            on:keydown={(e) => handleKeyDown(e, false)}
             class="pl-10 absolute inset-0 text-sm bg-transparent outline-0
                    focus:w-60 text-black/50 dark:text-white/50"
         />
@@ -293,6 +335,11 @@ $: if (initialized && keywordMobile) {
             </div>
         </a>
     {/each}
+    
+    <!-- 搜索提示 -->
+    <div class="text-xs text-30 mt-4 px-3 text-center">
+        {i18n(I18nKey.searchHint)}
+    </div>
 </div>
 
 <style>
@@ -345,5 +392,11 @@ $: if (initialized && keywordMobile) {
         transform: translateY(20px);
         opacity: 0;
         pointer-events: none;
+    }
+    
+    /* 搜索图标按钮悬停效果 */
+    [id^="search-bar"] button:hover {
+        transform: scale(1.1);
+        transition: transform 0.2s ease;
     }
 </style>
