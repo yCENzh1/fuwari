@@ -305,25 +305,45 @@ $: if (initialized && keywordMobile) {
         overflow-y: auto;
         z-index: 100; /* 确保面板在其他内容之上 */
         transition: transform 0.3s ease, opacity 0.3s ease;
+        
+        /* 自定义滚动条 - 更细更美观 */
+        scrollbar-width: thin; /* 支持Firefox */
+        scrollbar-color: rgba(128, 128, 128, 0.3) transparent; /* Firefox支持 */
+    }
+    
+    /* Webkit浏览器滚动条样式 */
+    .search-panel::-webkit-scrollbar {
+        width: 5px; /* 更细的滚动条宽度 */
+    }
+    
+    .search-panel::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 3px;
+        margin: 8px 0;
+    }
+    
+    .search-panel::-webkit-scrollbar-thumb {
+        background: rgba(128, 128, 128, 0.3);
+        border-radius: 3px;
+        transition: background 0.2s ease;
+    }
+    
+    .search-panel::-webkit-scrollbar-thumb:hover {
+        background: rgba(128, 128, 128, 0.5);
+    }
+    
+    /* 深色模式滚动条样式 */
+    .dark .search-panel::-webkit-scrollbar-thumb {
+        background: rgba(200, 200, 200, 0.3);
+    }
+    
+    .dark .search-panel::-webkit-scrollbar-thumb:hover {
+        background: rgba(200, 200, 200, 0.5);
     }
     
     .float-panel-closed {
         transform: translateY(20px);
         opacity: 0;
         pointer-events: none;
-    }
-    
-    /* 平滑滚动效果 */
-    .search-panel::-webkit-scrollbar {
-        width: 8px;
-    }
-    
-    .search-panel::-webkit-scrollbar-track {
-        background: transparent;
-    }
-    
-    .search-panel::-webkit-scrollbar-thumb {
-        background: var(--scrollbar-bg);
-        border-radius: 4px;
     }
 </style>
