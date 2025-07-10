@@ -297,7 +297,7 @@ $: if (initialized && keywordMobile) {
             bind:value={keywordMobile}
             on:keydown={(e) => handleKeyDown(e, false)}
             class="pl-10 absolute inset-0 text-sm bg-transparent outline-0
-                   focus:w-60 text-black/50 dark:text-white/50 h-full"  <!-- 确保输入框高度充满容器 -->
+                   focus:w-60 text-black/50 dark:text-white/50 h-full"
         />
     </div>
 
