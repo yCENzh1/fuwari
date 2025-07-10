@@ -279,7 +279,7 @@ $: if (initialized && keywordMobile) {
         class="flex relative lg:hidden items-center h-11 rounded-xl
                bg-black/[0.04] hover:bg-black/[0.06] focus-within:bg-black/[0.06]
                dark:bg-white/5 dark:hover:bg-white/10 dark:focus-within:bg-white/10
-               mb-2"  <!-- 添加底部margin保持上下平衡 -->
+               mb-2"  //添加底部margin保持上下平衡
     >
         <!-- 搜索图标（可点击） -->
         <button 
