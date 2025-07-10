@@ -60,12 +60,7 @@ const MetaItem = (props: {
 ---
 
 <!-- 主容器：使用 flex 布局 -->
-<div
-  class:list={[
-    "flex flex-wrap text-neutral-500 dark:text-neutral-400 items-center gap-4 gap-x-4 gap-y-2",
-    className
-  ]}
->
+<div class={`flex flex-wrap text-neutral-500 dark:text-neutral-400 items-center gap-4 gap-x-4 gap-y-2 ${className}`}>
   {/* 1. 发布日期 */}
   <MetaItem
     icon="material-symbols:calendar-today-outline-rounded"
@@ -97,15 +92,7 @@ const MetaItem = (props: {
   }
 
   {/* 4. 标签系统 (带响应式控制) */}
-  <div
-    class:list={[
-      "items-center",
-      {
-        "flex": !hideTagsForMobile,
-        "hidden md:flex": hideTagsForMobile
-      }
-    ]}
-  >
+  <div class={`items-center ${hideTagsForMobile ? "hidden md:flex" : "flex"}`}>
     {/* 标签图标 */}
     <div class="meta-icon">
       <Icon name="material-symbols:tag-rounded" class="text-xl" />
@@ -115,21 +102,23 @@ const MetaItem = (props: {
     <div class="flex flex-row flex-nowrap items-center">
       {
         tags?.length > 0 ? (
-          // 渲染标签列表 - 修复点：使用数组替代 Fragment
-          tags.map((tag, index) => [
-            // 标签间的分隔符 (首项不显示)
-            index > 0 && (
-              <div class="mx-1.5 text-[var(--meta-divider)] text-sm">/</div>
-            ),
-            // 单个标签
-            <a
-              href={getTagUrl(tag)}
-              aria-label={`查看包含 ${tag.trim()} 标签的文章`}
-              class="link-lg transition text-50 text-sm font-medium hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap"
-            >
-              {tag.trim()}
-            </a>
-          ])
+          // 渲染标签列表 - 使用显式循环
+          tags.map((tag, index) => {
+            return (
+              <Fragment>
+                {index > 0 && (
+                  <div class="mx-1.5 text-[var(--meta-divider)] text-sm">/</div>
+                )}
+                <a
+                  href={getTagUrl(tag)}
+                  aria-label={`查看包含 ${tag.trim()} 标签的文章`}
+                  class="link-lg transition text-50 text-sm font-medium hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap"
+                >
+                  {tag.trim()}
+                </a>
+              </Fragment>
+            );
+          })
         ) : (
           // 无标签时的占位文本
           <div class="transition text-50 text-sm font-medium">
