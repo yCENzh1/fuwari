@@ -60,7 +60,6 @@ const MetaItem = (props: {
 ---
 
 <!-- 主容器：使用 flex 布局 -->
-<!-- 修复点1: 修正 class:list 指令格式 -->
 <div
   class:list={[
     "flex flex-wrap text-neutral-500 dark:text-neutral-400 items-center gap-4 gap-x-4 gap-y-2",
@@ -98,7 +97,6 @@ const MetaItem = (props: {
   }
 
   {/* 4. 标签系统 (带响应式控制) */}
-  <!-- 修复点2: 修正 class:list 指令格式 -->
   <div
     class:list={[
       "items-center",
@@ -117,25 +115,21 @@ const MetaItem = (props: {
     <div class="flex flex-row flex-nowrap items-center">
       {
         tags?.length > 0 ? (
-          // 渲染标签列表
-          tags.map((tag, index) => (
-            // 使用 Fragment 包裹多个元素
-            <>
-              {/* 标签间的分隔符 (首项不显示) */}
-              {index > 0 && (
-                <div class="mx-1.5 text-[var(--meta-divider)] text-sm">/</div>
-              )}
-              
-              {/* 单个标签 */}
-              <a
-                href={getTagUrl(tag)}
-                aria-label={`查看包含 ${tag.trim()} 标签的文章`}
-                class="link-lg transition text-50 text-sm font-medium hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap"
-              >
-                {tag.trim()}
-              </a>
-            </>
-          ))
+          // 渲染标签列表 - 修复点：使用数组替代 Fragment
+          tags.map((tag, index) => [
+            // 标签间的分隔符 (首项不显示)
+            index > 0 && (
+              <div class="mx-1.5 text-[var(--meta-divider)] text-sm">/</div>
+            ),
+            // 单个标签
+            <a
+              href={getTagUrl(tag)}
+              aria-label={`查看包含 ${tag.trim()} 标签的文章`}
+              class="link-lg transition text-50 text-sm font-medium hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap"
+            >
+              {tag.trim()}
+            </a>
+          ])
         ) : (
           // 无标签时的占位文本
           <div class="transition text-50 text-sm font-medium">
