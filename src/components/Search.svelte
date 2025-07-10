@@ -273,12 +273,13 @@ $: if (initialized && keywordMobile) {
     class="float-panel float-panel-closed search-panel absolute md:w-[30rem]
            top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2"
 >
-    <!-- 移动端搜索输入框 -->
+    <!-- 移动端搜索输入框 - 修复了上下等宽问题 -->
     <div 
         id="search-bar-inside" 
-        class="flex relative lg:hidden transition-all items-center h-11 rounded-xl
+        class="flex relative lg:hidden items-center h-11 rounded-xl
                bg-black/[0.04] hover:bg-black/[0.06] focus-within:bg-black/[0.06]
-               dark:bg-white/5 dark:hover:bg-white/10 dark:focus-within:bg-white/10"
+               dark:bg-white/5 dark:hover:bg-white/10 dark:focus-within:bg-white/10
+               mb-2"  <!-- 添加底部margin保持上下平衡 -->
     >
         <!-- 搜索图标（可点击） -->
         <button 
@@ -296,7 +297,7 @@ $: if (initialized && keywordMobile) {
             bind:value={keywordMobile}
             on:keydown={(e) => handleKeyDown(e, false)}
             class="pl-10 absolute inset-0 text-sm bg-transparent outline-0
-                   focus:w-60 text-black/50 dark:text-white/50"
+                   focus:w-60 text-black/50 dark:text-white/50 h-full"  <!-- 确保输入框高度充满容器 -->
         />
     </div>
 
@@ -398,5 +399,19 @@ $: if (initialized && keywordMobile) {
     [id^="search-bar"] button:hover {
         transform: scale(1.1);
         transition: transform 0.2s ease;
+    }
+    
+    /* 修复输入框高度问题 */
+    #search-bar-inside {
+        height: 2.75rem; /* 确保高度一致 */
+    }
+    
+    #search-bar-inside input {
+        height: 100%; /* 输入框高度充满容器 */
+    }
+    
+    /* 桌面端输入框高度调整 */
+    #search-bar {
+        height: 2.75rem; /* 与移动端保持一致 */
     }
 </style>
