@@ -8,6 +8,7 @@ import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import { defineConfig } from "astro/config";
 //import cloudflare from '@astrojs/cloudflare';
+import netlify from '@astrojs/netlify';
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeComponents from "rehype-components"; /* Render the custom directive content */
 import rehypeKatex from "rehype-katex";
@@ -34,6 +35,7 @@ export default defineConfig({
         }
         })],*/
 	//adapter: cloudflare(),
+	adapter: netlify(),
 	site: "https://fuwari-17l.pages.dev/",
 	base: "/",
 	trailingSlash: "always",
