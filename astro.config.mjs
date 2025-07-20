@@ -39,6 +39,12 @@ export default defineConfig({
 	site: "https://fuwari-17l.pages.dev/",
 	base: "/",
 	trailingSlash: "always",
+
+	prefetch: {
+          prefetchAll: true,
+          defaultStrategy: 'hover',
+        },
+	
 	integrations: [
 		tailwind({
 			nesting: true,
