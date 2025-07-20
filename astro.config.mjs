@@ -40,10 +40,10 @@ export default defineConfig({
 	base: "/",
 	trailingSlash: "always",
 
-	prefetch: {
+	/*prefetch: {
           prefetchAll: true,
           defaultStrategy: 'hover',
-        },
+        },*/
 	
 	integrations: [
 		tailwind({
