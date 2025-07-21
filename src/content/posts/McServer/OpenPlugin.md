@@ -55,15 +55,15 @@ draft: false
 
 本地库可以在 **Maven** 或者 **Gradle** 的构建文件添加。
 
-{% hint style="info" %}
-**请注意，如果添加的 jar 文件下又需要添加其他 jar 文件作为依赖，那么添加本地库需要将这些所有用到的 jar 文件全部打包。**
+:::note
+请注意，如果添加的 jar 文件下又需要添加其他 jar 文件作为依赖，那么添加本地库需要将这些所有用到的 jar 文件全部打包。
 
-**例如，在下面这个例子中使用了 GamePoints 插件作为依赖打包，而 GamePoints 又用了其前置插件 NexEngine 作为依赖，因而我将两个插件都写进了这个构建文件中。**
-{% endhint %}
+例如，在下面这个例子中使用了 GamePoints 插件作为依赖打包，而 GamePoints 又用了其前置插件 NexEngine 作为依赖，因而我将两个插件都写进了这个构建文件中。
+:::
 
 对于 **Maven**，打开项目下的 `pom.xml` 文件，找到如下格式的内容：
 
-```
+```html no-wrap
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -100,6 +100,6 @@ dependencies {
 
 中添加：
 
-```
+```html no-wrap
 compileOnly fileTree(dir:'libs',includes:['*.jar'])
 ```
