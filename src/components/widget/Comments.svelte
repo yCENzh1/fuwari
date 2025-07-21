@@ -1,5 +1,5 @@
 <section>
-    <script src="https://giscus.app/client.js"
+    <script src="https://raw.githubusercontent.com/yCENzh/Fuwari-Giscus/main/client.js"
         data-repo="yCENzh/Fuwari-Giscus"
         data-repo-id="R_kgDOPQMy3A"
         data-category="Announcements"
