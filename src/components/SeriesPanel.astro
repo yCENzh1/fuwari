@@ -59,7 +59,7 @@ const groups: { category: string; series: Series[] }[] = (() => {
     {
         groups.map(group => {
             // 计算该分类的总文章数
-            const totalPosts = group.series.reduce((sum, series) => sum + series.count, 0);
+            const totalPosts = group.series.reduce((sum, s) => sum + s.count, 0);
             
             return (
             <div>
@@ -88,15 +88,15 @@ const groups: { category: string; series: Series[] }[] = (() => {
                     <div class="w-[65%] md:w-[75%] transition text-left text-50">{group.series.length} 个{i18n(I18nKey.series)}</div>
                 </div>
                 
-                {group.series.map(series => (
-                    <a href={getPostUrlBySlug(series.posts[series.posts.length-1].slug)}
-                       aria-label={series.name}
+                {group.series.map(s => (
+                    <a href={getPostUrlBySlug(s.posts[s.posts.length-1].slug)}
+                       aria-label={s.name}
                        class="group btn-plain !block h-10 w-full rounded-lg hover:text-[initial]"
                     >
                         <div class="flex flex-row justify-start items-center h-full">
                             <!-- count -->
                             <div class="w-[20%] md:w-[15%] transition text-sm text-right text-50">
-                                { series.count } 篇文章
+                                { s.count } 篇文章
                             </div>
                             <!-- dot and line -->
                             <div class="w-[15%] md:w-[10%] relative dash-line h-full flex items-center">
@@ -114,23 +114,12 @@ const groups: { category: string; series: Series[] }[] = (() => {
                                 group-hover:translate-x-1 transition-all group-hover:text-[var(--primary)]
                                 text-75 pr-8 whitespace-nowrap overflow-ellipsis overflow-hidden"
                             >
-                                    {series.name}
+                                    {s.name}
                             </div>
                         </div>
                     </a>
                 ))}
             </div>
         )})
-    }
-</div>                                group-hover:translate-x-1 transition-all group-hover:text-[var(--primary)]
-                                text-75 pr-8 whitespace-nowrap overflow-ellipsis overflow-hidden"
-                            >
-                                    {series.name}
-                            </div>
-                        </div>
-                    </a>
-                ))}
-            </div>
-        ))
     }
 </div>
