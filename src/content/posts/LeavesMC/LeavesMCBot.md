@@ -4,8 +4,9 @@ published: 2025-03-25
 description: "随笔记录~LeavesMC"
 image: "https://docs.leavesmc.org/logo.svg"
 tags: [LeavesMC,Bot,Minecraft]
-category: LeavesMC
+category: "教程"
 draft: false
+series: "LeavesMC"
 ---
 
 # 假人
