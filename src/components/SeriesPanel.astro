@@ -63,10 +63,10 @@ const groups: { category: string; series: Series[] }[] = (() => {
             
             return (
             <div>
-                <!-- 分类名单独一行 -->
-                <div class="w-full pb-2 pt-4">
+                <!-- 分类名单独一行 - 左对齐 -->
+                <div class="w-full pb-2 pt-4 text-left">
                     <a aria-label={group.category} href={getCategoryUrl(group.category)}
-                        class="btn-plain scale-animation rounded-lg h-11 font-bold px-2 active:scale-95 text-2xl flex items-center"
+                        class="btn-plain scale-animation rounded-lg h-11 font-bold px-2 active:scale-95 text-2xl inline-flex items-center"
                     >
                         {group.category}
                     </a>
