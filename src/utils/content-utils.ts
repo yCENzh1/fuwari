@@ -1,10 +1,11 @@
-import { getCollection } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import { getCategoryUrl } from "@utils/url-utils.ts";
 import { type BlogPostData } from "../types/config";
 
-export async function getSortedPosts() {
+// // Retrieve posts and sort them by publication date
+async function getRawSortedPosts() {
 	const allBlogPosts = await getCollection("posts", ({ data }) => {
 		return import.meta.env.PROD ? data.draft !== true : true;
 	});
@@ -14,6 +15,11 @@ export async function getSortedPosts() {
 		const dateB = new Date(b.data.published);
 		return dateA > dateB ? -1 : 1;
 	});
+	return sorted;
+}
+
+export async function getSortedPosts() {
+	const sorted = await getRawSortedPosts();
 
 	for (let i = 1; i < sorted.length; i++) {
 		sorted[i].data.nextSlug = sorted[i - 1].slug;
@@ -26,7 +32,20 @@ export async function getSortedPosts() {
 
 	return sorted;
 }
+export type PostForList = {
+	slug: string;
+	data: CollectionEntry<"posts">["data"];
+};
+export async function getSortedPostsList(): Promise<PostForList[]> {
+	const sortedFullPosts = await getRawSortedPosts();
+	// delete post.body
+	const sortedPostsList = sortedFullPosts.map((post) => ({
+		slug: post.slug,
+		data: post.data,
+	}));
 
+	return sortedPostsList;
+}
 export type Tag = {
 	name: string;
 	count: number;
