@@ -1,9 +1,9 @@
 <section>
     <script src="https://giscus.app/client.js"
         data-repo="yCENzh/Fuwari-Giscus"
-        data-repo-id="R_kgDOPQMy3A"
+        data-repo-id="R_kgDOPQkHFg"
         data-category="Announcements"
-        data-category-id="DIC_kwDOPQMy3M4CtPUD"
+        data-category-id="DIC_kwDOPQkHFs4CtQyk"
         data-mapping="pathname"
         data-strict="0"
         data-reactions-enabled="1"
