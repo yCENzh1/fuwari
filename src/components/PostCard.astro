@@ -71,9 +71,12 @@ const { remarkPluginFrontmatter } = await entry.render();
     ]}
   >
    	{pinned && (
-      <div class="absolute top-2 left-2 flex items-center gap-1">
+      <div class="absolute top-2 left-2 flex items-center gap-1 z-[1]">
         <Icon name="mdi:pin" class="w-5 h-5 text-[var(--primary)]" />
-        <span class="px-2 py-1 text-xs font-semibold rounded bg-[var(--primary)] text-white">
+        <span
+          class="px-1.5 py-0 text-[10px] leading-none font-semibold
+                 rounded bg-[var(--primary)]/60 text-white"
+        >
           置顶
         </span>
       </div>
