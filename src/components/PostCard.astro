@@ -70,9 +70,14 @@ const { remarkPluginFrontmatter } = await entry.render();
       }
     ]}
   >
-   	{pinned && <div class="absolute top-2 left-2 text-[var(--primary)]">
-        <Icon name="mdi:pin" class="w-5 h-5" />
-     </div>}
+   	{pinned && (
+      <div class="absolute top-2 left-2 flex items-center gap-1">
+        <Icon name="mdi:pin" class="w-5 h-5 text-[var(--primary)]" />
+        <span class="px-2 py-1 text-xs font-semibold rounded bg-[var(--primary)] text-white">
+          置顶
+        </span>
+      </div>
+    )}
     <a 
       href={url}
       class="transition group w-full block font-bold mb-3 text-3xl text-90
