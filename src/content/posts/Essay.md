@@ -6,6 +6,8 @@ image: "./pin.webp"
 tags: [Essay]
 category: Essay
 draft: false
+series: Essay
+pinned: true
 ---
 
 关于我的超链接
