@@ -26,7 +26,7 @@ import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 import fuwariLinkCard from "./src/plugins/fuwari-link-card.ts";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
-import mdx from '@astrojs/mdx';
+//import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
