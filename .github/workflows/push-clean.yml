@@ -18,9 +18,12 @@ jobs:
           fetch-depth: 0                   # 完整历史，方便后续 force push
 
       # 2. 再克隆公开仓库到 public 目录（会被我们覆盖）
-      - name: Clone public repo
-        run: |
-          git clone --depth 1 https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/yCENzh/Fuwari-yCENzh.git public
+      - name: Checkout public repo
+        uses: actions/checkout@v4
+        with:
+          repository: yCENzh/Fuwari-yCENzh
+          token: ${{ secrets.GH_TOKEN }}
+          path: public
 
       # 3. 把私密仓库里“非文章/非脚本”的文件复制过去
       - name: Copy template files (exclude posts & this workflow)
