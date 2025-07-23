@@ -26,15 +26,19 @@ import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 import fuwariLinkCard from "./src/plugins/fuwari-link-card.ts";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
+import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-	/*integrations: [tailwind({
+	integrations: [
+		tailwind(/*{
         // 添加此配置
         config: {
         applyComplexClasses: true,
         }
-        })],*/
+        }*/),
+		mdx()
+	],
 	//adapter: cloudflare(),
 	//adapter: netlify(),
 	site: "https://fuwari-17l.pages.dev/",
