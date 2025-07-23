@@ -37,7 +37,7 @@ export default defineConfig({
         applyComplexClasses: true,
         }
         }*/),
-		mdx()
+		//mdx()
 	],
 	//adapter: cloudflare(),
 	//adapter: netlify(),
