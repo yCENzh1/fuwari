@@ -1,0 +1,48 @@
+# .github/workflows/push-clean.yml
+name: Daily Push Template to Public (without posts)
+
+on:
+  schedule:
+    - cron: '0 2 * * *'   # 每天 02:00 UTC
+  workflow_dispatch:       # 也可手动触发测试
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 拉取私密仓库本身
+      - name: Checkout private repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_TOKEN }}   # 需要 PAT，能读写公开仓库
+          fetch-depth: 0                   # 完整历史，方便后续 force push
+
+      # 2. 再克隆公开仓库到 public 目录（会被我们覆盖）
+      - name: Clone public repo
+        run: |
+          git clone --depth 1 https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/yCENzh/Fuwari-yCENzh.git public
+
+      # 3. 把私密仓库里“非文章/非脚本”的文件复制过去
+      - name: Copy template files (exclude posts & this workflow)
+        run: |
+          # 清空公开仓库工作区
+          rm -rf public/*
+
+          # 复制私密仓库根目录内容，但排除：
+          # - 文章目录（下文假设为 src/content/posts）
+          # - .github/workflows（防止把脚本也推上去）
+          # - 其它你想排除的文件/目录可继续追加
+          rsync -av --exclude='src/content/posts' \
+                     --exclude='.github/workflows/push-clean.yml' \
+                     --exclude='.git' \
+                     ./ public/
+
+      # 4. 提交并强制推送到公开仓库
+      - name: Commit & force push
+        run: |
+          cd public
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: auto-sync template at $(date -u +%F_%T)" || true
+          git push --force-with-lease origin main   # 公开仓库的主分支名
