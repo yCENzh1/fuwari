@@ -11077,7 +11077,7 @@ snapshots:
       jiti: 1.21.7
       lightningcss: 1.29.3
       sass: 1.80.4
-      stylus: 0.64.0
+      stylus: github:stylus/stylus#0.64.0
       terser: 5.39.0
       yaml: 2.7.0
 
