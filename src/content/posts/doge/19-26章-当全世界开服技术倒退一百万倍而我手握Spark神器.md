@@ -1,5 +1,5 @@
 ---
-title: 当全世界开服技术倒退一百万倍而我手握Spark神器
+title: 19-26章-当全世界开服技术倒退一百万倍而我手握Spark神器
 published: 2025-07-24
 description: "19-26章,给我看笑了"
 tags: [豪赤]
