@@ -26,7 +26,7 @@ import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 import fuwariLinkCard from "./src/plugins/fuwari-link-card.ts";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
-import cloudflare from "@astrojs/cloudflare";
+//import cloudflare from "@astrojs/cloudflare";
 //import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
@@ -43,7 +43,7 @@ export default defineConfig({
 
   //adapter: cloudflare(),
   //adapter: netlify(),
-  site: "https://fuwari-17l.pages.dev/",
+  site: "https://fuwari.14131413.xyz/",
 
   base: "/",
   trailingSlash: "always",
