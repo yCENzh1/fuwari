@@ -15,23 +15,23 @@ const filteredHeadings = headings.filter(heading => heading.depth >= 1 && headin
 ---
 
 {filteredHeadings.length > 0 && (
-  <div class="mb-5 rounded-[var(--radius-large)] overflow-hidden" style="background: var(--primary); background-opacity: 0.05;">
+  <div class="mb-5 rounded-[var(--radius-large)] overflow-hidden bg-black/5 dark:bg-white/5 backdrop-blur-sm">
     <!-- 目录标题栏 -->
     <button 
-      class="toc-toggle w-full px-4 py-3 flex items-center justify-between text-sm font-medium text-white/90 hover:bg-white/5 transition-colors"
+      class="toc-toggle w-full px-4 py-3 flex items-center justify-between text-sm font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
       type="button"
     >
       <span class="flex items-center gap-2">
-        <div class="h-5 w-5 rounded-md bg-white/15 text-white/70 flex items-center justify-center">
+        <div class="h-5 w-5 rounded-md bg-black/10 dark:bg-white/10 text-black/50 dark:text-white/50 flex items-center justify-center">
           📋
         </div>
         目录
       </span>
-      <span class="toc-arrow text-xs text-white/70 transition-transform duration-300 ease-in-out">▼</span>
+      <span class="toc-arrow text-xs text-black/50 dark:text-white/50 transition-transform duration-300 ease-in-out">▼</span>
     </button>
     
     <!-- 目录内容 -->
-    <div class="toc-content max-h-0 overflow-hidden px-4 border-t border-white/15 transition-all duration-300 ease-in-out">
+    <div class="toc-content max-h-0 overflow-y-auto px-4 border-t border-black/10 dark:border-white/10 transition-all duration-300 ease-in-out">
       <nav class="pt-3 pb-4">
         {filteredHeadings.map((heading) => {
           // 根据标题级别设置缩进和样式
@@ -49,7 +49,7 @@ const filteredHeadings = headings.filter(heading => heading.depth >= 1 && headin
           return (
             <a
               href={`#${heading.slug}`}
-              class={`toc-link block py-2 text-white/70 hover:text-white transition-colors ${indentClass} ${sizeClass}`}
+              class={`toc-link block py-2 text-black/60 dark:text-white/60 hover:text-[var(--primary)] transition-colors ${indentClass} ${sizeClass}`}
               data-heading-id={heading.slug}
             >
               {heading.text}
@@ -63,24 +63,37 @@ const filteredHeadings = headings.filter(heading => heading.depth >= 1 && headin
 
 <style>
   .toc-link.active {
-    color: white;
+    color: var(--primary);
     font-weight: 600;
   }
   
-  /* 使用主题色作为背景的半透明效果 */
-  .mb-5 {
-    background: rgba(var(--primary-rgb), 0.08);
-    backdrop-filter: blur(8px);
-  }
-  
-  /* 展开状态的动画 */
+  /* 展开状态的动画 - 增加最大高度以支持更多标题 */
   .toc-content.expanded {
-    max-height: 500px; /* 根据需要调整最大高度 */
+    max-height: 80vh; /* 使用视口高度，最多占用80%的屏幕高度 */
   }
   
   /* 箭头旋转动画 */
   .toc-arrow.rotated {
     transform: rotate(180deg);
+  }
+  
+  /* 自定义滚动条样式 */
+  .toc-content::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .toc-content::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .toc-content::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 2px;
+    opacity: 0.3;
+  }
+  
+  .toc-content::-webkit-scrollbar-thumb:hover {
+    opacity: 0.6;
   }
 </style>
 
