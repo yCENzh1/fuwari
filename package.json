@@ -75,6 +75,7 @@
     "@types/mdast": "^4.0.4",
     "@types/punycode": "^2.1.4",
     "@types/sanitize-html": "^2.16.0",
+    "exit-hook": "^4.0.0",
     "postcss-import": "^16.1.1",
     "postcss-nesting": "^13.0.2"
   },
