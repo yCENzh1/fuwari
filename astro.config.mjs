@@ -26,20 +26,19 @@ import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 import fuwariLinkCard from "./src/plugins/fuwari-link-card.ts";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
+import mdx from "@astrojs/mdx";
 //import cloudflare from "@astrojs/cloudflare";
 //import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [
-      tailwind(/*{
-      // 添加此配置
-      config: {
-      applyComplexClasses: true,
-      }
-      }*/),
-      //mdx()
-	],
+  integrations: [//mdx()
+  tailwind(/*{
+  // 添加此配置
+  config: {
+  applyComplexClasses: true,
+  }
+  }*/), mdx()],
 
   //adapter: cloudflare(),
   //adapter: netlify(),
@@ -129,7 +128,7 @@ export default defineConfig({
       fuwariLinkCard({
         internalLink: { enabled: true },
       }),
-	],
+    ],
 
   markdown: {
       remarkPlugins: [
@@ -181,7 +180,7 @@ export default defineConfig({
               },
           ],
       ],
-	},
+    },
 
   vite: {
       build: {
@@ -198,6 +197,6 @@ export default defineConfig({
               },
           },
       },
-	},
+    },
 
 });
