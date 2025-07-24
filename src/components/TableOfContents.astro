@@ -10,40 +10,52 @@ interface Props {
 
 const { headings } = Astro.props;
 
-// 只显示 h2 和 h3 标题
-const filteredHeadings = headings.filter(heading => heading.depth >= 2 && heading.depth <= 3);
+// 获取所有标题级别 (h1-h6)
+const filteredHeadings = headings.filter(heading => heading.depth >= 1 && heading.depth <= 6);
 ---
 
 {filteredHeadings.length > 0 && (
-  <div class="mb-5 card-base rounded-[var(--radius-large)] overflow-hidden">
+  <div class="mb-5 rounded-[var(--radius-large)] overflow-hidden" style="background: var(--primary); background-opacity: 0.1;">
     <!-- 目录标题栏 -->
     <button 
-      class="toc-toggle w-full px-4 py-3 flex items-center justify-between text-sm font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+      class="toc-toggle w-full px-4 py-3 flex items-center justify-between text-sm font-medium text-white/90 hover:bg-white/10 transition-colors"
       type="button"
     >
       <span class="flex items-center gap-2">
-        <div class="h-5 w-5 rounded-md bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50 flex items-center justify-center">
+        <div class="h-5 w-5 rounded-md bg-white/20 text-white/80 flex items-center justify-center">
           📋
         </div>
         目录
       </span>
-      <span class="toc-arrow text-xs">▼</span>
+      <span class="toc-arrow text-xs text-white/80">▼</span>
     </button>
     
     <!-- 目录内容 -->
-    <div class="toc-content hidden px-4 pb-4 border-t border-[var(--line-divider)]">
+    <div class="toc-content hidden px-4 pb-4 border-t border-white/20">
       <nav class="pt-3">
-        {filteredHeadings.map((heading) => (
-          <a
-            href={`#${heading.slug}`}
-            class={`toc-link block py-2 text-sm text-black/60 dark:text-white/60 hover:text-[var(--primary)] transition-colors ${
-              heading.depth === 2 ? 'font-medium' : 'ml-4 text-xs'
-            }`}
-            data-heading-id={heading.slug}
-          >
-            {heading.text}
-          </a>
-        ))}
+        {filteredHeadings.map((heading) => {
+          // 根据标题级别设置缩进和样式
+          const indentClass = heading.depth === 1 ? '' : 
+                             heading.depth === 2 ? 'ml-2' :
+                             heading.depth === 3 ? 'ml-4' :
+                             heading.depth === 4 ? 'ml-6' :
+                             heading.depth === 5 ? 'ml-8' : 'ml-10';
+          
+          const sizeClass = heading.depth === 1 ? 'text-sm font-bold' :
+                           heading.depth === 2 ? 'text-sm font-medium' :
+                           heading.depth === 3 ? 'text-xs font-medium' :
+                           'text-xs';
+          
+          return (
+            <a
+              href={`#${heading.slug}`}
+              class={`toc-link block py-2 text-white/70 hover:text-white transition-colors ${indentClass} ${sizeClass}`}
+              data-heading-id={heading.slug}
+            >
+              {heading.text}
+            </a>
+          );
+        })}
       </nav>
     </div>
   </div>
@@ -51,8 +63,14 @@ const filteredHeadings = headings.filter(heading => heading.depth >= 2 && headin
 
 <style>
   .toc-link.active {
-    color: var(--primary);
-    font-weight: 500;
+    color: white;
+    font-weight: 600;
+  }
+  
+  /* 使用主题色作为背景的半透明效果 */
+  .mb-5 {
+    background: rgba(var(--primary-rgb), 0.15);
+    backdrop-filter: blur(10px);
   }
 </style>
 
@@ -79,7 +97,7 @@ const filteredHeadings = headings.filter(heading => heading.depth >= 2 && headin
     
     // 高亮当前阅读位置
     const observeHeadings = () => {
-      const headings = document.querySelectorAll('h2[id], h3[id], h4[id], h5[id], h6[id]');
+      const headings = document.querySelectorAll('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]');
       const tocLinks = document.querySelectorAll('.toc-link');
       
       if (headings.length === 0 || tocLinks.length === 0) return;
