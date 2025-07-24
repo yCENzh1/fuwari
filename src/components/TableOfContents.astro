@@ -77,7 +77,7 @@ const filteredHeadings = headings.filter(heading => heading.depth >= 1 && headin
     transform: rotate(180deg);
   }
   
-  /* 自定义滚动条样式 */
+  /* 自定义滚动条样式 - 使用更柔和的颜色 */
   .toc-content::-webkit-scrollbar {
     width: 4px;
   }
@@ -87,33 +87,52 @@ const filteredHeadings = headings.filter(heading => heading.depth >= 1 && headin
   }
   
   .toc-content::-webkit-scrollbar-thumb {
-    background: var(--primary);
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 2px;
-    opacity: 0.3;
+  }
+  
+  .dark .toc-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
   }
   
   .toc-content::-webkit-scrollbar-thumb:hover {
-    opacity: 0.6;
+    background: rgba(0, 0, 0, 0.4);
+  }
+  
+  .dark .toc-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
   }
 </style>
 
 <script>
-  // 点击展开/收起功能
-  document.addEventListener('DOMContentLoaded', () => {
+  // 初始化目录功能
+  function initTableOfContents() {
     const tocToggle = document.querySelector('.toc-toggle');
     const tocContent = document.querySelector('.toc-content');
     const tocArrow = document.querySelector('.toc-arrow');
     
+    // 重置目录状态为收起
+    if (tocContent && tocArrow) {
+      tocContent.classList.remove('expanded');
+      tocArrow.classList.remove('rotated');
+    }
+    
+    // 点击展开/收起功能
     if (tocToggle && tocContent && tocArrow) {
-      tocToggle.addEventListener('click', () => {
+      // 移除旧的事件监听器（如果存在）
+      tocToggle.replaceWith(tocToggle.cloneNode(true));
+      const newTocToggle = document.querySelector('.toc-toggle');
+      const newTocArrow = document.querySelector('.toc-arrow');
+      
+      newTocToggle.addEventListener('click', () => {
         if (tocContent.classList.contains('expanded')) {
           // 收起
           tocContent.classList.remove('expanded');
-          tocArrow.classList.remove('rotated');
+          newTocArrow.classList.remove('rotated');
         } else {
           // 展开
           tocContent.classList.add('expanded');
-          tocArrow.classList.add('rotated');
+          newTocArrow.classList.add('rotated');
         }
       });
     }
@@ -125,7 +144,12 @@ const filteredHeadings = headings.filter(heading => heading.depth >= 1 && headin
       
       if (headings.length === 0 || tocLinks.length === 0) return;
       
-      const observer = new IntersectionObserver((entries) => {
+      // 清除之前的观察器
+      if (window.tocObserver) {
+        window.tocObserver.disconnect();
+      }
+      
+      window.tocObserver = new IntersectionObserver((entries) => {
         let activeId = '';
         
         entries.forEach(entry => {
@@ -148,14 +172,25 @@ const filteredHeadings = headings.filter(heading => heading.depth >= 1 && headin
         threshold: 0
       });
       
-      headings.forEach(heading => observer.observe(heading));
+      headings.forEach(heading => window.tocObserver.observe(heading));
     };
     
     // 延迟执行确保 DOM 完全加载
     setTimeout(observeHeadings, 100);
+  }
+  
+  // 页面首次加载时初始化
+  document.addEventListener('DOMContentLoaded', initTableOfContents);
+  
+  // 监听页面内容变化（用于SPA路由切换）
+  document.addEventListener('astro:page-load', initTableOfContents);
+  
+  // 备用方案：监听popstate事件（浏览器前进后退）
+  window.addEventListener('popstate', () => {
+    setTimeout(initTableOfContents, 100);
   });
   
-  // 平滑滚动
+  // 平滑滚动功能
   document.addEventListener('click', (e) => {
     const tocLink = e.target.closest('.toc-link');
     if (tocLink) {
