@@ -200,5 +200,4 @@ export default defineConfig({
       },
 	},
 
-  adapter: cloudflare(),
 });
