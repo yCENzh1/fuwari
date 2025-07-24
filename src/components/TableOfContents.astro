@@ -1,0 +1,136 @@
+---
+// 接收标题数据
+interface Props {
+  headings: {
+    depth: number;
+    slug: string;
+    text: string;
+  }[];
+}
+
+const { headings } = Astro.props;
+
+// 只显示 h2 和 h3 标题
+const filteredHeadings = headings.filter(heading => heading.depth >= 2 && heading.depth <= 3);
+---
+
+{filteredHeadings.length > 0 && (
+  <div class="mb-5 card-base rounded-[var(--radius-large)] overflow-hidden">
+    <!-- 目录标题栏 -->
+    <button 
+      class="toc-toggle w-full px-4 py-3 flex items-center justify-between text-sm font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+      type="button"
+    >
+      <span class="flex items-center gap-2">
+        <div class="h-5 w-5 rounded-md bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50 flex items-center justify-center">
+          📋
+        </div>
+        目录
+      </span>
+      <span class="toc-arrow text-xs">▼</span>
+    </button>
+    
+    <!-- 目录内容 -->
+    <div class="toc-content hidden px-4 pb-4 border-t border-[var(--line-divider)]">
+      <nav class="pt-3">
+        {filteredHeadings.map((heading) => (
+          <a
+            href={`#${heading.slug}`}
+            class={`toc-link block py-2 text-sm text-black/60 dark:text-white/60 hover:text-[var(--primary)] transition-colors ${
+              heading.depth === 2 ? 'font-medium' : 'ml-4 text-xs'
+            }`}
+            data-heading-id={heading.slug}
+          >
+            {heading.text}
+          </a>
+        ))}
+      </nav>
+    </div>
+  </div>
+)}
+
+<style>
+  .toc-link.active {
+    color: var(--primary);
+    font-weight: 500;
+  }
+</style>
+
+<script>
+  // 点击展开/收起功能
+  document.addEventListener('DOMContentLoaded', () => {
+    const tocToggle = document.querySelector('.toc-toggle');
+    const tocContent = document.querySelector('.toc-content');
+    const tocArrow = document.querySelector('.toc-arrow');
+    
+    if (tocToggle && tocContent && tocArrow) {
+      tocToggle.addEventListener('click', () => {
+        if (tocContent.classList.contains('hidden')) {
+          // 展开
+          tocContent.classList.remove('hidden');
+          tocArrow.textContent = '▲';
+        } else {
+          // 收起
+          tocContent.classList.add('hidden');
+          tocArrow.textContent = '▼';
+        }
+      });
+    }
+    
+    // 高亮当前阅读位置
+    const observeHeadings = () => {
+      const headings = document.querySelectorAll('h2[id], h3[id], h4[id], h5[id], h6[id]');
+      const tocLinks = document.querySelectorAll('.toc-link');
+      
+      if (headings.length === 0 || tocLinks.length === 0) return;
+      
+      const observer = new IntersectionObserver((entries) => {
+        let activeId = '';
+        
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            activeId = entry.target.id;
+          }
+        });
+        
+        // 更新高亮链接
+        tocLinks.forEach(link => {
+          const headingId = link.getAttribute('data-heading-id');
+          if (headingId === activeId) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }, {
+        rootMargin: '-20% 0px -80% 0px',
+        threshold: 0
+      });
+      
+      headings.forEach(heading => observer.observe(heading));
+    };
+    
+    // 延迟执行确保 DOM 完全加载
+    setTimeout(observeHeadings, 100);
+  });
+  
+  // 平滑滚动
+  document.addEventListener('click', (e) => {
+    const tocLink = e.target.closest('.toc-link');
+    if (tocLink) {
+      e.preventDefault();
+      const targetId = tocLink.getAttribute('href').substring(1);
+      const targetElement = document.getElementById(targetId);
+      
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+        
+        // 更新 URL
+        history.pushState(null, null, `#${targetId}`);
+      }
+    }
+  });
+</script>
