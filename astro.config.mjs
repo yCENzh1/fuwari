@@ -27,6 +27,7 @@ import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 import fuwariLinkCard from "./src/plugins/fuwari-link-card.ts";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
 import mdx from "@astrojs/mdx";
+import partytown from "@astrojs/partytown";
 //import cloudflare from "@astrojs/cloudflare";
 //import mdx from '@astrojs/mdx';
 
@@ -38,7 +39,7 @@ export default defineConfig({
   config: {
   applyComplexClasses: true,
   }
-  }*/), mdx()],
+  }*/), mdx(), partytown()],
 
   //adapter: cloudflare(),
   //adapter: netlify(),
