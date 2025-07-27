@@ -3,7 +3,7 @@
 
 This is the demo site for [Fuwari](https://github.com/saicaca/fuwari).
 
-::github{repo="yCENzh/fuwari"}
+::github{repo="yCENzh/Fuwari-yCENzh"}
 
 PS:点点star吧
 

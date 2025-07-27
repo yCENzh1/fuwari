@@ -28,12 +28,12 @@ https://astro.build/
 
 <https://github.com/saicaca/fuwari/>
 
-[https://fuwari.vercel.app/](https://fuwari.vercel.app/)
+[https://fuwari.14131413.xyz/](https://fuwari.14131413.xyz/)
 
 **Internal Links**  
 **内部链接**
 
-[/posts/guide/](/posts/guide/)
+[/posts/archive/](/posts/archive/)
 
 For more details, see the internalLink option section.  
 更多细节请参见 internalLink 选项部分。
@@ -46,11 +46,11 @@ https://はじめよう.みんな/
 
 https://astro.build/
 
-<https://github.com/saicaca/fuwari/>
+<https://github.com/yCENzh/Fuwari-yCENzh/>
 
-[https://fuwari.vercel.app/](https://fuwari.vercel.app/)
+[https://fuwari.14131413.xyz/](https://fuwari.14131413.xyz/)
 
-[/posts/guide/](/posts/guide/)
+[/posts/archive/](/posts/archive/)
 
 https://はじめよう.みんな/
 
