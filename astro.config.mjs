@@ -1,3 +1,4 @@
+// astro.config.mjs
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
@@ -7,13 +8,11 @@ import swup from "@swup/astro";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import { defineConfig } from "astro/config";
-//import cloudflare from '@astrojs/cloudflare';
-//import netlify from '@astrojs/netlify';
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeComponents from "rehype-components";/* Render the custom directive content */
+import rehypeComponents from "rehype-components";
 import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
-import remarkDirective from "remark-directive";/* Handle directives */
+import remarkDirective from "remark-directive";
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
@@ -24,180 +23,164 @@ import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.
 import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
+// 导入你的自定义链接卡片插件
 import fuwariLinkCard from "./src/plugins/fuwari-link-card.ts";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
 import mdx from "@astrojs/mdx";
 import partytown from "@astrojs/partytown";
-//import cloudflare from "@astrojs/cloudflare";
-//import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [//mdx()
-  tailwind(/*{
-  // 添加此配置
-  config: {
-  applyComplexClasses: true,
-  }
-  }*/), mdx(), partytown()],
-
-  //adapter: cloudflare(),
-  //adapter: netlify(),
   site: "https://fuwari.14131413.xyz/",
-
   base: "/",
   trailingSlash: "always",
 
-  /*prefetch: {
-        prefetchAll: true,
-        defaultStrategy: 'hover',
-      },*/
-
   integrations: [
-      tailwind({
-          nesting: true,
-      }),
-      swup({
-          theme: false,
-          animationClass: "transition-swup-", // see https://swup.js.org/options/#animationselector
-          // the default value `transition-` cause transition delay
-          // when the Tailwind class `transition-all` is used
-          containers: ["main", "#toc", "#series"],
-          smoothScrolling: true,
-          cache: true,
-          preload: true,
-          accessibility: true,
-          updateHead: true,
-          updateBodyClass: false,
-          globalInstance: true,
-      }),
-      icon({
-          include: {
-              mdi: ["*"],
-              "preprocess: vitePreprocess(),": ["*"],
-              "fa6-brands": ["*"],
-              "fa6-regular": ["*"],
-              "fa6-solid": ["*"],
+    tailwind({
+      nesting: true,
+    }),
+    partytown(),
+
+    swup({
+      theme: false,
+      animationClass: "transition-swup-",
+      containers: ["main", "#toc", "#series"],
+      smoothScrolling: true,
+      cache: true,
+      preload: true,
+      accessibility: true,
+      updateHead: true,
+      updateBodyClass: false,
+      globalInstance: true,
+    }),
+    icon({
+      include: {
+        mdi: ["*"],
+        "preprocess: vitePreprocess(),": ["*"],
+        "fa6-brands": ["*"],
+        "fa6-regular": ["*"],
+        "fa6-solid": ["*"],
+      },
+    }),
+    expressiveCode({
+      themes: [expressiveCodeConfig.theme, expressiveCodeConfig.theme],
+      plugins: [
+        pluginCollapsibleSections(),
+        pluginLineNumbers(),
+        pluginLanguageBadge(),
+        pluginCustomCopyButton()
+      ],
+      defaultProps: {
+        wrap: false,
+        overridesByLang: {
+          'shellsession': {
+            showLineNumbers: false,
           },
-      }),
-      expressiveCode({
-          themes: [expressiveCodeConfig.theme, expressiveCodeConfig.theme],
-          plugins: [
-              pluginCollapsibleSections(),
-              pluginLineNumbers(),
-              pluginLanguageBadge(),
-              pluginCustomCopyButton()
-          ],
-          defaultProps: {
-              wrap: true,
-              overridesByLang: {
-                  'shellsession': {
-                      showLineNumbers: false,
-                  },
-              },
-          },
-          styleOverrides: {
-              codeBackground: "var(--codeblock-bg)",
-              borderRadius: "0.75rem",
-              borderColor: "none",
-              codeFontSize: "0.875rem",
-              codeFontFamily: "'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
-              codeLineHeight: "1.5rem",
-              frames: {
-                  editorBackground: "var(--codeblock-bg)",
-                  terminalBackground: "var(--codeblock-bg)",
-                  terminalTitlebarBackground: "var(--codeblock-topbar-bg)",
-                  editorTabBarBackground: "var(--codeblock-topbar-bg)",
-                  editorActiveTabBackground: "none",
-                  editorActiveTabIndicatorBottomColor: "var(--primary)",
-                  editorActiveTabIndicatorTopColor: "none",
-                  editorTabBarBorderBottomColor: "var(--codeblock-topbar-bg)",
-                  terminalTitlebarBorderBottomColor: "none"
-              },
-              textMarkers: {
-                  delHue: 0,
-                  insHue: 180,
-                  markHue: 250
-              }
-          },
-          frames: {
-              showCopyToClipboardButton: false,
-          }
-      }),
-      svelte(),
-      sitemap(),
-      fuwariLinkCard({
-        internalLink: { enabled: true },
-      }),
-    ],
+        },
+      },
+      styleOverrides: {
+        codeBackground: "var(--codeblock-bg)",
+        borderRadius: "0.75rem",
+        borderColor: "none",
+        codeFontSize: "0.875rem",
+        codeFontFamily: "'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+        codeLineHeight: "1.5rem",
+        frames: {
+          editorBackground: "var(--codeblock-bg)",
+          terminalBackground: "var(--codeblock-bg)",
+          terminalTitlebarBackground: "var(--codeblock-topbar-bg)",
+          editorTabBarBackground: "var(--codeblock-topbar-bg)",
+          editorActiveTabBackground: "none",
+          editorActiveTabIndicatorBottomColor: "var(--primary)",
+          editorActiveTabIndicatorTopColor: "none",
+          editorTabBarBorderBottomColor: "var(--codeblock-topbar-bg)",
+          terminalTitlebarBorderBottomColor: "none"
+        },
+        textMarkers: {
+          delHue: 0,
+          insHue: 180,
+          markHue: 250
+        }
+      },
+      frames: {
+        showCopyToClipboardButton: false,
+      }
+    }),
+    mdx(),
+    svelte(),
+    sitemap(),
+    fuwariLinkCard({
+      internalLink: { enabled: true },
+      cache: true,
+    }),
+  ],
 
   markdown: {
-      remarkPlugins: [
-          remarkMath,
-          remarkReadingTime,
-          remarkExcerpt,
-          remarkGithubAdmonitionsToDirectives,
-          remarkDirective,
-          remarkSectionize,
-          parseDirectiveNode,
+    remarkPlugins: [
+      remarkMath,
+      remarkReadingTime,
+      remarkExcerpt,
+      remarkGithubAdmonitionsToDirectives,
+      remarkDirective,
+      remarkSectionize,
+      parseDirectiveNode,
+    ],
+    rehypePlugins: [
+      rehypeKatex,
+      rehypeSlug,
+      [
+        rehypeComponents,
+        {
+          components: {
+            github: GithubCardComponent,
+            note: (x, y) => AdmonitionComponent(x, y, "note"),
+            tip: (x, y) => AdmonitionComponent(x, y, "tip"),
+            important: (x, y) => AdmonitionComponent(x, y, "important"),
+            caution: (x, y) => AdmonitionComponent(x, y, "caution"),
+            warning: (x, y) => AdmonitionComponent(x, y, "warning"),
+          },
+        },
       ],
-      rehypePlugins: [
-          rehypeKatex,
-          rehypeSlug,
-          [
-              rehypeComponents,
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: "append",
+          properties: {
+            className: ["anchor"],
+          },
+          content: {
+            type: "element",
+            tagName: "span",
+            properties: {
+              className: ["anchor-icon"],
+              "data-pagefind-ignore": true,
+            },
+            children: [
               {
-                  components: {
-                      github: GithubCardComponent,
-                      note: (x, y) => AdmonitionComponent(x, y, "note"),
-                      tip: (x, y) => AdmonitionComponent(x, y, "tip"),
-                      important: (x, y) => AdmonitionComponent(x, y, "important"),
-                      caution: (x, y) => AdmonitionComponent(x, y, "caution"),
-                      warning: (x, y) => AdmonitionComponent(x, y, "warning"),
-                  },
+                type: "text",
+                value: "#",
               },
-          ],
-          [
-              rehypeAutolinkHeadings,
-              {
-                  behavior: "append",
-                  properties: {
-                      className: ["anchor"],
-                  },
-                  content: {
-                      type: "element",
-                      tagName: "span",
-                      properties: {
-                          className: ["anchor-icon"],
-                          "data-pagefind-ignore": true,
-                      },
-                      children: [
-                          {
-                              type: "text",
-                              value: "#",
-                          },
-                      ],
-                  },
-              },
-          ],
+            ],
+          },
+        },
       ],
-    },
+    ],
+  },
 
   vite: {
-      build: {
-          rollupOptions: {
-              onwarn(warning, warn) {
-                  // temporarily suppress this warning
-                  if (
-                      warning.message.includes("is dynamically imported by") &&
-                      warning.message.includes("but also statically imported by")
-                  ) {
-                      return;
-                  }
-                  warn(warning);
-              },
-          },
+    build: {
+      rollupOptions: {
+        onwarn(warning, warn) {
+          if (
+            warning.message.includes("is dynamically imported by") &&
+            warning.message.includes("but also statically imported by")
+          ) {
+            return;
+          }
+          warn(warning);
+        },
       },
     },
+  },
 
 });
