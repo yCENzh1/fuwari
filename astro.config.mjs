@@ -80,7 +80,7 @@ export default defineConfig({
       },
       styleOverrides: {
         codeBackground: "var(--codeblock-bg)",
-        borderRadius: "0.35rem",
+        borderRadius: "0.325rem",
         borderColor: "none",
         codeFontSize: "0.875rem",
         codeFontFamily: "'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
