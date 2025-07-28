@@ -34,8 +34,6 @@ enum I18nKey {
 	license = "license",
 	
 	series = 'series',
-	
-	starlight = 'starlight'
 }
 
 export default I18nKey;
