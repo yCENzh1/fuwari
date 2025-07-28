@@ -68,7 +68,8 @@ export default defineConfig({
         pluginCollapsibleSections(),
         pluginLineNumbers(),
         pluginLanguageBadge(),
-        pluginCustomCopyButton()
+        pluginCustomCopyButton(),
+        pluginFullscreen()
       ],
       defaultProps: {
         wrap: false,
