@@ -23,11 +23,11 @@ import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.
 import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
-// 导入你的自定义链接卡片插件
 import fuwariLinkCard from "./src/plugins/fuwari-link-card.ts";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
 import mdx from "@astrojs/mdx";
 import partytown from "@astrojs/partytown";
+import pluginFullscreen from 'expressive-code-fullscreen';
 
 // https://astro.build/config
 export default defineConfig({
