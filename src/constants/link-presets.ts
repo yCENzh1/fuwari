@@ -16,7 +16,11 @@ export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
 		url: "/archive/",
 	},
 	[LinkPreset.Series]: {
-                name: i18n(I18nKey.series),
-                url: '/series/',
-        },
+        name: i18n(I18nKey.series),
+        url: '/series/',
+    },
+    [LinkPreset.Starlight]: {
+        name: i18n(I18nKey.starlight),
+        url: '/welcome/',
+    },
 };

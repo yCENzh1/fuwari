@@ -37,4 +37,5 @@ export const zh_CN: Translation = {
 	[Key.license]: "许可协议",
 
 	[Key.series]: '专栏',
+	[Key.starlight]: 'Starlight',
 };
