@@ -27,7 +27,7 @@ import fuwariLinkCard from "./src/plugins/fuwari-link-card.ts";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
 import mdx from "@astrojs/mdx";
 import partytown from "@astrojs/partytown";
-import pluginFullscreen from 'expressive-code-fullscreen';
+import { pluginFullscreen } from 'expressive-code-fullscreen';
 
 // https://astro.build/config
 export default defineConfig({
