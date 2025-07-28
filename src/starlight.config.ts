@@ -1,4 +1,4 @@
-export default defineStarlightConfig({
+export default {
   // 在这里定义所有 Starlight 的配置
   title: 'Starlight', // Starlight 部分的标题
   description: 'Hello starlight!',
@@ -20,4 +20,4 @@ export default defineStarlightConfig({
     //   autogenerate: { directory: 'tech' }, // 自动生成 tech 目录下的链接
     // },
   ],
-});
+};
