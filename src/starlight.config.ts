@@ -1,6 +1,3 @@
-// starlight.config.ts
-import { defineStarlightConfig } from '@astrojs/starlight';
-
 export default defineStarlightConfig({
   // 在这里定义所有 Starlight 的配置
   title: 'Starlight', // Starlight 部分的标题
