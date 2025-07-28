@@ -3,17 +3,14 @@
 基于 [Astro](https://astro.build) 开发的静态博客模板。
 
 [**🖥️在线预览（Vercel）**](https://fuwari.vercel.app)
-[**🖥️作者博客**](https://fuwari-17l.pages.dev/)
+[**🖥️作者博客**](https://fuwari.14131413.xyz/)
 
 ![Preview Image](https://raw.githubusercontent.com/saicaca/resource/main/fuwari/home.png)
 
-## 食用方法(基础版构建
-1.  [Fork本项目](https://github.com/yCENzh/fuwari/fork) (PS:请不要勾选Copy the master branch only选项)
-2.  使用 [Cloudflare](https://dash.cloudflare.com/) 提供的Pages -> 创建一个Pages -> 导入现有Git存储库 -> 将生产分支更改为Build,框架预设选择Astro,再将构建命令npm run build更改为pnpm run build -> 保存并构建
+## 食用方法(以cloudflare page举例,现已完全可用cloudflare worker代替,也可使用其他静态托管服务部署)
+1.  [Fork本项目](https://github.com/yCENzh/Fuwari-yCENzh/fork)
+2.  使用 [Cloudflare](https://dash.cloudflare.com/) 提供的Pages -> 创建一个Pages -> 导入现有Git存储库 -> 框架预设选择Astro,再将构建命令npm run build更改为pnpm run build -> 保存并构建(本项目以pnpm构建)
 3.  没了,非常的简单,后续食用方法请查看我的博客
-
-## 更新日志(25-07-05)
-1. 修复了上古时期的markdown.css中link及btn-regular-dark类未定义(应该是吧)导致构建有概率失败的bug(PS:好消息修好了,坏消息修好了)
 
 ## ✨ 功能特性
 
@@ -22,7 +19,7 @@
 - [x] 亮色 / 暗色模式
 - [x] 自定义主题色和横幅图片
 - [x] 响应式设计
-- [ ] 评论(e其实可以用[giscus](https://giscus.app/)的)
+- [ ] 评论(官方尚未支持,可使用[giscus](https://giscus.app/))
 - [x] 搜索
 - [x] 文内目录
 
