@@ -107,9 +107,9 @@ export default defineConfig({
   }),
   
     starlight({
-      contentDir: 'src/content/starlight',
       ...starlightConfig,
     }),
+
   ],
 
   markdown: {

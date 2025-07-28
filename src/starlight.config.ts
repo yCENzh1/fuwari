@@ -2,9 +2,9 @@ export default {
   // 在这里定义所有 Starlight 的配置
   title: 'Starlight', // Starlight 部分的标题
   description: 'Hello starlight!',
-  social: {
-    github: 'https://github.com/yCENzh',
-  },
+  social: [
+    { icon: 'github', label: 'GitHub', href: 'https://github.com/yCENzh' },
+  ],
   // 侧边栏是关键，我们先定义一个简单的
   sidebar: [
     {
