@@ -106,10 +106,11 @@ export default defineConfig({
     cache: true,
   }),
   
-  starlight({
-    contentDir: 'src/content/starlight',
-    ...starlightConfig,
-  }),
+    starlight({
+      contentDir: 'src/content/starlight',
+      ...starlightConfig,
+    }),
+  ],
 
   markdown: {
     remarkPlugins: [
