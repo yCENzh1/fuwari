@@ -55,8 +55,14 @@ const mainPanelTop = siteConfig.banner.enable
 
 <!-- Banner -->
 {siteConfig.banner.enable && <div id="banner-wrapper" class={`absolute z-10 w-full transition duration-700 overflow-hidden`} style={`top: -${BANNER_HEIGHT_EXTEND}vh`}>
+    <!-- ✅ [新增] Linear Progress 加载动画 -->
+    <div id="banner-progress" class="banner-progress">
+        <div class="banner-progress-bar"></div>
+    </div>
+    
     <ImageWrapper id="banner" alt="Banner image of the blog" class:list={["object-cover h-full transition duration-700 opacity-0 scale-105"]}
                   src={siteConfig.banner.src} position={siteConfig.banner.position}
+                  data-banner-image="true"
     >
     </ImageWrapper>
 </div>}
@@ -124,4 +130,95 @@ const mainPanelTop = siteConfig.banner.enable
         {!siteConfig.toc.enable && <div id="toc"></div>}
     </div>
 </div>
+
+<!-- ✅ [新增] Banner 加载样式 -->
+<style>
+    .banner-progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background-color: rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        z-index: 20;
+        transition: opacity 0.3s ease-out;
+    }
+    
+    :global(.dark) .banner-progress {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .banner-progress-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: hsl(var(--hue), 70%, 55%);
+        transform-origin: left;
+        animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+    }
+    
+    :global(.dark) .banner-progress-bar {
+        background-color: hsl(var(--hue), 70%, 65%);
+    }
+    
+    @keyframes indeterminate {
+        0% {
+            transform: translateX(-100%) scaleX(1);
+        }
+        60% {
+            transform: translateX(100%) scaleX(1);
+        }
+        100% {
+            transform: translateX(100%) scaleX(1);
+        }
+    }
+    
+    .banner-progress.hide {
+        opacity: 0;
+        pointer-events: none;
+    }
+</style>
+
+<!-- ✅ [新增] Banner 图片加载检测脚本 -->
+<script>
+    function initBannerProgress() {
+        const bannerImage = document.querySelector('[data-banner-image="true"] img');
+        const progressBar = document.getElementById('banner-progress');
+        
+        if (!bannerImage || !progressBar) return;
+        
+        // 检查图片是否已经加载完成（从缓存）
+        if (bannerImage.complete && bannerImage.naturalHeight !== 0) {
+            progressBar.classList.add('hide');
+            return;
+        }
+        
+        // 监听图片加载完成事件
+        bannerImage.addEventListener('load', () => {
+            setTimeout(() => {
+                progressBar.classList.add('hide');
+            }, 300); // 延迟一点隐藏，让动画更自然
+        });
+        
+        // 监听图片加载错误事件
+        bannerImage.addEventListener('error', () => {
+            progressBar.classList.add('hide');
+        });
+    }
+    
+    // 页面加载时初始化
+    document.addEventListener('DOMContentLoaded', initBannerProgress);
+    
+    // 如果使用了 Swup，在页面切换后也需要初始化
+    if (window.swup) {
+        window.swup.hooks.on('page:view', initBannerProgress);
+    } else {
+        document.addEventListener('swup:enable', () => {
+            window.swup.hooks.on('page:view', initBannerProgress);
+        });
+    }
+</script>
 </Layout>

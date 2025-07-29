@@ -185,6 +185,34 @@ const bannerOffset =
 	.navbar-hidden {
 		@apply opacity-0 -translate-y-16
 	}
+	
+	/* ✅ [新增] Linear Progress 样式 */
+	.banner-progress {
+		@apply absolute top-0 left-0 w-full h-1 bg-black/10 dark:bg-white/10 overflow-hidden z-10;
+	}
+	
+	.banner-progress::before {
+		content: '';
+		@apply absolute top-0 left-0 h-full bg-[hsl(var(--hue),70%,55%)] dark:bg-[hsl(var(--hue),70%,65%)];
+		width: 100%;
+		animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+	}
+	
+	@keyframes indeterminate {
+		0% {
+			left: -100%;
+			right: 100%;
+		}
+		60% {
+			left: 100%;
+			right: -90%;
+		}
+		100% {
+			left: 100%;
+			right: -90%;
+		}
+	}
+	
 }
 </style>
 
