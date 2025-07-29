@@ -33,7 +33,7 @@ https://astro.build/
 **Internal Links**  
 **内部链接**
 
-[/posts/archive/](/posts/archive/)
+[/archive/](/archive/)
 
 For more details, see the internalLink option section.  
 更多细节请参见 internalLink 选项部分。
@@ -50,7 +50,7 @@ https://astro.build/
 
 [https://fuwari.14131413.xyz/](https://fuwari.14131413.xyz/)
 
-[/posts/archive/](/posts/archive/)
+[/archive/](/archive/)
 
 https://はじめよう.みんな/
 

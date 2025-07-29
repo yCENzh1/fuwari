@@ -6,6 +6,7 @@ image: "https://api.boxmoe.com/random.php"
 tags: [Markdown, Blogging, Demo]
 category: Default
 draft: false
+series: Examples
 ---
 
 # An h1 header

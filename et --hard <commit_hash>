@@ -1,0 +1,444 @@
+[33mdddd77b[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m v1.0.1增加加载动画
+[33m3bff937[m v1.0没错我又回来了
+[33m1d62206[m v1.1 Starlight修bug4
+[33m17248a3[m v1.1 Starlight修bug3
+[33m7d1c802[m v1.1 Starlight修bug2
+[33m0507744[m v1.1 Starlight修bug1
+[33m4ca1faf[m v1.1 Starlight再再修bug
+[33mf3a2a20[m v1.1 Starlight再修bug
+[33mf3cf1b0[m v1.1 Starlight修bug
+[33m5b2aa16[m v1.1 Starlight!
+[33ma9b1c3b[m v1.0正式版
+[33m18970f6[m 回退,删除全屏
+[33m511ebf5[m 更换具名导入
+[33mc229419[m 忘记导入了
+[33m06f6417[m 代码全屏
+[33m9a48d5d[m 更新依赖
+[33mfeb345a[m 主题色
+[33m46d97f4[m 调整圆角0.25
+[33m3db198f[m 调整圆角0.3
+[33m8f87e38[m 调整圆角0.32
+[33m0aa8366[m 调整圆角0.325
+[33m55760d2[m 调整圆角0.35
+[33mf3ed2df[m 调整圆角0.4
+[33mc2e3c57[m 调整圆角0.6
+[33m1e1fd1d[m 调整圆角0.6
+[33me9974d4[m 调整圆角0.5
+[33m892788d[m 调整圆角0.25
+[33mabab8a7[m 修bug?
+[33m829ec8c[m 嘶
+[33m66a95b8[m 优化页面加载逻辑
+[33m37502ef[m 优化页面加载逻辑
+[33m94d204b[m 安装partytown
+[33mba0f0ae[m md什么东西啊
+[33m5e9e0d9[m 不修了c
+[33m0ec0c23[m 再次修复
+[33ma80f99a[m layout-fixes
+[33m686fcbe[m 笑
+[33mffe0a4e[m 豪赤,太豪赤了
+[33m05363d6[m 豪赤
+[33m8cb7331[m mdx格式支持
+[33m8e1730c[m 更新日期
+[33m6292c28[m 再再再次更新
+[33mb613035[m 再再次更新
+[33m56edc77[m 再次更改
+[33m53a6ec4[m 更改目录样式
+[33m35dd86e[m fix: add missing exit-hook for wrangler deploy
+[33m76d2829[m 增加目录
+[33m651564f[m Update astro.config.mjs
+[33m3e5fe06[m Update astro.config.mjs
+[33m81451c3[m 更新cf适配器
+[33m6ed8146[m chore: update dependencies
+[33m6957155[m 2025-07-23-1918
+[33m1a9108e[m 再次更新
+[33m8d576dc[m 更新stylus
+[33maf10b38[m Update package.json
+[33m58cf2fc[m Update package.json
+[33mec5bc61[m Update package.json
+[33m486fc1f[m Delete src/content/posts/doge/当全世界开服技术倒退一百万倍而我手握Spark神器.md
+[33mcccc718[m Add files via upload
+[33mb3cd342[m Create 当全世界开服技术倒退一百万倍而我手握Spark神器.md
+[33m97b00dd[m Update push-clean.yml
+[33m32dfdb9[m Create push-clean.yml
+[33mca0199c[m 2025-07-23-1558
+[33mcbd8c39[m Update astro.config.mjs
+[33mb923eb8[m Update astro.config.mjs
+[33me3adf92[m Update package.json
+[33m5031942[m Update package.json
+[33m3098848[m Update astro.config.mjs
+[33mfb13dda[m 置顶
+[33m3fa5cc7[m Update link-cards.md
+[33m459cd63[m 置顶
+[33m9e380f3[m 置顶
+[33m9ec5abb[m 更换 置顶 字体位置
+[33mc2a1b96[m 删除半透明
+[33mf4051eb[m 再次更改字体
+[33mb9026e3[m 增加置顶字体
+[33me9c9915[m 置顶图标更换左侧
+[33m41bfa9c[m 2025-07-22-1602
+[33m8373be8[m 2025-07-22-1601
+[33me085e19[m Update pnpm-lock.yaml
+[33md56e7f1[m 2025-07-22-1330
+[33m0c71a79[m 增加文章置顶功能
+[33me4f0293[m Update astro.config.mjs
+[33m63b5f26[m Update .gitignore
+[33m1463811[m Update [...slug].astro
+[33m02036e7[m Delete src/components/widget/Comments.svelte
+[33mb626ad5[m Update Comments.svelte
+[33m69af081[m Update Comments.svelte
+[33m9b43ecd[m Update Comments.svelte
+[33mebd0f92[m Update Comments.svelte
+[33m5300ddf[m Delete .github/workflows/biome.yml
+[33mcbfebce[m Delete .github/workflows/build.yml
+[33m7a857b8[m Update Comments.svelte
+[33mf1510f7[m Update Comments.svelte
+[33m2383adf[m Update Comments.svelte
+[33ma270fe5[m Update [...slug].astro
+[33m25f3654[m Create Comments.svelte
+[33m4d2c1c3[m Update [...slug].astro
+[33mba89fa8[m Create 4.2-kan-bao-cuo.md
+[33m2fbc1db[m Create 3.6-zui-hou-tuo-zhan-wan-fa-de-cha-jian.md
+[33mc1361ad[m Create 3.5-shi-zhan-chuan-song.md
+[33m9073bec[m Create 3.4-shi-zhan-fu-kong-zi.md
+[33mf0f41b6[m Create 3.3-shi-zhan-npc.md
+[33m95d153f[m Create 3.2-shi-zhan-shi-jie-de-an-pai.md
+[33m6ecc9d1[m Create 3.1-shi-zhan-quan-xian-zu-de-an-pai.md
+[33m2216466[m Create 2.5-ben-zhang-zuo-ye-zong-he-ji-chu-cha-jian.md
+[33m2a238be[m Create 2.4-xiang-bu-dao-he-xin-ye-neng-pei-zhi.md
+[33m373eaa2[m Create 2.3-gao-xiaol-zhi-zuo-pei-zhi-mu-ban.md
+[33m90691b6[m Update 2.2-zi-xue-cai-shi-wang-dao-du-cha-jian-wen-dang.md
+[33mc4d406d[m Update 2.1-da-hao-ji-chu-yaml-ge-shi-de-xue-xi.md
+[33md1cd0a7[m Create 2.2-zi-xue-cai-shi-wang-dao-du-cha-jian-wen-dang.md
+[33m8ff073c[m Create 2.1-da-hao-ji-chu-yaml-ge-shi-de-xue-xi.md
+[33m7426d37[m Update SeriesPanel.astro
+[33m2d0aede[m Update SeriesPanel.astro
+[33m21e3831[m Update SeriesPanel.astro
+[33me5a0f26[m Update SeriesPanel.astro
+[33made82b6[m Update SeriesPanel.astro
+[33m7fcceaf[m Update 1.8-ben-zhang-zuo-ye-quan-xian-zu-he-duo-shi-jie-cha-jian.md
+[33m4c8b5e8[m Update 1.7-cha-jian-de-xuan-ze-bao-hu-cha-jian-yu-chuang-shi-shen.md
+[33m65a5a07[m Update 1.6-xun-zhao-zi-yuan-cong-zhu-cheng-di-tu-kai-shi.md
+[33m1be31e5[m Update 1.5-zong-he-qi-lai-kan-cong-fu-wu-qi-de-cai-dan-kai-shi.md
+[33m624d332[m Update 1.4-ruan-jian-de-xuan-ze-chang-yong-ruan-jian.md
+[33mdda9eb7[m Update 1.3-cha-jian-de-xuan-ze-chang-jian-api-cha-jian.md
+[33m652024d[m Update 1.2-yun-ying-de-si-lu-cong-jing-ji-fang-mian-kai-shi.md
+[33ma67f35a[m Update 1.1-cha-jian-de-xuan-ze-cong-jing-ji-cha-jian-kai-shi.md
+[33md8493d5[m Update 0.1-fu-wu-duan-de-xuan-ze.md
+[33m53156a4[m Update 0.0-zong-qian-yan.md
+[33m40e2f2d[m Update 0.1-fu-wu-duan-de-xuan-ze.md
+[33m18ef14e[m Update 0.0-zong-qian-yan.md
+[33m0faf920[m Create 1.8-ben-zhang-zuo-ye-quan-xian-zu-he-duo-shi-jie-cha-jian.md
+[33m6046517[m Create 1.7-cha-jian-de-xuan-ze-bao-hu-cha-jian-yu-chuang-shi-shen.md
+[33m98e53cd[m Create 1.6-xun-zhao-zi-yuan-cong-zhu-cheng-di-tu-kai-shi.md
+[33m14314ac[m Create 1.5-zong-he-qi-lai-kan-cong-fu-wu-qi-de-cai-dan-kai-shi.md
+[33mf663f68[m Update 1.4-ruan-jian-de-xuan-ze-chang-yong-ruan-jian.md
+[33mb8005a9[m Create 1.4-ruan-jian-de-xuan-ze-chang-yong-ruan-jian.md
+[33m8e8eaa7[m Create 1.3-cha-jian-de-xuan-ze-chang-jian-api-cha-jian.md
+[33meafe732[m Create 1.2-yun-ying-de-si-lu-cong-jing-ji-fang-mian-kai-shi.md
+[33md1dc229[m Create 1.1-cha-jian-de-xuan-ze-cong-jing-ji-cha-jian-kai-shi.md
+[33md740e69[m Create 1.0-xu.md
+[33me0190a0[m Create 0.2-fu-wu-duan-mu-lu-xia-de-wen-jian.md
+[33m7f4f0e5[m Create 0.1-fu-wu-duan-de-xuan-ze.md
+[33m2a4f9ac[m Update 0.0-zong-qian-yan.md
+[33m8ee05d7[m Create 0.0-zong-qian-yan.md
+[33m9ef4595[m Update and rename src/content/posts/MCServer/LaunchServer/OpenPluginBuilding.md to src/content/posts/MCServer/new-user-doc/fu-zhu-ye-yao-hui-yi-dian-zhe-xie/4.1-kai-yuan-cha-jian-de-gou-jian.md
+[33md60df1c[m Rename OpenPlugin.md to OpenPluginBuilding.md
+[33m6fada22[m Update and rename src/content/posts/McServer/OpenPlugin.md to src/content/posts/McServer/LaunchServer/OpenPlugin.md
+[33m3b8d83e[m Update archive.astro
+[33m9ae8e9e[m Update content-utils.ts
+[33mfb675e8[m Update archive.astro
+[33md29304d[m Update constants.ts
+[33mae63b33[m Update content-utils.ts
+[33mfb054ad[m Create SeriesPanel.astro
+[33m5adf616[m Create series.astro
+[33m249c19a[m Update config.ts
+[33mb190889[m Update config.ts
+[33mc7f326f[m Update link-presets.ts
+[33m4e2224a[m Update LeavesMCBot.md
+[33m0fbf276[m Update OpenPlugin.md
+[33m1afe471[m Update astro.config.mjs
+[33mf594554[m Update SideBar.astro
+[33m2cbd6b2[m Create Series.astro
+[33mb5f49f6[m Update content-utils.ts
+[33m9ab7b9a[m Update MainGridLayout.astro
+[33mc9b3674[m Update [...slug].astro
+[33mcaa9327[m Update config.ts
+[33m2f3ea4f[m Update config.ts
+[33md202bc4[m Update zh_TW.ts
+[33mc120fb4[m Update zh_CN.ts
+[33mb8bc3cd[m Update th.ts
+[33m7a1892f[m Update ko.ts
+[33m1b4a2d3[m Update ja.ts
+[33m23ac590[m Update es.ts
+[33m69c10b0[m Update en.ts
+[33me9efa48[m Update i18nKey.ts
+[33m4375563[m Update OpenPlugin.md
+[33m69ac432[m Update OpenPlugin.md
+[33m4de32b9[m Update OpenPlugin.md
+[33mc8a40ed[m Update OpenPlugin.md
+[33mb54c6e4[m Create OpenPlugin.md
+[33m2ba283a[m Update astro.config.mjs
+[33m2ec0d09[m Update astro.config.mjs
+[33m1078d5e[m Rename src/content/posts/LeavesMCBot.md to src/content/posts/LeavesMC/LeavesMCBot.md
+[33mb0d530e[m Add files via upload
+[33md2412fe[m Update Layout.astro
+[33mc8fd8c8[m Update Layout.astro
+[33m2b8a0a2[m Delete components.css
+[33m589578d[m Update astro.config.mjs
+[33m3259ccb[m Update astro.config.mjs
+[33m88b5ad0[m Update PostPage.astro
+[33m8325fd6[m Update PostMeta.astro
+[33m16b3125[m Update PostCard.astro
+[33m6fc0087[m Update Navbar.astro
+[33m9c40164[m Update ArchivePanel.svelte
+[33m4419bea[m Update BackToTop.astro
+[33m6813ad0[m Update BackToTop.astro
+[33m62fb442[m Update PostPage.astro
+[33m072ece1[m Update PostMeta.astro
+[33m5ab3bf7[m Update PostCard.astro
+[33me029c41[m Update ArchivePanel.svelte
+[33me25898b[m Update Navbar.astro
+[33mb8b81c3[m Update Search.svelte
+[33m48d6405[m Update Search.svelte
+[33m5fc43f4[m Update Search.svelte
+[33m8763f96[m Update Search.svelte
+[33m6f6945b[m Update Search.svelte
+[33mc841093[m Update Search.svelte
+[33mc4be296[m Update Search.svelte
+[33m0007eff[m Update BackToTop.astro
+[33m50d5850[m Update PostPage.astro
+[33m929f15d[m Update Search.svelte
+[33mc343d25[m Update PostPage.astro
+[33m8a7f2d2[m Update ArchivePanel.svelte
+[33m956c714[m Update ArchivePanel.svelte
+[33m3864183[m Update ArchivePanel.svelte
+[33mff80d1e[m Update PostMeta.astro
+[33mf06bbb7[m Update PostMeta.astro
+[33me7a8e61[m Update PostMeta.astro
+[33mc75ba32[m Update PostMeta.astro
+[33m771e364[m Update PostMeta.astro
+[33m991001c[m Update ArchivePanel.svelte
+[33m3542d49[m Update PostMeta.astro
+[33mbb6a9c3[m Update ArchivePanel.svelte
+[33m5c6f65e[m Update ArchivePanel.svelte
+[33m527ed79[m Update ArchivePanel.svelte
+[33md5989fe[m Update ArchivePanel.svelte
+[33m4fba565[m Update ArchivePanel.svelte
+[33med0d352[m Update ArchivePanel.svelte
+[33me682cc8[m Update PostCard.astro
+[33md55a4d9[m Update PostCard.astro
+[33m80ce65b[m Update PostCard.astro
+[33m3aaea4c[m Update Navbar.astro
+[33m1cb0cfd[m Update LightDarkSwitch.svelte
+[33m637f001[m Update LightDarkSwitch.svelte
+[33ma23d7ea[m Update LightDarkSwitch.svelte
+[33mac6b96f[m Update LightDarkSwitch.svelte
+[33m761764a[m Update LightDarkSwitch.svelte
+[33m84e53a5[m Update LightDarkSwitch.svelte
+[33m44e1981[m Update LightDarkSwitch.svelte
+[33mee6ecfd[m Update Footer.astro
+[33mb18e13b[m Update Footer.astro
+[33m91ef492[m Update ArchivePanel.svelte
+[33mf678462[m Update Layout.astro
+[33m8e10d19[m Update TOC.astro
+[33m2c60c8f[m Update Categories.astro
+[33m9904c17[m Update Pagination.astro
+[33m53f6d6c[m Update ButtonLink.astro
+[33m81d1847[m Update BackToTop.astro
+[33m62ccf6e[m Update PostMeta.astro
+[33mf3e2152[m Update Footer.astro
+[33mf3382f5[m Update TOC.astro
+[33mf725413[m Update Profile.astro
+[33mfb55f63[m Update Pagination.astro
+[33mf5a53a9[m Update ButtonTag.astro
+[33mfd06663[m Update BackToTop.astro
+[33md0df407[m Update BackToTop.astro
+[33mba28f68[m Update Search.svelte
+[33m4e7536c[m Update PostMeta.astro
+[33m09f673b[m Update PostCard.astro
+[33m735de8d[m Update LightDarkSwitch.svelte
+[33mb8a3198[m Update ArchivePanel.svelte
+[33m0106b93[m Update Categories.astro
+[33m7cd25ed[m Update Categories.astro
+[33m48fdb21[m Update Categories.astro
+[33m2e1be5b[m Update Categories.astro
+[33mf183c37[m Update AIReplay.md
+[33m6298740[m Update AIReplay.md
+[33m533e01a[m Update AIReplay.md
+[33madb8bbc[m Create AIReplay.md
+[33mf9d030d[m Update NavMenuPanel.astro
+[33m77f7900[m Update NavMenuPanel.astro
+[33m176a1a1[m Update Categories.astro
+[33m40efb01[m Update Profile.astro
+[33mb025690[m Update TOC.astro
+[33me9b1a45[m Update Navbar.astro
+[33mcf1b81d[m Update Profile.astro
+[33m68e4ddc[m Update Categories.astro
+[33m4d14e87[m Update TOC.astro
+[33m11eb3fe[m Update TOC.astro
+[33m9af5480[m Update TOC.astro
+[33ma084658[m Update NavMenuPanel.astro
+[33md05be0d[m Update NavMenuPanel.astro
+[33m319d995[m Update NavMenuPanel.astro
+[33m2172c62[m Update WidgetLayout.astro
+[33m81612da[m Update Categories.astro
+[33mad12930[m Update Profile.astro
+[33m6e63f50[m Update NavMenuPanel.astro
+[33m044fc5d[m Update NavMenuPanel.astro
+[33m19b31d9[m Update NavMenuPanel.astro
+[33m51d37f2[m Update DisplaySettings.svelte
+[33m3032fa3[m Update DisplaySettings.svelte
+[33med9a228[m Update DisplaySettings.svelte
+[33m057e12e[m Update DisplaySettings.svelte
+[33m3fa6aaf[m Update DisplaySettings.svelte
+[33mb9f8fff[m Update Categories.astro
+[33m0d93b09[m Update WidgetLayout.astro
+[33mec4a511[m Update LightDarkSwitch.svelte
+[33m699b636[m Update LightDarkSwitch.svelte
+[33mc568d71[m Update LightDarkSwitch.svelte
+[33m41426d8[m Update LightDarkSwitch.svelte
+[33m4e29377[m Update LightDarkSwitch.svelte
+[33mcdebb1b[m Update LightDarkSwitch.svelte
+[33m24689b8[m Update Navbar.astro
+[33m9ec5812[m Update Navbar.astro
+[33m71c7be8[m Update LightDarkSwitch.svelte
+[33mf596dc0[m Update LightDarkSwitch.svelte
+[33m2d56cc3[m Update Footer.astro
+[33m2365265[m Update ArchivePanel.svelte
+[33m66ac53c[m 重写新建脚本
+[33m2229fe6[m Update Navbar.astro
+[33mcb7bd38[m Update Footer.astro
+[33m3581a02[m Update astro.config.mjs
+[33m679fe0f[m Update Footer.astro
+[33mbc50a6f[m Update Footer.astro
+[33mf771a66[m Update Pagination.astro
+[33m501acdc[m Update ButtonTag.astro
+[33m37ae3da[m Update ButtonLink.astro
+[33m93d93a3[m Update BackToTop.astro
+[33mc3f7db5[m Update Search.svelte
+[33mbc30d75[m Update Search.svelte
+[33m61579b8[m Update PostMeta.astro
+[33m3533b57[m Update PostCard.astro
+[33m23b67c3[m Update Navbar.astro
+[33ma9c06e5[m Update LightDarkSwitch.svelte
+[33mef6fcfb[m Update LightDarkSwitch.svelte
+[33m5ed80e9[m Update config.ts
+[33mb11dae3[m Update config.ts
+[33m2ba807a[m Update ArchivePanel.svelte
+[33m8b258fb[m 坏了没注意到ArchivePanel.svelte用不了sass
+[33mc0ac50e[m ArchivePanel.svelte增加了一点新东西
+[33m84e8fe5[m Update config.ts
+[33m403f485[m Update markdown.md
+[33md7feedb[m Update about.md
+[33m1a87070[m Update PictureAPI.md
+[33m28a96a9[m Update markdown-extended.md
+[33md1e603c[m Update expressive-code.md
+[33mfd2cf9a[m Update markdown.md
+[33mc828e61[m Update video.md
+[33m05d8c48[m Update draft.md
+[33m7cde1a1[m Update markdown-extended.md
+[33m09ded48[m Update expressive-code.md
+[33m5b7f233[m Update index.md
+[33m4a36298[m Update markdown.md
+[33m4475d01[m Update video.md
+[33mdc25cab[m Update draft.md
+[33m29eabef[m Update Essay.md
+[33m72a2215[m Update README.md
+[33m75c7f73[m Update README.md
+[33mc230356[m 不愧是我
+[33mdf80590[m 叒一次尝试
+[33m6c56098[m 又又又一次尝试
+[33ma8f2108[m 又又又一次尝试
+[33m7d8b89d[m 双一次尝试
+[33m315ac62[m 泥马，传错文件了
+[33m6aca8b8[m 双一次尝试
+[33md4bf9d6[m 又又一次尝试
+[33m88b95d6[m 又一次尝试
+[33m49b1b68[m 再一次尝试修复
+[33m4f9da8e[m 尝试修复link引用问题
+[33maa8b707[m Update Essay.md
+[33m9a02ded[m Update PictureAPI.md
+[33mcac69bc[m Rename src/content/posts/Guide/Essay.md to src/content/posts/Essay.md
+[33mbb85986[m Rename src/content/posts/Essay.md to src/content/posts/Guide/Essay.md
+[33mc0e5008[m Add files via upload
+[33m25bbb25[m Rename video.md to video.md
+[33mb4ab05b[m Rename markdown.md to markdown.md
+[33m33ba457[m Rename markdown-extended.md to markdown-extended.md
+[33m69c9b35[m Rename index.md to index.md
+[33ma17f7ad[m Rename expressive-code.md to expressive-code.md
+[33m4cdcf2b[m Rename draft.md to draft.md
+[33mf3e62ed[m Delete src/content/posts/guide/cover.jpeg
+[33m39a9ec5[m Delete src/content/posts/教程 directory
+[33m8a9da29[m Create AIReplay.md
+[33md0ee470[m Update tailwind.config.cjs
+[33m2fbf163[m Update about.md
+[33m280d6a2[m Update tailwind.config.cjs
+[33m8b006ab[m Update markdown.css
+[33m09e1956[m Update main.css
+[33mda2a2c0[m Update tailwind.config.cjs
+[33m80b5ed7[m Update astro.config.mjs
+[33maaa51ec[m Update astro.config.mjs
+[33mf93d806[m Update astro.config.mjs
+[33m9a94965[m Update astro.config.mjs
+[33ma3bf092[m Update astro.config.mjs
+[33mcbced7a[m Update tailwind.config.cjs
+[33mc90c843[m Update main.css
+[33m43e161a[m Update tailwind.config.cjs
+[33m798c5b5[m Update markdown.css
+[33m1c29bc7[m Update markdown.css
+[33mba5518d[m Create components.css
+[33md4237cf[m Update tailwind.config.cjs
+[33maae6565[m Update markdown.css
+[33m2a36b9c[m Update markdown.css
+[33m2a0673a[m Update README.md
+[33m38a7462[m 定义了markdown.css中的link类
+[33mf141a4c[m Update about.md
+[33md34bc35[m Update about.md
+[33me48643f[m Update PictureAPI.md
+[33m84927ff[m Update config.ts
+[33m836bfe9[m Update PictureAPI.md
+[33m652eed1[m Update PictureAPI.md
+[33m3f9a33c[m Update PictureAPI.md
+[33md7dea70[m Update astro.config.mjs
+[33m85606ff[m Create PictureAPI.md
+[33md326eaa[m Delete src/content/posts/Default
+[33m9cd46bd[m Create Default
+[33mc5a9f5f[m Update video.md
+[33mbb38904[m Update markdown.md
+[33mc4b3057[m Update markdown-extended.md
+[33m933115e[m Update expressive-code.md
+[33mc1c8d04[m Update draft.md
+[33m37722c2[m Update config.ts
+[33m9d07e10[m Update Essay.md
+[33mae9a7da[m Essay
+[33m9648065[m Update config.ts
+[33m0a87135[m Update config.ts
+[33m792f4df[m Update config.ts
+[33md9ebabe[m Celestia!!!
+[33mdf616bc[m Add files via upload
+[33m0584b75[m Update config.ts
+[33maee048c[m Update video.md
+[33mb646ab1[m Update markdown.md
+[33m6ad05ce[m Update markdown-extended.md
+[33m49bd2e9[m Update index.md
+[33m51ebb64[m Update expressive-code.md
+[33m055d30e[m Update draft.md
+[33m3cbd157[m Add files via upload
+[33mcd99165[m Delete src/content/posts/guide/index.md
+[33m26262af[m Add files via upload
+[33md363070[m Delete src/content/posts/video.md
+[33meb01726[m Delete src/content/posts/markdown.md
+[33maff88fb[m Delete src/content/posts/markdown-extended.md
+[33mfc48ed2[m Delete src/content/posts/expressive-code.md
+[33m20bd129[m Delete src/content/posts/draft.md
+[33mc06519e[m Merge pull request #2 from yCENzh/update_worker_name_to_fuwari
+[33m7ce350b[m Update wrangler config name to fuwari
+[33m7b1c16b[m Update astro.config.mjs
+[33m5c5cc5e[m Create wrangler.jsonc
+[33m725142e[m Update astro.config.mjs
+[33m85d838a[m Create .assetsignore
+[33m3a9a565[m Update config.ts
+[33m3fe8811[m Update README.md
+[33m933de00[m Update README.md
+[33m6f307f0[m Update config.ts
+[33m8b5c698[m Initial commit

@@ -5,6 +5,7 @@ image: "https://api.lxtu.cn/api.php?category=ecy"
 tags: [Markdown, Blogging, Demo]
 category: Default
 draft: false
+series: Examples
 ---
 
 # This Article is a Draft

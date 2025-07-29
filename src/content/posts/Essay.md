@@ -26,7 +26,9 @@ ShellClash
 
 > 用于在Linux上使用CLI来进行正向代理。通过导入标准的Clash `config.yaml` 来实现
 
-<https://github.com/juewuy/ShellCrash​>
+```
+https://github.com/juewuy/ShellCrash
+```
 
 Tg通知频道：<https://t.me/ShellClash>
 
@@ -100,7 +102,9 @@ bash <(curl -sL kejilion.sh)
 
 哪吒探针Cloudflare版
 
-<https://github.com/yumusb/nezha-new​>
+```
+https://github.com/yumusb/nezha-new
+```
 
 VPS一键魔法脚本
 
@@ -208,7 +212,9 @@ auth.token = "07210721"
 
 FRP systemd服务配置（开机自启）
 
-<https://gofrp.org/zh-cn/docs/setup/systemd/​>
+```
+https://gofrp.org/zh-cn/docs/setup/systemd/
+```
 
 Linux Deb系安装Speedtest-cli
 

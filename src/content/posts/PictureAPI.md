@@ -6,11 +6,16 @@ image: "https://api.lxtu.cn/api.php?category=mn"
 tags: [Essay,Picture,API]
 category: Essay
 draft: false
+series: Essay
 ---
 
-<https://rba.kanostar.top/adapt>
+```
+https://rba.kanostar.top/adapt
+```
 
+```
 <https://api.lxtu.cn/>
+```
 
 ## 二次元
 
