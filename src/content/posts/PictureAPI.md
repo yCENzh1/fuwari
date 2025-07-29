@@ -2,7 +2,7 @@
 title: PictureAPI
 published: 1145-01-01
 description: "随机图片API,不定期更新"
-image: "https://api.lxtu.cn/api.php?category=mn"
+image: "./pin.webp"
 tags: [Essay,Picture,API]
 category: Essay
 draft: false

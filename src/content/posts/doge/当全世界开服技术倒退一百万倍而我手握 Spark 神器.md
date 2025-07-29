@@ -6,7 +6,6 @@ tags: [豪赤]
 category: 豪赤
 draft: false
 series: 豪赤
-pinned: true
 ---
 
 :::note

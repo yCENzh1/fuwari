@@ -2,7 +2,6 @@
 import path from "node:path";
 import License from "@components/misc/License.astro";
 import Markdown from "@components/misc/Markdown.astro";
-import TableOfContents from "@components/TableOfContents.svelte";  // 目录组件
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
@@ -94,11 +93,6 @@ const jsonLd = {
                         category={entry.data.category}
                 ></PostMetadata>
                 {!entry.data.image && <div class="border-[var(--line-divider)] border-dashed border-b-[1px] mb-5"></div>}
-            </div>
-
-            <!-- 新添加的目录组件 -->
-            <div class="onload-animation">
-                <TableOfContents headings={headings} client:idle />
             </div>
 
             <!-- always show cover as long as it has one -->
