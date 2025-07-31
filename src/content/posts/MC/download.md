@@ -3,6 +3,7 @@ title: MC资源下载
 published: 2025-07-31
 description: MC资源下载分享页面
 tags: [下载, Minecraft]
+category: Minecraft
 draft: false
 ---
 
