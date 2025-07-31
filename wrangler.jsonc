@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "fuwari",
-  "compatibility_date": "2025-07-27",
+  "compatibility_date": "2025-07-31",
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page" // 如果你有自定义的 `src/pages/404.astro` 页面
