@@ -1,6 +1,12 @@
 # About
 ![Picture](https://rba.kanostar.top/adapt)
 
+:::note
+[FoldCraftLauncher（FCL启动器最新版下载地址）](https://gh.llkk.cc/https://github.com/FCL-Team/FoldCraftLauncher/releases/download/1.2.4.3/FCL-release-1.2.4.3-arm64-v8a.apk)
+
+不定期更新
+:::
+
 This is the demo site for [Fuwari](https://github.com/saicaca/fuwari).
 
 ::github{repo="yCENzh/Fuwari-yCENzh"}
