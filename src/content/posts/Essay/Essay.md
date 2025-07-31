@@ -3,10 +3,10 @@ title: Essay
 published: 1145-01-01
 description: "随笔记录~"
 image: "https://pic.2x.nz/?img=h"
-tags: [Essay]
-category: Essay
+tags: [Essay, 随笔, 记录]
+category: 记录
 draft: false
-series: Essay
+series: 随笔
 pinned: true
 ---
 
