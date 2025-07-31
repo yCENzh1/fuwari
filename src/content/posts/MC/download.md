@@ -1,8 +1,8 @@
 ---
-title: MC资源下载
+title: MC资源分享
 published: 2025-07-31
 description: MC资源下载分享页面
-tags: [下载, Minecraft]
+tags: [Minecraft]
 category: Minecraft
 draft: false
 ---
@@ -11,6 +11,8 @@ draft: false
 
 :::note
 直接cname解析到我云服openlist上的
-如果打不开可以去友站下载
+
+可能会被劫持,如果打不开可以去友站下载
+
 https://foldcraftlauncher.cn/
 :::
