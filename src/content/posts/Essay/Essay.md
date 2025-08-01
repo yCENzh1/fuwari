@@ -2,7 +2,7 @@
 title: Essay
 published: 1145-01-01
 description: "随笔记录~"
-image: "https://pic.2x.nz/?img=h"
+image: "https://eo-pic.2x.nz/h"
 tags: [Essay, 随笔, 记录]
 category: 记录
 draft: false
