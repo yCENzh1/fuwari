@@ -1,0 +1,27 @@
+---
+import PasswordProtect from './PasswordProtect.astro';
+
+export interface Props {
+  frontmatter: any;
+  compiledContent?: () => string;
+}
+
+const { frontmatter, compiledContent } = Astro.props;
+const hasPassword = !!frontmatter.password;
+const articleId = frontmatter.slug || frontmatter.title.replace(/\s+/g, '-').toLowerCase();
+
+// 获取内容
+const content = compiledContent ? compiledContent() : '';
+---
+
+{hasPassword ? (
+  <PasswordProtect 
+    password={frontmatter.password} 
+    articleId={articleId}
+    content={content}
+  />
+) : (
+  <div class="article-content">
+    <Fragment set:html={content} />
+  </div>
+)}

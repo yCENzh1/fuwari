@@ -400,6 +400,11 @@ function resizeFunction() {
 function initPageContent() {
 	initCustomScrollbar();
 	createPhotoSwipe();
+	
+	//初始化密码保护
+	if (window.initPasswordProtect) {
+    window.initPasswordProtect();
+  }
 }
 
 /**
