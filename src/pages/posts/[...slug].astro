@@ -2,6 +2,7 @@
 import path from "node:path";
 import License from "@components/misc/License.astro";
 import Markdown from "@components/misc/Markdown.astro";
+import ArticleWrapper from "@components/ArticleWrapper.astro";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
@@ -14,10 +15,6 @@ import PostMetadata from "../../components/PostMeta.astro";
 import { profileConfig, siteConfig } from "../../config";
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
 
-//导入加密组件
-import Layout from '@layouts/Layout.astro';
-import ArticleWrapper from '@components/ArticleWrapper.astro';
-
 export async function getStaticPaths() {
 	const blogEntries = await getSortedPosts();
 	return blogEntries.map((entry) => ({
@@ -27,9 +24,11 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content, headings } = await entry.render();
+const { Content, headings, remarkPluginFrontmatter } = await entry.render();
 
-const { remarkPluginFrontmatter } = await entry.render();
+// 获取编译后的HTML内容用于加密
+const compiledEntry = await entry.render();
+const compiledContent = compiledEntry.code;
 
 const jsonLd = {
 	"@context": "https://schema.org",
@@ -48,26 +47,7 @@ const jsonLd = {
 		: siteConfig.lang.replace("_", "-"),
 	// TODO include cover image here
 };
-
-//导入加密
-const { post } = Astro.props;
-const { Content, frontmatter, compiledContent } = post;
 ---
-//导入加密
-<Layout title={frontmatter.title} description={frontmatter.description}>
-  <main>
-    <!-- 文章头部信息 -->
-    <header>
-      <h1>{frontmatter.title}</h1>
-      <!-- 其他元信息 -->
-    </header>
-
-    <!-- 使用ArticleWrapper来处理加密 -->
-    <ArticleWrapper frontmatter={frontmatter} compiledContent={compiledContent}>
-      <Content />
-    </ArticleWrapper>
-  </main>
-</Layout>
 
 <MainGridLayout banner={entry.data.image} title={entry.data.title} description={entry.data.description} lang={entry.data.lang} setOGTypeArticle={true} headings={headings} series={entry.data.series}>
     <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
@@ -124,9 +104,12 @@ const { Content, frontmatter, compiledContent } = post;
                 <ImageWrapper id="post-cover" src={entry.data.image} basePath={path.join("content/posts/", getDir(entry.id))} class="mb-8 rounded-xl banner-container onload-animation"/>
             }
 
-            <Markdown class="mb-6 markdown-content onload-animation">
-                <Content />
-            </Markdown>
+            <!-- 使用ArticleWrapper来处理加密 -->
+            <ArticleWrapper frontmatter={entry.data} compiledContent={compiledContent} articleId={entry.slug}>
+                <Markdown class="mb-6 markdown-content onload-animation">
+                    <Content />
+                </Markdown>
+            </ArticleWrapper>
 
             {licenseConfig.enable && <License title={entry.data.title} slug={entry.slug} pubDate={entry.data.published} class="mb-6 rounded-xl license-container onload-animation"></License>}
 
