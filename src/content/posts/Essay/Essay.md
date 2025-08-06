@@ -2,13 +2,14 @@
 title: Essay
 published: 1145-01-01
 description: "随笔记录~"
-image: "https://eo-pic.2x.nz/h"
 tags: [Essay, 随笔, 记录]
 category: 记录
 draft: false
 series: 随笔
 pinned: true
 ---
+
+![EO随机图](https://eo-pic.2x.nz/h)
 
 关于我的超链接
 
