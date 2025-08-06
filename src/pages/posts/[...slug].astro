@@ -2,7 +2,6 @@
 import path from "node:path";
 import License from "@components/misc/License.astro";
 import Markdown from "@components/misc/Markdown.astro";
-import ArticleWrapper from "@components/ArticleWrapper.astro";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
@@ -25,10 +24,6 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await entry.render();
-
-// 获取编译后的HTML内容用于加密
-const compiledEntry = await entry.render();
-const compiledContent = compiledEntry.code;
 
 const jsonLd = {
 	"@context": "https://schema.org",
@@ -103,13 +98,6 @@ const jsonLd = {
             {entry.data.image &&
                 <ImageWrapper id="post-cover" src={entry.data.image} basePath={path.join("content/posts/", getDir(entry.id))} class="mb-8 rounded-xl banner-container onload-animation"/>
             }
-
-            <!-- 使用ArticleWrapper来处理加密 -->
-            <ArticleWrapper frontmatter={entry.data} compiledContent={compiledContent} articleId={entry.slug}>
-                <Markdown class="mb-6 markdown-content onload-animation">
-                    <Content />
-                </Markdown>
-            </ArticleWrapper>
 
             {licenseConfig.enable && <License title={entry.data.title} slug={entry.slug} pubDate={entry.data.published} class="mb-6 rounded-xl license-container onload-animation"></License>}
 
