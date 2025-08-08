@@ -15,3 +15,7 @@ https://github.com/saicaca/fuwari/pull/324/commits
 ## 置顶
 
 https://github.com/saicaca/fuwari/pull/317
+
+## 友链
+
+https://aulypc1.github.io/posts/website/add_friendspage_in_fuwari/
