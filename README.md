@@ -2,10 +2,11 @@
 
 基于 [Astro](https://astro.build) 开发的静态博客模板。
 
-[**🖥️在线预览（Vercel）**](https://fuwari.vercel.app)
-[**🖥️作者博客**](https://14131413.xyz/)
+[**🖥️在线预览**](https://14131413.xyz)
 
 ![Preview Image](https://raw.githubusercontent.com/saicaca/resource/main/fuwari/home.png)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/da2085c7-98d3-4ef5-87bb-0dfc45f91ddb/deploy-status)](https://app.netlify.com/projects/fuwaris/deploys)
 
 ## 食用方法(以Netlify举例)
 1.  [Fork本项目](https://github.com/yCENzh/fuwari/fork)
@@ -68,7 +69,7 @@ deno run -A npm:create-fuwari@latest
 ```yaml
 ---
 title: My First Blog Post
-published: 2023-09-09
+published: 2025-08-10
 description: This is the first post of my new Astro blog.
 image: ./cover.jpg
 tags: [Foo, Bar]
