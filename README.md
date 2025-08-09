@@ -3,13 +3,13 @@
 基于 [Astro](https://astro.build) 开发的静态博客模板。
 
 [**🖥️在线预览（Vercel）**](https://fuwari.vercel.app)
-[**🖥️作者博客**](https://fuwari.14131413.xyz/)
+[**🖥️作者博客**](https://14131413.xyz/)
 
 ![Preview Image](https://raw.githubusercontent.com/saicaca/resource/main/fuwari/home.png)
 
-## 食用方法(以cloudflare page举例,现已完全可用cloudflare worker代替,也可使用其他静态托管服务部署)
-1.  [Fork本项目](https://github.com/yCENzh/Fuwari-yCENzh/fork)
-2.  使用 [Cloudflare](https://dash.cloudflare.com/) 提供的Pages -> 创建一个Pages -> 导入现有Git存储库 -> 框架预设选择Astro,再将构建命令npm run build更改为pnpm run build -> 保存并构建(本项目以pnpm构建)
+## 食用方法(以Netlify举例)
+1.  [Fork本项目](https://github.com/yCENzh/fuwari/fork)
+2.  使用 [Cloudflare](https://netlify.com/) 创建一个项目 -> 导入现有Git存储库 -> 保存并构建(本项目以pnpm构建)
 3.  没了,非常的简单,后续食用方法请查看我的博客
 
 ## ✨ 功能特性
