@@ -218,10 +218,7 @@ const bannerOffset =
 
 <!-- ✅ [优化] 将所有客户端脚本合并到一个地方，并进行优化 -->
 <script>
-import 'overlayscrollbars/overlayscrollbars.css';
 import { OverlayScrollbars } from 'overlayscrollbars';
-import PhotoSwipeLightbox from "photoswipe/lightbox";
-import "photoswipe/style.css";
 import { getHue, getStoredTheme, setHue, setTheme } from "../utils/setting-utils";
 import { pathsEqual, url } from "../utils/url-utils";
 import {
@@ -232,8 +229,12 @@ import {
 } from "../constants/constants";
 import { siteConfig } from '../config';
 
+// 导入 Fancybox
+import { Fancybox } from "@fancyapps/ui";
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
+
 const bannerEnabled = !!document.getElementById('banner-wrapper');
-let lightbox; // PhotoSwipe instance
+let fancyboxInstance; // Fancybox 实例
 
 function setClickOutsideToClose(panel, ignores) {
 	document.addEventListener("click", event => {
@@ -304,40 +305,44 @@ function initCustomScrollbar() {
 }
 
 /**
- * ✅ [优化] 按需初始化 PhotoSwipe 图片灯箱
+ * ✅ [优化] 按需初始化 Fancybox 图片灯箱
  * 只有当页面上存在符合条件的图片时，才创建实例。
  */
-function createPhotoSwipe() {
+function createFancybox() {
     const gallerySelector = ".custom-md img, #post-cover img";
-	if (!document.querySelector(gallerySelector)) {
-		return; // 如果页面上没有图片，则不初始化灯箱，节省性能
-	}
+    const images = document.querySelectorAll(gallerySelector);
 
-	lightbox = new PhotoSwipeLightbox({
-		gallery: gallerySelector,
-		pswpModule: () => import("photoswipe"),
-		closeSVG: '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>',
-		zoomSVG: '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M340-540h-40q-17 0-28.5-11.5T260-580q0-17 11.5-28.5T300-620h40v-40q0-17 11.5-28.5T380-700q17 0 28.5 11.5T420-660v40h40q17 0 28.5 11.5T500-580q0 17-11.5 28.5T460-540h-40v40q0 17-11.5 28.5T380-460q-17 0-28.5-11.5T340-500v-40Zm40 220q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l224 224q11 11 11 28t-11 28q-11 11-28 11t-28-11L532-372q-30 24-69 38t-83 14Zm0-80q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>',
-		padding: { top: 20, bottom: 20, left: 20, right: 20 },
-		wheelToZoom: true,
-		arrowPrev: false,
-		arrowNext: false,
-		imageClickAction: 'close',
-		tapAction: 'close',
-		doubleTapAction: 'zoom',
-	});
+    if (images.length === 0) {
+        return; // 如果页面上没有图片，则不初始化灯箱，节省性能
+    }
 
-	lightbox.addFilter("domItemData", (itemData, element) => {
-		if (element instanceof HTMLImageElement) {
-			itemData.src = element.src;
-			itemData.w = Number(element.naturalWidth || window.innerWidth);
-			itemData.h = Number(element.naturalHeight || window.innerHeight);
-			itemData.msrc = element.src;
-		}
-		return itemData;
-	});
+    // 为每个图片添加 data-fancybox 属性
+    images.forEach((img, index) => {
+        if (!img.hasAttribute('data-fancybox')) {
+            img.setAttribute('data-fancybox', 'gallery');
+            // 可选：添加标题，例如从 alt 属性获取
+            if (img.alt && !img.hasAttribute('data-caption')) {
+                img.setAttribute('data-caption', img.alt);
+            }
+        }
+    });
 
-	lightbox.init();
+    // 初始化 Fancybox
+    fancyboxInstance = Fancybox.bind(gallerySelector, {
+        // Fancybox 配置选项
+        dragToClose: false,
+        Toolbar: {
+            display: {
+                left: ['infobar'],
+                middle: [],
+                right: ['close'],
+            },
+        },
+        closeButton: 'top',
+        click: false,
+        dblclick: false,
+        wheel: 'slide',
+    });
 }
 
 function showBanner() {
@@ -399,7 +404,7 @@ function resizeFunction() {
  */
 function initPageContent() {
 	initCustomScrollbar();
-	createPhotoSwipe();
+	createFancybox();
 }
 
 /**
@@ -421,8 +426,10 @@ function setupSwupHooks() {
     
 	window.swup.hooks.on('content:replace', () => {
         // 在替换内容前，销毁旧的灯箱实例
-		lightbox?.destroy?.();
-        lightbox = null;
+        if (fancyboxInstance) {
+            fancyboxInstance.destroy();
+            fancyboxInstance = null;
+        }
 	}, { before: true });
 
 	window.swup.hooks.on('page:view', () => {
