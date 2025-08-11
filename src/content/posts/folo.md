@@ -12,7 +12,7 @@ lang: ''
 
 这是一篇Folo认证文章，用于认证本RSS归属于我
 
-This message is used to verify that this feed (feedId:177558563292790784) belongs to me (userId:177556222102647808). Join me in enjoying the next generation information browser https://folo.is.
+This message is used to verify that this feed (feedId:177560452107933696) belongs to me (userId:177556222102647808). Join me in enjoying the next generation information browser https://folo.is.
 
 # 我要怎么认证？
 
